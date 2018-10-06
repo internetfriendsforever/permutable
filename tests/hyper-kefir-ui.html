@@ -1,0 +1,28 @@
+<body>
+  <script src="https://unpkg.com/kefir@3.8.5/dist/kefir.min.js"></script>
+  <script src="https://unpkg.com/hyperhtml@latest/min.js"></script>
+  <script>
+    const { bind, wire } = hyperHTML
+
+    const clickEvents = Kefir.fromEvents(document.body, 'click')
+
+    const count = Kefir.merge([
+      clickEvents.filter(event => event.target.name === 'decrement-button').map(() => -1),
+      clickEvents.filter(event => event.target.name === 'increment-button').map(() => 1)
+    ]).scan((a, b) => a + b).toProperty(() => 0)
+
+    const state = Kefir.combine({ count })
+
+    state.onValue(state => bind(document.body)`
+      <h1>Count: ${state.count}</h1>
+
+      <button name='decrement-button'>
+        Decrement
+      </button>
+
+      <button name='increment-button'>
+        Increment
+      </button>
+    `)
+  </script>
+</body>
