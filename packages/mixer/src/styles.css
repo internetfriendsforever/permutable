@@ -38,23 +38,6 @@ footer, header, hgroup, menu, nav, section {
   src: url('./assets/fonts/IBM-Plex-Mono/IBMPlexMono-Regular.woff2') format('woff2');
 }
 
-::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-
-::-webkit-scrollbar-track {
-  background: black;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #aaa;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #fff;
-}
-
 html {
   height: 100%;
   width: 100%;
