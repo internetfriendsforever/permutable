@@ -76,9 +76,7 @@ export default function Mixer () {
           Master
         </Heading>
 
-        <Content>
-          Content
-        </Content>
+        <Content />
       </Panel>
     </Container>
   )
