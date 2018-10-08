@@ -1,21 +1,58 @@
-import { bind, wire } from 'https://unpkg.com/hyperhtml@2.14.0/esm/index.js'
-import throttle from 'https://unpkg.com/raf-throttle@2.0.3/rafThrottle.js'
+import { bind } from './libraries/hyperhtml.js'
+import throttle from './libraries/rafThrottle.js'
 import state from './state.js'
+import css from './css.js'
+import list from './sortable/list.js'
+import item from './sortable/item.js'
 
-const count = change => state => {
-  state.count += change
-}
+const panels = css`
+  display: flex;
+`
 
-state.listen(throttle(values => {
+const panel = css`
+
+`
+
+state.listen(throttle((state, update) => {
   bind(document.body)`
-    <h1>Count ${values.count}</h1>
-    <button onclick=${() => state.update(count(-3))}>-3</button>
-    <button onclick=${() => state.update(count(-2))}>-2</button>
-    <button onclick=${() => state.update(count(1))}>+1</button>
-    <button onclick=${() => state.update(count(7))}>+7</button>
+    <main className=${panels}>
+      <section className=${panel}>
+        <h2>Library</h2>
+        ${list(
+          state.library.map(app => item({
+            item: app,
+            children: app.label
+          }))
+        )}
+      </section>
+
+      <section className=${panel}>
+        <h2>Channels</h2>
+        ${list(
+          state.channels.map(channel => item({
+            item: channel,
+            children: channel.label
+          }))
+        )}
+      </section>
+
+      <section className=${panel}>
+        <h2>Output</h2>
+      </section>
+    </main>
   `
 }))
 
 state.update(() => ({
-  count: 0
+  library: [
+    { label: 'One' },
+    { label: 'Two' }
+  ],
+
+  channels: [
+    { label: 'One' },
+    { label: 'Two' }
+  ],
+
+  sorting: null
 }))
