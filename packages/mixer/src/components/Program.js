@@ -15,14 +15,14 @@ const Container = styled('div')`
 
 export default class Program extends Component {
   onDragStart = event => {
-    event.dataTransfer.setData('text/plain', this.props.id)
+    event.dataTransfer.setData('application/json', JSON.stringify(this.props.program))
     event.dataTransfer.dropEffect = 'copy'
   }
 
   render () {
     return (
       <Container draggable onDragStart={this.onDragStart}>
-        {this.props.children}
+        {this.props.program.title}
       </Container>
     )
   }

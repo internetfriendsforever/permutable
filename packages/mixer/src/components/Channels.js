@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { findDOMNode } from 'react-dom'
 import styled from 'react-emotion'
 
 const Container = styled('div')`
@@ -9,6 +10,11 @@ const Container = styled('div')`
   `}
 `
 
+const Channel = styled('div')`
+  padding: 0.75rem;
+  border-bottom: 2px #aaa solid;
+`
+
 export default class Channels extends Component {
   state = {
     dropping: false
@@ -16,9 +22,7 @@ export default class Channels extends Component {
 
   onDragOver = event => {
     event.preventDefault()
-  }
 
-  onDragEnter = event => {
     this.setState({
       dropping: true
     })
@@ -31,21 +35,31 @@ export default class Channels extends Component {
   }
 
   onDrop = event => {
+    this.props.onAdd(JSON.parse(event.dataTransfer.getData('application/json')))
+
     this.setState({
       dropping: false
     })
   }
 
   render () {
+    const { dropping } = this.state
+    const { channels } = this.props
+
+    const events = {
+      onDragOver: this.onDragOver,
+      onDragLeave: this.onDragLeave,
+      onDrop: this.onDrop
+    }
+
     return (
-      <Container
-        dropping={this.state.dropping}
-        onDragOver={this.onDragOver}
-        onDragEnter={this.onDragEnter}
-        onDragLeave={this.onDragLeave}
-        onDrop={this.onDrop}
-        children={this.props.children}
-      />
+      <Container dropping={dropping} {...events}>
+        {channels.map(channel => (
+          <Channel key={channel.id}>
+            {channel.title}
+          </Channel>
+        ))}
+      </Container>
     )
   }
 }

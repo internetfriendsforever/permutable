@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 import styled from 'react-emotion'
+import produce from 'immer'
 import Program from './Program'
 import Channels from './Channels'
 
@@ -42,42 +43,68 @@ const Content = styled('div')`
   }
 `
 
-export default function Mixer () {
-  return (
-    <Container>
-      <ProgramsPanel>
-        <Heading>
-          Programs
-        </Heading>
+export default class Mixer extends Component {
+  state = Object.freeze({
+    programs: [
+      {
+        id: 1,
+        title: 'Particles'
+      }, {
+        id: 2,
+        title: 'Fluid'
+      }
+    ],
 
-        <Content>
-          <Program id='1'>
-            Particles
-          </Program>
+    channels: []
+  })
 
-          <Program id='2'>
-            Fluid
-          </Program>
-        </Content>
-      </ProgramsPanel>
+  onAddChannel = program => {
+    this.setState(produce(draft => {
+      draft.channels.push({
+        id: Math.random().toString(32).substring(2),
+        title: program.title
+      })
+    }))
+  }
 
-      <Panel>
-        <Heading>
-          Channels
-        </Heading>
+  render () {
+    const { programs, channels } = this.state
 
-        <Content>
-          <Channels />
-        </Content>
-      </Panel>
+    return (
+      <Container>
+        <ProgramsPanel>
+          <Heading>
+            Programs
+          </Heading>
 
-      <Panel>
-        <Heading>
-          Master
-        </Heading>
+          <Content>
+            {programs.map(program => (
+              <Program key={program.id} program={program} />
+            ))}
+          </Content>
+        </ProgramsPanel>
 
-        <Content />
-      </Panel>
-    </Container>
-  )
+        <Panel>
+          <Heading>
+            Channels
+          </Heading>
+
+          <Content>
+            <Channels
+              onAdd={this.onAddChannel}
+              channels={channels}
+            />
+          </Content>
+        </Panel>
+
+        <Panel>
+          <Heading>
+            Master
+          </Heading>
+
+          <Content />
+        </Panel>
+      </Container>
+    )
+  }
 }
