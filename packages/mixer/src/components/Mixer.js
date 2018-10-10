@@ -3,6 +3,7 @@ import styled from 'react-emotion'
 import produce from 'immer'
 import Program from './Program'
 import Channels from './Channels'
+import * as programs from '../programs'
 
 const Container = styled('div')`
   display: flex;
@@ -14,7 +15,7 @@ const Container = styled('div')`
 `
 
 const Panel = styled('div')`
-  flex: auto;
+  flex: 1;
   display: flex;
   flex-direction: column;
   border-right: 2px #aaa solid;
@@ -45,24 +46,16 @@ const Content = styled('div')`
 
 export default class Mixer extends Component {
   state = Object.freeze({
-    programs: [
-      {
-        id: 1,
-        title: 'Particles'
-      }, {
-        id: 2,
-        title: 'Fluid'
-      }
-    ],
-
+    programs,
     channels: []
   })
 
-  onAddChannel = program => {
+  onAddChannel = programId => {
     this.setState(produce(draft => {
       draft.channels.push({
-        id: Math.random().toString(32).substring(2),
-        title: program.title
+        id: Date.now(),
+        title: programId,
+        program: this.state.programs[programId]
       })
     }))
   }
@@ -78,8 +71,8 @@ export default class Mixer extends Component {
           </Heading>
 
           <Content>
-            {programs.map(program => (
-              <Program key={program.id} program={program} />
+            {Object.keys(programs).map(key => (
+              <Program key={key} id={key} />
             ))}
           </Content>
         </ProgramsPanel>

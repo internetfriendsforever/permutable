@@ -1,0 +1,38 @@
+<!doctype html>
+
+<html>
+  <head>
+    <title>Rectangle</title>
+  </head>
+  <body>
+    <script>
+      const id = window.location.hash.substring(1)
+
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext('2d')
+
+      canvas.width = 1920
+      canvas.height = 1080
+
+      function render (time = 0) {
+        context.fillStyle = 'yellow'
+        context.fillRect(0, 0, canvas.width, canvas.height)
+
+        context.save()
+        context.translate(canvas.width / 2, canvas.height / 2)
+        context.rotate(time / 1000)
+
+        context.fillStyle = 'red'
+        context.fillRect(-50, -50, 100, 100)
+        context.restore()
+
+        createImageBitmap(canvas).then(image => {
+          window.parent.postMessage({ image, id }, 'http://localhost:3000/', [image])
+          window.requestAnimationFrame(render)
+        })
+      }
+
+      render()
+    </script>
+  </body>
+</html>

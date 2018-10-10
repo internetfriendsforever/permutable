@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import styled from 'react-emotion'
+import Channel from './Channel'
 
 const Container = styled('div')`
   height: 100%;
@@ -8,11 +9,6 @@ const Container = styled('div')`
   ${props => props.dropping && `
     background: #222;
   `}
-`
-
-const Channel = styled('div')`
-  padding: 0.75rem;
-  border-bottom: 2px #aaa solid;
 `
 
 export default class Channels extends Component {
@@ -35,7 +31,7 @@ export default class Channels extends Component {
   }
 
   onDrop = event => {
-    this.props.onAdd(JSON.parse(event.dataTransfer.getData('application/json')))
+    this.props.onAdd(event.dataTransfer.getData('application/json'))
 
     this.setState({
       dropping: false
@@ -55,9 +51,7 @@ export default class Channels extends Component {
     return (
       <Container dropping={dropping} {...events}>
         {channels.map(channel => (
-          <Channel key={channel.id}>
-            {channel.title}
-          </Channel>
+          <Channel key={channel.id} channel={channel} />
         ))}
       </Container>
     )
