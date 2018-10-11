@@ -71,6 +71,7 @@ export default class Channel extends Component {
             <Player
               handler={handler}
               values={values}
+              play={values.mix > 0}
             />
           </PreviewInner>
         </PreviewOuter>

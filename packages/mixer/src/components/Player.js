@@ -7,21 +7,41 @@ const Canvas = styled('canvas')`
 `
 
 export default class ChannelPreview extends Component {
-  shouldComponentUpdate = () => false
+  playing = false
+
+  shouldComponentUpdate = nextProps => {
+    if (this.playing && !nextProps.play) {
+      this.pause()
+    }
+
+    if (!this.playing && nextProps.play) {
+      this.play()
+    }
+
+    return false
+  }
 
   onRef = ref => {
     if (ref) {
       this.canvas = findDOMNode(ref)
       this.canvasContext = this.canvas.getContext('2d')
-      this.renderProgram = this.props.handler(this.canvas, this.canvasContext)
-      this.tick()
+      this.canvasRender = this.props.handler(this.canvas, this.canvasContext)
+
+      if (this.props.play) {
+        this.play()
+      }
     }
   }
 
-  tick = (time = 0) => {
-    this.renderProgram(this.props.values)
+  play = (time = 0) => {
+    this.playing = true
+    this.canvasRender(this.props.values)
+    this.frameRequest = window.requestAnimationFrame(this.play)
+  }
 
-    window.requestAnimationFrame(this.tick)
+  pause = () => {
+    this.playing = false
+    window.cancelAnimationFrame(this.frameRequest)
   }
 
   render () {
