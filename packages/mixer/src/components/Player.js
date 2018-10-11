@@ -4,6 +4,7 @@ import styled from 'react-emotion'
 
 const Canvas = styled('canvas')`
   display: block;
+  border: 5px transparent solid;
 `
 
 export default class ChannelPreview extends Component {

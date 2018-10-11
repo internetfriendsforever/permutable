@@ -81,7 +81,7 @@ export default class Mixer extends Component {
       <Container>
         <ProgramsPanel>
           <Heading>
-            Programs
+            programs
           </Heading>
 
           <Content>
@@ -93,7 +93,7 @@ export default class Mixer extends Component {
 
         <Panel>
           <Heading>
-            Channels
+            channels
           </Heading>
 
           <Content>
@@ -107,7 +107,7 @@ export default class Mixer extends Component {
 
         <MasterPanel>
           <Heading>
-            Master
+            master
           </Heading>
 
           <Content>
