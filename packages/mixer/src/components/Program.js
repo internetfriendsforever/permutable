@@ -11,6 +11,11 @@ const Container = styled('div')`
     background: #aaa;
     color: black;
   }
+
+  &:active {
+    background: gold;
+    color: black;
+  }
 `
 
 export default class Program extends Component {

@@ -27,7 +27,7 @@ const Panel = styled('div')`
 `
 
 const ProgramsPanel = styled(Panel)`
-  flex: 0.5;
+  flex: 0;
 `
 
 const MasterPanel = styled(Panel)`
@@ -74,6 +74,17 @@ export default class Mixer extends Component {
     }))
   }
 
+  renderMaster = (canvas, context) => {
+    return (input) => {
+      context.clearRect(0, 0, canvas.width, canvas.height)
+
+      input.forEach(({ canvas, mix }) => {
+        context.globalAlpha = mix
+        context.drawImage(canvas, 0, 0)
+      })
+    }
+  }
+
   render () {
     const { programs, channels, master } = this.state
 
@@ -114,16 +125,7 @@ export default class Mixer extends Component {
             <Player
               style={{ height: 720 / 2 }}
               values={master.input}
-              handler={(canvas, context) => {
-                return (input) => {
-                  context.clearRect(0, 0, canvas.width, canvas.height)
-
-                  input.forEach(({ canvas, mix }) => {
-                    context.globalAlpha = mix
-                    context.drawImage(canvas, 0, 0)
-                  })
-                }
-              }}
+              handler={this.renderMaster}
             />
           </Content>
         </MasterPanel>

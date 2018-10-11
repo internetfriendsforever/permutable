@@ -1,13 +1,24 @@
 import React, { Component } from 'react'
 import styled from 'react-emotion'
+import ControlMidi from './ControlMidi'
 
 const Container = styled('div')`
   display: flex;
-  cursor: ew-resize;
+  align-items: center;
+`
 
-  :hover,
-  :active {
+const Slider = styled('div')`
+  flex: auto;
+  cursor: ew-resize;
+  display: flex;
+  margin-right: 0.5rem;
+
+  :hover {
     color: white;
+  }
+
+  :active {
+    color: gold;
   }
 `
 
@@ -32,7 +43,7 @@ export default class ControlFloat extends Component {
     const value = Math.min(1, Math.max(0, this.props.value + delta * 0.01))
 
     this.prev = e.clientX
-    this.props.onChange(value)
+    this.props.onChange(this.props.id, value)
   }
 
   onMouseUp = e => {
@@ -40,13 +51,32 @@ export default class ControlFloat extends Component {
     window.removeEventListener('mouseup', this.onMouseUp)
   }
 
+  onMidiChange = signal => {
+    this.props.onChange(this.props.id, this.parseMidiSignal(signal))
+  }
+
+  parseMidiSignal = ({ type, value }) => {
+    switch (type) {
+      case 128:
+        return 0
+      case 144:
+        return 1
+      default:
+        return value / 127
+    }
+  }
+
   render () {
-    const { name, value } = this.props
+    const { id, value } = this.props
 
     return (
-      <Container onMouseDown={this.onMouseDown}>
-        <Name>{name}</Name>
-        <Value>{value.toFixed(2)}</Value>
+      <Container>
+        <Slider onMouseDown={this.onMouseDown}>
+          <Name>{id}</Name>
+          <Value>{value.toFixed(2)}</Value>
+        </Slider>
+
+        <ControlMidi onChange={this.onMidiChange} />
       </Container>
     )
   }

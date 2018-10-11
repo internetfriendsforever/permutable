@@ -62,9 +62,10 @@ export default class Channels extends Component {
       <Container dropping={dropping} {...events}>
         {channels.map(channel => (
           <Channel
+            id={channel.id}
             key={channel.id}
             channel={channel}
-            onOutput={output => this.onChannelOutput(channel.id, output)}
+            onOutput={this.onChannelOutput}
           />
         ))}
       </Container>

@@ -43,18 +43,23 @@ export default class Channel extends Component {
 
   componentDidUpdate = (prevProps, prevState) => {
     if (prevState.values.mix !== this.state.values.mix) {
-      this.props.onOutput({
+      this.props.onOutput(this.props.id, {
         mix: this.state.values.mix,
         canvas: this.canvas
       })
     }
   }
 
+  renderPreview = (canvas, context) => {
+    this.canvas = canvas
+    return this.props.channel.program.handler(canvas, context)
+  }
+
   render () {
     const { values } = this.state
     const { channel } = this.props
     const { program } = channel
-    const { params, handler } = program
+    const { params } = program
 
     return (
       <Container>
@@ -70,9 +75,9 @@ export default class Channel extends Component {
             return (
               <Control
                 key={key}
-                name={key}
+                id={key}
                 value={value}
-                onChange={v => this.onParamChange(key, v)}
+                onChange={this.onParamChange}
               />
             )
           })}
@@ -83,10 +88,7 @@ export default class Channel extends Component {
             style={{ height: 720 / 8 }}
             play={values.play}
             values={values}
-            handler={(canvas, context) => {
-              this.canvas = canvas
-              return handler(canvas, context)
-            }}
+            handler={this.renderPreview}
           />
         </PreviewOuter>
       </Container>

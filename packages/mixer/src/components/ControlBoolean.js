@@ -20,10 +20,10 @@ const Value = styled('div')`
   flex: 0;
 `
 
-export default function ControlBoolean ({ name, value, onChange }) {
+export default function ControlBoolean ({ id, value, onChange }) {
   return (
-    <Container onClick={() => onChange(!value)}>
-      <Name>{name}</Name>
+    <Container onClick={() => onChange(id, !value)}>
+      <Name>{id}</Name>
       <Value>{value ? 'yes' : 'no'}</Value>
     </Container>
   )
