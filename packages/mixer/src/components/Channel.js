@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import styled from 'react-emotion'
 import produce from 'immer'
 import Player from './Player'
-import Control from './Control'
+import ControlFloat from './ControlFloat'
+import ControlBoolean from './ControlBoolean'
 
 const Container = styled('div')`
   display: flex;
@@ -32,6 +33,7 @@ const Controls = styled('div')`
 export default class Channel extends Component {
   state = Object.freeze({
     values: {
+      play: true,
       mix: 0,
       ...this.props.channel.program.params
     }
@@ -56,14 +58,19 @@ export default class Channel extends Component {
         </Title>
 
         <Controls>
-          {Object.keys(values).map(key => (
-            <Control
-              key={key}
-              name={key}
-              value={values[key] || 0}
-              onChange={v => this.onParamChange(key, v)}
-            />
-          ))}
+          {Object.keys(values).map(key => {
+            const value = values[key]
+            const Control = typeof value === 'boolean' ? ControlBoolean : ControlFloat
+
+            return (
+              <Control
+                key={key}
+                name={key}
+                value={value}
+                onChange={v => this.onParamChange(key, v)}
+              />
+            )
+          })}
         </Controls>
 
         <PreviewOuter>
@@ -71,7 +78,7 @@ export default class Channel extends Component {
             <Player
               handler={handler}
               values={values}
-              play={values.mix > 0}
+              play={values.play}
             />
           </PreviewInner>
         </PreviewOuter>

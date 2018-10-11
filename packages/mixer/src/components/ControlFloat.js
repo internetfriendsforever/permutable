@@ -20,7 +20,7 @@ const Value = styled('div')`
   flex: 0;
 `
 
-export default class Control extends Component {
+export default class ControlFloat extends Component {
   onMouseDown = e => {
     this.prev = e.clientX
     window.addEventListener('mousemove', this.onMouseMove)
