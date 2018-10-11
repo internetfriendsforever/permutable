@@ -1,16 +1,26 @@
 export default {
-  params: ['speed'],
+  params: {
+    size: 0.5,
+    speed: 0.5
+  },
+
   handler: (canvas, context) => {
-    return time => {
+    let t = 0
+
+    return ({ speed, size }) => {
+      t += speed
+
       context.fillStyle = 'yellow'
       context.fillRect(0, 0, canvas.width, canvas.height)
 
       context.save()
       context.translate(canvas.width / 2, canvas.height / 2)
-      context.rotate(time / 1000)
+      context.rotate(t / 10)
+
+      const scaled = size * 200
 
       context.fillStyle = 'red'
-      context.fillRect(-200, -200, 200, 200)
+      context.fillRect(-scaled, -scaled, scaled, scaled)
       context.restore()
     }
   }

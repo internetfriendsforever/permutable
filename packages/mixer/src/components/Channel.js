@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'react-emotion'
+import produce from 'immer'
 import Player from './Player'
 import Control from './Control'
 
@@ -9,15 +10,8 @@ const Container = styled('div')`
 `
 
 const Title = styled('h2')`
-  flex: auto;
+  flex: 1;
   padding: 0.75rem;
-  background: #222;
-  cursor: grab;
-
-  &:hover {
-    background: #aaa;
-    color: black;
-  }
 `
 
 const PreviewOuter = styled('div')`
@@ -31,33 +25,56 @@ const PreviewInner = styled('div')`
 `
 
 const Controls = styled('div')`
-  flex auto;
+  flex 2;
   padding: 0.75rem;
 `
 
-export default function Channel ({ channel }) {
-  const { program } = channel
-  const { params, handler } = program
+export default class Channel extends Component {
+  state = Object.freeze({
+    values: {
+      mix: 0,
+      ...this.props.channel.program.params
+    }
+  })
 
-  return (
-    <Container>
-      <Title>
-        {channel.title}
-      </Title>
+  onParamChange = (key, value) => {
+    this.setState(produce(draft => {
+      draft.values[key] = value
+    }))
+  }
 
-      <Controls>
-        <Control name='mix' value={0} />
+  render () {
+    const { values } = this.state
+    const { channel } = this.props
+    const { program } = channel
+    const { params, handler } = program
 
-        {params.map(name => (
-          <Control key='name' name={name} value={0} />
-        ))}
-      </Controls>
+    return (
+      <Container>
+        <Title>
+          {channel.title}
+        </Title>
 
-      <PreviewOuter>
-        <PreviewInner>
-          <Player handler={handler} />
-        </PreviewInner>
-      </PreviewOuter>
-    </Container>
-  )
+        <Controls>
+          {Object.keys(values).map(key => (
+            <Control
+              key={key}
+              name={key}
+              value={values[key] || 0}
+              onChange={v => this.onParamChange(key, v)}
+            />
+          ))}
+        </Controls>
+
+        <PreviewOuter>
+          <PreviewInner>
+            <Player
+              handler={handler}
+              values={values}
+            />
+          </PreviewInner>
+        </PreviewOuter>
+      </Container>
+    )
+  }
 }

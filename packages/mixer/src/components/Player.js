@@ -14,13 +14,13 @@ export default class ChannelPreview extends Component {
       this.canvas = findDOMNode(ref)
       this.canvasContext = this.canvas.getContext('2d')
       this.renderProgram = this.props.handler(this.canvas, this.canvasContext)
-      this.offset = Math.random() * 1000
       this.tick()
     }
   }
 
   tick = (time = 0) => {
-    this.renderProgram(time + this.offset)
+    this.renderProgram(this.props.values)
+
     window.requestAnimationFrame(this.tick)
   }
 
