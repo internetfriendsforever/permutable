@@ -21,10 +21,6 @@ const PreviewOuter = styled('div')`
   align-items: center;
 `
 
-const PreviewInner = styled('div')`
-  height: ${720 / 8}px;
-`
-
 const Controls = styled('div')`
   flex 2;
   padding: 0.75rem;
@@ -43,6 +39,15 @@ export default class Channel extends Component {
     this.setState(produce(draft => {
       draft.values[key] = value
     }))
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevState.values.mix !== this.state.values.mix) {
+      this.props.onOutput({
+        mix: this.state.values.mix,
+        canvas: this.canvas
+      })
+    }
   }
 
   render () {
@@ -74,13 +79,15 @@ export default class Channel extends Component {
         </Controls>
 
         <PreviewOuter>
-          <PreviewInner>
-            <Player
-              handler={handler}
-              values={values}
-              play={values.play}
-            />
-          </PreviewInner>
+          <Player
+            style={{ height: 720 / 8 }}
+            play={values.play}
+            values={values}
+            handler={(canvas, context) => {
+              this.canvas = canvas
+              return handler(canvas, context)
+            }}
+          />
         </PreviewOuter>
       </Container>
     )

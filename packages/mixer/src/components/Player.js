@@ -9,6 +9,10 @@ const Canvas = styled('canvas')`
 export default class ChannelPreview extends Component {
   playing = false
 
+  static defaultProps = {
+    play: true
+  }
+
   shouldComponentUpdate = nextProps => {
     if (this.playing && !nextProps.play) {
       this.pause()
@@ -50,7 +54,7 @@ export default class ChannelPreview extends Component {
         ref={this.onRef}
         width={1280}
         height={720}
-        style={{ height: '100%' }}
+        style={this.props.style}
       />
     )
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { findDOMNode } from 'react-dom'
 import styled from 'react-emotion'
+import produce from 'immer'
 import Channel from './Channel'
 
 const Container = styled('div')`
@@ -12,8 +13,17 @@ const Container = styled('div')`
 `
 
 export default class Channels extends Component {
-  state = {
-    dropping: false
+  state = Object.freeze({
+    dropping: false,
+    output: {}
+  })
+
+  onChannelOutput = (id, output) => {
+    this.setState(produce(draft => {
+      draft.output[id] = output
+    }), () => {
+      this.props.onOutput(Object.values(this.state.output))
+    })
   }
 
   onDragOver = event => {
@@ -51,7 +61,11 @@ export default class Channels extends Component {
     return (
       <Container dropping={dropping} {...events}>
         {channels.map(channel => (
-          <Channel key={channel.id} channel={channel} />
+          <Channel
+            key={channel.id}
+            channel={channel}
+            onOutput={output => this.onChannelOutput(channel.id, output)}
+          />
         ))}
       </Container>
     )

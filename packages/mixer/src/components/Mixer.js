@@ -3,6 +3,7 @@ import styled from 'react-emotion'
 import produce from 'immer'
 import Program from './Program'
 import Channels from './Channels'
+import Player from './Player'
 import * as programs from '../programs'
 
 const Container = styled('div')`
@@ -29,6 +30,10 @@ const ProgramsPanel = styled(Panel)`
   flex: 0.5;
 `
 
+const MasterPanel = styled(Panel)`
+  flex: 0;
+`
+
 const Heading = styled('h1')`
   flex: 0;
   padding: 0.75rem;
@@ -47,7 +52,10 @@ const Content = styled('div')`
 export default class Mixer extends Component {
   state = Object.freeze({
     programs,
-    channels: []
+    channels: [],
+    master: {
+      input: []
+    }
   })
 
   onAddChannel = programId => {
@@ -60,8 +68,14 @@ export default class Mixer extends Component {
     }))
   }
 
+  onChannelsOutput = output => {
+    this.setState(produce(draft => {
+      draft.master.input = output
+    }))
+  }
+
   render () {
-    const { programs, channels } = this.state
+    const { programs, channels, master } = this.state
 
     return (
       <Container>
@@ -85,18 +99,34 @@ export default class Mixer extends Component {
           <Content>
             <Channels
               onAdd={this.onAddChannel}
+              onOutput={this.onChannelsOutput}
               channels={channels}
             />
           </Content>
         </Panel>
 
-        <Panel>
+        <MasterPanel>
           <Heading>
             Master
           </Heading>
 
-          <Content />
-        </Panel>
+          <Content>
+            <Player
+              style={{ height: 720 / 2 }}
+              values={master.input}
+              handler={(canvas, context) => {
+                return (input) => {
+                  context.clearRect(0, 0, canvas.width, canvas.height)
+
+                  input.forEach(({ canvas, mix }) => {
+                    context.globalAlpha = mix
+                    context.drawImage(canvas, 0, 0)
+                  })
+                }
+              }}
+            />
+          </Content>
+        </MasterPanel>
       </Container>
     )
   }
