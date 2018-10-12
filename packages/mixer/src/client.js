@@ -1,15 +1,8 @@
-import { hydrate } from 'react-dom'
-import router from '@cyberspace/router'
-import routes from './routes'
+import React from 'react'
+import { render } from 'react-dom'
+import Mixer from './components/Mixer'
 
-router.listen((path, navigate) => {
-  const { key, params } = (router.resolve(routes, path) || {})
-  const route = key ? routes[key]({ params }) : routes['NotFound']()
-
-  document.title = route.title
-
-  hydrate(route.component, document.getElementById('root'))
-})
+render(<Mixer />, document.getElementById('root'))
 
 // Warn reload
 // window.addEventListener('beforeunload', function (event) {
