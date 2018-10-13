@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import styled from 'react-emotion'
 import produce from 'immer'
 import Program from './Program'
-import Channels from './Channels'
+import Channel from './Channel'
 import Player from './Player'
-import * as programs from '../programs'
 
 const Container = styled('div')`
   display: flex;
@@ -49,87 +48,67 @@ const Content = styled('div')`
   }
 `
 
-export default class Mixer extends Component {
-  state = Object.freeze({
-    programs,
-    channels: [],
-    master: {
-      input: []
-    }
-  })
+const Channels = styled('div')`
+  height: 100%;
 
-  onAddChannel = programId => {
-    this.setState(produce(draft => {
-      draft.channels.push({
-        id: Date.now(),
-        title: programId,
-        program: this.state.programs[programId]
-      })
-    }))
-  }
+  ${props => props.receiving && `
+    background: #222;
+  `}
+`
 
-  onChannelsOutput = output => {
-    this.setState(produce(draft => {
-      draft.master.input = output
-    }))
-  }
+export default function Mixer (props) {
+  const { programs, channels, master } = props
 
-  renderMaster = (canvas, context) => {
-    return (input) => {
-      context.clearRect(0, 0, canvas.width, canvas.height)
+  return (
+    <Container>
+      <ProgramsPanel>
+        <Heading>
+          programs
+        </Heading>
 
-      input.forEach(({ canvas, mix }) => {
-        context.globalAlpha = mix
-        context.drawImage(canvas, 0, 0)
-      })
-    }
-  }
+        <Content>
+          {Object.keys(programs).map(key => (
+            <Program key={key} id={key} />
+          ))}
+        </Content>
+      </ProgramsPanel>
 
-  render () {
-    const { programs, channels, master } = this.state
+      <Panel>
+        <Heading>
+          channels
+        </Heading>
 
-    return (
-      <Container>
-        <ProgramsPanel>
-          <Heading>
-            programs
-          </Heading>
-
-          <Content>
-            {Object.keys(programs).map(key => (
-              <Program key={key} id={key} />
+        <Content>
+          <Channels id='channels' receiving={channels.receiving}>
+            {channels.items.map(channel => (
+              <Channel key={channel.id} {...channel} />
             ))}
-          </Content>
-        </ProgramsPanel>
+          </Channels>
+        </Content>
+      </Panel>
 
-        <Panel>
-          <Heading>
-            channels
-          </Heading>
+      <MasterPanel>
+        <Heading>
+          master
+        </Heading>
 
-          <Content>
-            <Channels
-              onAdd={this.onAddChannel}
-              onOutput={this.onChannelsOutput}
-              channels={channels}
-            />
-          </Content>
-        </Panel>
+        <Content>
+          <Player
+            style={{ height: 720 / 2 }}
+            values={master.input}
+            handler={(canvas, context) => {
+              return (input) => {
+                context.clearRect(0, 0, canvas.width, canvas.height)
 
-        <MasterPanel>
-          <Heading>
-            master
-          </Heading>
-
-          <Content>
-            <Player
-              style={{ height: 720 / 2 }}
-              values={master.input}
-              handler={this.renderMaster}
-            />
-          </Content>
-        </MasterPanel>
-      </Container>
-    )
-  }
+                input.forEach(({ canvas, mix }) => {
+                  context.globalAlpha = mix
+                  context.drawImage(canvas, 0, 0)
+                })
+              }
+            }}
+          />
+        </Content>
+      </MasterPanel>
+    </Container>
+  )
 }

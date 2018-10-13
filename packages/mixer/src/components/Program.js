@@ -18,17 +18,13 @@ const Container = styled('div')`
   }
 `
 
-export default class Program extends Component {
-  onDragStart = event => {
-    event.dataTransfer.setData('application/json', this.props.id)
-    event.dataTransfer.dropEffect = 'copy'
-  }
-
-  render () {
-    return (
-      <Container draggable onDragStart={this.onDragStart}>
-        {this.props.id}
-      </Container>
-    )
-  }
+export default function Program ({ id }) {
+  return (
+    <Container draggable onDragStart={event => {
+      event.dataTransfer.setData('application/json', id)
+      event.dataTransfer.dropEffect = 'copy'
+    }}>
+      {id}
+    </Container>
+  )
 }

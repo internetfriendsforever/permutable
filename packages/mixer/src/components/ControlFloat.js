@@ -31,53 +31,25 @@ const Value = styled('div')`
   flex: 0;
 `
 
-export default class ControlFloat extends Component {
-  onMouseDown = e => {
-    this.prev = e.clientX
-    window.addEventListener('mousemove', this.onMouseMove)
-    window.addEventListener('mouseup', this.onMouseUp)
-  }
+// parseMidiSignal = ({ type, value }) => {
+//   switch (type) {
+//     case 128:
+//       return 0
+//     case 144:
+//       return 1
+//     default:
+//       return value / 127
+//   }
+// }
 
-  onMouseMove = e => {
-    const delta = e.clientX - this.prev
-    const value = Math.min(1, Math.max(0, this.props.value + delta * 0.01))
-
-    this.prev = e.clientX
-    this.props.onChange(this.props.id, value)
-  }
-
-  onMouseUp = e => {
-    window.removeEventListener('mousemove', this.onMouseMove)
-    window.removeEventListener('mouseup', this.onMouseUp)
-  }
-
-  onMidiChange = signal => {
-    this.props.onChange(this.props.id, this.parseMidiSignal(signal))
-  }
-
-  parseMidiSignal = ({ type, value }) => {
-    switch (type) {
-      case 128:
-        return 0
-      case 144:
-        return 1
-      default:
-        return value / 127
-    }
-  }
-
-  render () {
-    const { id, value } = this.props
-
-    return (
-      <Container>
-        <Slider onMouseDown={this.onMouseDown}>
-          <Name>{id}</Name>
-          <Value>{value.toFixed(2)}</Value>
-        </Slider>
-
-        <ControlMidi onChange={this.onMidiChange} />
-      </Container>
-    )
-  }
+export default function ControlFloat ({ name, value, attributes }) {
+  return (
+    <Container data-control='float' data-name={name} data-value={value} {...attributes}>
+      <Slider data-slider>
+        <Name>{name}</Name>
+        <Value>{value.toFixed(2)}</Value>
+      </Slider>
+      <ControlMidi />
+    </Container>
+  )
 }

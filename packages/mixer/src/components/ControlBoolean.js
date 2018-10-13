@@ -5,9 +5,12 @@ const Container = styled('div')`
   display: flex;
   cursor: pointer;
 
-  :hover,
-  :active {
+  :hover {
     color: white;
+  }
+
+  :active {
+    color: gold;
   }
 `
 
@@ -20,10 +23,10 @@ const Value = styled('div')`
   flex: 0;
 `
 
-export default function ControlBoolean ({ id, value, onChange }) {
+export default function ControlBoolean ({ name, value, attributes }) {
   return (
-    <Container onClick={() => onChange(id, !value)}>
-      <Name>{id}</Name>
+    <Container data-control='boolean' data-name={name} data-value={value} {...attributes}>
+      <Name>{name}</Name>
       <Value>{value ? 'yes' : 'no'}</Value>
     </Container>
   )

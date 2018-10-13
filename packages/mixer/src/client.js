@@ -1,8 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
 import Mixer from './components/Mixer'
+import state from './state'
 
-render(<Mixer />, document.getElementById('root'))
+state.onValue(value => {
+  render(<Mixer {...value} />, document.getElementById('root'))
+})
 
 // Warn reload
 // window.addEventListener('beforeunload', function (event) {
