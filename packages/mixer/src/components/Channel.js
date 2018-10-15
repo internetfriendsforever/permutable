@@ -15,8 +15,7 @@ const title = css`
 
 const player = css`
   flex 0;
-  display: flex;
-  align-items: center;
+  border: 0.5rem transparent solid;
 `
 
 const controlsContainer = css`

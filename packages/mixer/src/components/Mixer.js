@@ -50,11 +50,18 @@ styles.masterPanel = css`
   flex: 0;
 `
 
-styles.channels = receiving => `${styles.content} ${css`
+styles.channels = receiving => css`
+  ${styles.content}
+
   ${receiving && `
     background: #222;
   `}
-`}`
+`
+
+styles.player = css`
+  ${styles.content}
+  padding: 0.5rem;
+`
 
 export default function mixer ({ programs, channels, master }) {
   return html`
@@ -84,7 +91,7 @@ export default function mixer ({ programs, channels, master }) {
           Master
         </h1>
 
-        <div className=${styles.content}>
+        <div className=${styles.player}>
           ${master.canvas}
         </div>
       </div>
