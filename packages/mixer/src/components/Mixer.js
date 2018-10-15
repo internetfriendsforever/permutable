@@ -1,114 +1,95 @@
-import React, { Component } from 'react'
-import styled from 'react-emotion'
-import produce from 'immer'
-import Program from './Program'
-import Channel from './Channel'
-import Player from './Player'
+import { css } from 'emotion'
+import wires from '../wires'
+import program from './program'
+import channel from './channel'
 
-const Container = styled('div')`
-  display: flex;
-  min-height: 100vh;
-  max-height: 100vh;
-  border: 2px #aaa solid;
-  box-sizing: border-box;
-  -webkit-overflow-scrolling: touch;
-`
+const styles = {
+  container: css`
+    display: flex;
+    min-height: 100vh;
+    max-height: 100vh;
+    border: 2px #aaa solid;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+  `,
 
-const Panel = styled('div')`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  border-right: 2px #aaa solid;
+  panel: css`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-right: 2px #aaa solid;
 
-  &:last-child {
-    border-right: 0;
-  }
-`
+    &:last-child {
+      border-right: 0;
+    }
+  `,
 
-const ProgramsPanel = styled(Panel)`
+  heading: css`
+    flex: 0;
+    padding: 0.75rem;
+    border-bottom: 2px #aaa solid;
+  `,
+
+  content: css`
+    flex: 1;
+    overflow: auto;
+
+    &:last-child {
+      border-right: 0;
+    }
+  `
+}
+
+styles.programsPanel = css`
+  ${styles.panel}
   flex: 0;
 `
 
-const MasterPanel = styled(Panel)`
+styles.masterPanel = css`
+  ${styles.panel}
   flex: 0;
 `
 
-const Heading = styled('h1')`
-  flex: 0;
-  padding: 0.75rem;
-  border-bottom: 2px #aaa solid;
-`
-
-const Content = styled('div')`
-  flex: 1;
-  overflow: auto;
-
-  &:last-child {
-    border-right: 0;
-  }
-`
-
-const Channels = styled('div')`
-  height: 100%;
-
-  ${props => props.receiving && `
+styles.channels = receiving => `${styles.content} ${css`
+  ${receiving && `
     background: #222;
   `}
-`
+`}`
 
-export default function Mixer (props) {
-  const { programs, channels, master } = props
+export default function mixer ({ programs, channels, master }) {
+  const { wire, next } = wires('mixer')
 
-  return (
-    <Container>
-      <ProgramsPanel>
-        <Heading>
-          programs
-        </Heading>
+  return wire`
+    <div className=${styles.container}>
+      <div className=${styles.programsPanel}>
+        <h1 className=${styles.heading}>
+          Programs
+        </h1>
 
-        <Content>
-          {Object.keys(programs).map(key => (
-            <Program key={key} id={key} />
-          ))}
-        </Content>
-      </ProgramsPanel>
+        <div className=${styles.content}>
+          ${Object.keys(programs).map(name => program({ name, wires: next }))}
+        </div>
+      </div>
 
-      <Panel>
-        <Heading>
-          channels
-        </Heading>
+      <div className=${styles.panel}>
+        <h1 className=${styles.heading}>
+          Channels
+        </h1>
 
-        <Content>
-          <Channels id='channels' receiving={channels.receiving}>
-            {channels.items.map(channel => (
-              <Channel key={channel.id} {...channel} />
-            ))}
-          </Channels>
-        </Content>
-      </Panel>
+        <div data-channels className=${styles.channels(channels.receiving)}>
+          ${channels.items.map(item => channel({ item, wires: next }))}
+        </div>
+      </div>
 
-      <MasterPanel>
-        <Heading>
-          master
-        </Heading>
+      <div className=${styles.masterPanel}>
+        <h1 className=${styles.heading}>
+          Master
+        </h1>
 
-        <Content>
-          <Player
-            style={{ height: 720 / 2 }}
-            values={master.input}
-            handler={(canvas, context) => {
-              return (input) => {
-                context.clearRect(0, 0, canvas.width, canvas.height)
+        <div className=${styles.content}>
 
-                input.forEach(({ canvas, mix }) => {
-                  context.globalAlpha = mix
-                  context.drawImage(canvas, 0, 0)
-                })
-              }
-            }}
-          />
-        </Content>
-      </MasterPanel>
-    </Container>
-  )
+        </div>
+      </div>
+    </div>
+  `
 }

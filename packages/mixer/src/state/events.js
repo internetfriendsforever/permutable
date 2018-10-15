@@ -7,6 +7,7 @@ const events = [
   'mouseup',
   'mousemove',
   'click',
+  'dragstart',
   'dragover',
   'dragleave',
   'drop'

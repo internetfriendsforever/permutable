@@ -3,10 +3,10 @@ import { combine, merge } from 'kefir'
 import events from './events'
 import controls from './controls'
 
-const inChannels = event => event.target.closest('#channels')
-const dragover = events.dragover.filter(inChannels)
-const dragleave = events.dragleave.filter(inChannels)
-const drop = events.drop.filter(inChannels)
+const findChannels = event => event.target.closest('[data-channels]')
+const dragover = events.dragover.filter(findChannels)
+const dragleave = events.dragleave.filter(findChannels)
+const drop = events.drop.filter(findChannels)
 
 dragover.onValue(event => event.preventDefault())
 
@@ -17,48 +17,53 @@ const receiving = merge([
 ]).toProperty(() => false).skipDuplicates()
 
 const controlsByChannel = controls.scan((previous, control) => {
-  const channel = control.attributes['data-channel'].value
-  const name = control.attributes['data-name'].value
+  const channel = control.element.closest('[data-channel]').getAttribute('data-id')
+  const key = control.attributes['data-key'].value
   const controls = { ...previous }
 
   if (!controls[channel]) {
     controls[channel] = {}
   }
 
-  controls[channel][name] = control.value
+  controls[channel][key] = { value: control.value }
 
   return controls
 }, {})
 
-const droppedItems = drop.scan((previous, event) => {
+const droppedItems = combine([drop, programs], (event, programs) => {
+  const key = event.dataTransfer.getData('application/json')
+  const program = programs[key]
   const id = Math.random().toString(32).substring(2)
-  const program = event.dataTransfer.getData('application/json')
-  return [...previous, { id, program }]
-}, [])
-
-const items = combine([
-  droppedItems,
-  programs,
-  controlsByChannel
-], (
-  items,
-  programs,
-  controls
-) => items.map(item => {
-  const { id, program } = item
+  const title = key
+  const canvas = document.createElement('canvas')
+  const context = canvas.getContext('2d')
+  const handler = program.handler(canvas, context)
 
   const values = {
-    play: true,
-    mix: 0,
-    ...programs[program].params,
-    ...controls[id]
+    play: { value: true },
+    mix: { value: 0 },
+    ...program.params
   }
 
   return {
     id,
-    program,
-    values
+    title,
+    canvas,
+    context,
+    values,
+    handler
   }
+}).scan((all, item) => [...all, item], [])
+
+const items = combine([
+  droppedItems,
+  controlsByChannel
+], (items, controls) => items.map(item => {
+  for (let key in controls[item.id]) {
+    item.values[key] = controls[item.id][key]
+  }
+
+  return item
 }))
 
 export default combine({

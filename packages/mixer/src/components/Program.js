@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
-import styled from 'react-emotion'
+import { css } from 'emotion'
 
-const Container = styled('div')`
+const styles = css`
   cursor: grab;
   padding: 0.75rem;
   border-bottom: 2px #aaa solid;
@@ -18,13 +17,10 @@ const Container = styled('div')`
   }
 `
 
-export default function Program ({ id }) {
-  return (
-    <Container draggable onDragStart={event => {
-      event.dataTransfer.setData('application/json', id)
-      event.dataTransfer.dropEffect = 'copy'
-    }}>
-      {id}
-    </Container>
-  )
+export default function program ({ name, wires }) {
+  return wires(name).wire`
+    <div className=${styles} data-program data-name=${name} draggable=${true}>
+      ${name}
+    </div>
+  `
 }

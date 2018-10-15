@@ -1,12 +1,13 @@
 export default {
   params: {
-    speed: 0.5
+    speed: { value: 0.5 }
   },
+
   handler: (canvas, context) => {
     let t = 0
 
     return ({ speed }) => {
-      t += speed * 0.1
+      t += speed.value * 0.1
 
       context.fillStyle = 'blue'
       context.fillRect(0, 0, canvas.width, canvas.height)
