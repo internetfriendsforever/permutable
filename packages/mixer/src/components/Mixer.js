@@ -85,7 +85,7 @@ export default function mixer ({ programs, channels, master }) {
         </h1>
 
         <div className=${styles.content}>
-
+          ${master.canvas}
         </div>
       </div>
     </div>

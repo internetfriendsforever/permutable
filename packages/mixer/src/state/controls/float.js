@@ -24,7 +24,7 @@ const output = combine(
   (delta, target) => ({
     element: target,
     attributes: target.attributes,
-    value: parseFloat(target.getAttribute('data-value'), 10) + delta * 0.01
+    value: parseFloat(target.getAttribute('data-value'), 10) + delta * 0.0025
   })
 )
 
