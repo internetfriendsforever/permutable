@@ -14,7 +14,7 @@ const receiving = merge([
   dragover.map(() => true),
   dragleave.map(() => false),
   drop.map(() => false)
-]).toProperty(() => false).skipDuplicates()
+]).skipDuplicates()
 
 const controlsByChannel = controls.scan((previous, control) => {
   const channel = control.element.closest('[data-channel]').getAttribute('data-id')
@@ -69,4 +69,7 @@ const items = combine([
 export default combine({
   receiving,
   items
-})
+}).toProperty(() => ({
+  receiving: false,
+  items: []
+}))

@@ -1,23 +1,19 @@
 import morph from 'nanomorph'
 import mixer from './components/mixer'
-import { ui, animation, size } from './state'
+import { ui, size, animation } from './state'
 
 const root = document.getElementById('root')
 
-ui.onValue(value => {
-  morph(root, mixer(value))
-})
+ui.onValue(value => morph(root, mixer(value)))
 
 size.onValue(({ width, height, channels, master }) => {
   channels.items.forEach(channel => {
     const { canvas } = channel
-    canvas.width = width
-    canvas.height = height
+    updateCanvasSize(canvas, width, height)
     canvas.style.width = `${width / 8}px`
   })
 
-  master.canvas.width = width
-  master.canvas.height = height
+  updateCanvasSize(master.canvas, width, height)
   master.canvas.style.width = `${width / 2}px`
 })
 
@@ -36,6 +32,11 @@ animation.onValue(({ width, height, channels, master }) => {
     master.context.drawImage(channel.canvas, 0, 0)
   })
 })
+
+function updateCanvasSize (canvas, width, height) {
+  if (canvas.width !== width) canvas.width = width
+  if (canvas.height !== height) canvas.height = height
+}
 
 // Warn reload
 // window.addEventListener('beforeunload', function (event) {
