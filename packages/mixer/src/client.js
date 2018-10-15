@@ -1,9 +1,11 @@
-import { bind } from 'hyperhtml'
+import morph from 'nanomorph'
 import mixer from './components/mixer'
 import { ui, animation, size } from './state'
 
+const root = document.getElementById('root')
+
 ui.onValue(value => {
-  bind(document.getElementById('root'))`${mixer(value)}`
+  morph(root, mixer(value))
 })
 
 size.onValue(({ width, height, channels }) => {

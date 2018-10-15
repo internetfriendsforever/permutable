@@ -1,3 +1,4 @@
+import html from 'nanohtml'
 import { css } from 'emotion'
 
 const container = css`
@@ -28,11 +29,9 @@ const valueContainer = css`
   flex: 0;
 `
 
-export default function control ({ item, key, wires }) {
-  const { wire } = wires(key)
-
-  return wire`
-    <div className=${container} data-control='float' data-key=${key} data-value=${item.value}>
+export default function control ({ id, item, key }) {
+  return html`
+    <div id=${id} className=${container} data-control='float' data-key=${key} data-value=${item.value}>
       <div className=${slider} data-slider>
         <div className=${nameContainer}>${key}</div>
         <div className=${valueContainer}>${item.value.toFixed(2)}</div>

@@ -1,5 +1,5 @@
+import html from 'nanohtml'
 import { css } from 'emotion'
-import wires from '../wires'
 import program from './program'
 import channel from './channel'
 
@@ -57,9 +57,7 @@ styles.channels = receiving => `${styles.content} ${css`
 `}`
 
 export default function mixer ({ programs, channels, master }) {
-  const { wire, next } = wires('mixer')
-
-  return wire`
+  return html`
     <div className=${styles.container}>
       <div className=${styles.programsPanel}>
         <h1 className=${styles.heading}>
@@ -67,7 +65,7 @@ export default function mixer ({ programs, channels, master }) {
         </h1>
 
         <div className=${styles.content}>
-          ${Object.keys(programs).map(name => program({ name, wires: next }))}
+          ${Object.keys(programs).map(name => program({ name }))}
         </div>
       </div>
 
@@ -77,7 +75,7 @@ export default function mixer ({ programs, channels, master }) {
         </h1>
 
         <div data-channels className=${styles.channels(channels.receiving)}>
-          ${channels.items.map(item => channel({ item, wires: next }))}
+          ${channels.items.map(item => channel({ item }))}
         </div>
       </div>
 
