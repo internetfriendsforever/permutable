@@ -18,6 +18,8 @@
   "dependencies": {
     "@cyberspace/webpack-config": "^0.3.4",
     "@cyberspace/webpack-development": "^0.3.4",
+    "@permutable/program-circle": "^0.0.0",
+    "@permutable/program-rectangle": "^0.0.0",
     "emotion": "^9.2.8",
     "express": "^4.16.3",
     "kefir": "^3.8.5",

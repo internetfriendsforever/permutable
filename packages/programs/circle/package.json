@@ -1,0 +1,9 @@
+{
+  "name": "@permutable/program-circle",
+  "version": "0.0.0",
+  "description": "Permutable circle program",
+  "main": "index.js",
+  "repository": "https://github.com/internetfriendsforever/permutable/packages/programs/circle",
+  "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
+  "license": "ISC"
+}

@@ -23,7 +23,7 @@ const output = combine(
   [target],
   (delta, target) => ({
     element: target,
-    attributes: target.attributes,
+    key: target.getAttribute('data-key'),
     value: Math.min(1, Math.max(0, parseFloat(target.getAttribute('data-value'), 10) + delta * 0.0025))
   })
 )

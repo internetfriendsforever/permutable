@@ -29,12 +29,12 @@ const valueContainer = css`
   flex: 0;
 `
 
-export default function control ({ id, item, key }) {
+export default function control ({ id, value, key }) {
   return html`
-    <div id=${id} className=${container} data-control='float' data-key=${key} data-value=${item.value}>
+    <div id=${id} className=${container} data-control='float' data-key=${key} data-value=${value}>
       <div className=${slider} data-slider>
         <div className=${nameContainer}>${key}</div>
-        <div className=${valueContainer}>${item.value.toFixed(2)}</div>
+        <div className=${valueContainer}>${value.toFixed(2)}</div>
       </div>
     </div>
   `

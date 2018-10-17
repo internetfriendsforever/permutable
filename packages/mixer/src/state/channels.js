@@ -18,14 +18,14 @@ const receiving = merge([
 
 const controlsByChannel = controls.scan((previous, control) => {
   const channel = control.element.closest('[data-channel]').getAttribute('data-id')
-  const key = control.attributes['data-key'].value
+  const key = control.key
   const controls = { ...previous }
 
   if (!controls[channel]) {
     controls[channel] = {}
   }
 
-  controls[channel][key] = { value: control.value }
+  controls[channel][key] = control.value
 
   return controls
 }, {})
@@ -40,8 +40,8 @@ const droppedItems = combine([drop, programs], (event, programs) => {
   const handler = program.handler(canvas, context)
 
   const values = {
-    play: { value: true },
-    mix: { value: 0 },
+    play: true,
+    mix: 0,
     ...program.params
   }
 

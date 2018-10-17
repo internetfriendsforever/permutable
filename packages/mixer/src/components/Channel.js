@@ -33,7 +33,7 @@ export default function channel ({ item }) {
       </h2>
 
       <div className=${controlsContainer}>
-        ${map(item.values, (item, key) => controls({ id: `control-${id}-${key}`, item, key }))}
+        ${map(item.values, (value, key) => controls({ id: `control-${id}-${key}`, value, key }))}
       </div>
 
       <div className=${player}>

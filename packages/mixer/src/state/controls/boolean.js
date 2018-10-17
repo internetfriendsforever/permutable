@@ -7,6 +7,6 @@ export default events.click
   .filter()
   .map(target => ({
     element: target,
-    attributes: target.attributes,
+    key: target.getAttribute('data-key'),
     value: !(target.getAttribute('data-value') === 'true')
   }))

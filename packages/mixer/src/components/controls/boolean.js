@@ -24,11 +24,11 @@ const valueContainer = css`
   flex: 0;
 `
 
-export default function control ({ id, item, key }) {
+export default function control ({ id, value, key }) {
   return html`
-    <div id=${id} className=${container} data-control='boolean' data-key=${key} data-value=${item.value}>
+    <div id=${id} className=${container} data-control='boolean' data-key=${key} data-value=${value}>
       <div className=${nameContainer}>${key}</div>
-      <div className=${valueContainer}>${item.value ? 'yes' : 'no'}</div>
+      <div className=${valueContainer}>${value ? 'yes' : 'no'}</div>
     </div>
   `
 }

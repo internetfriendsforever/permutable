@@ -1,7 +1,7 @@
 import { constant } from 'kefir'
 import events from './events'
-import rectangle from '../programs/rectangle'
-import circle from '../programs/circle'
+import rectangle from '@permutable/program-rectangle'
+import circle from '@permutable/program-circle'
 
 const findProgram = event => event.target.closest('[data-program]')
 

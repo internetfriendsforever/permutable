@@ -26,15 +26,15 @@ animation.onValue(({ width, height, channels, master }) => {
   master.context.clearRect(0, 0, master.canvas.width, master.canvas.height)
 
   channels.items.forEach(channel => {
-    const play = channel.values.play.value
+    const { play, mix } = channel.values
 
     if (play) {
       const { handler, values } = channel
       handler(values)
     }
 
-    if (channel.values.mix.value) {
-      master.context.globalAlpha = channel.values.mix.value
+    if (mix) {
+      master.context.globalAlpha = mix
       master.context.drawImage(channel.canvas, 0, 0)
     }
   })

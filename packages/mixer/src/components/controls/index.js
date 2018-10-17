@@ -1,11 +1,11 @@
 import floatControl from './float'
 import booleanControl from './boolean'
 
-export default function control ({ id, item, key }) {
-  switch (typeof item.value) {
+export default function control ({ id, value, key }) {
+  switch (typeof value) {
     case 'number':
-      return floatControl({ id, item, key })
+      return floatControl({ id, value, key })
     default:
-      return booleanControl({ id, item, key })
+      return booleanControl({ id, value, key })
   }
 }
