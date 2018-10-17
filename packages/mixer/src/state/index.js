@@ -17,7 +17,7 @@ export const ui = combine({ programs, channels, master })
 
 export const animation = combine({ frame }, { programs, channels, master })
 
-const width = constant(1920 / 2)
-const height = constant(1200 / 2)
+const width = constant(1280)
+const height = constant(720)
 
 export const size = combine({ width, height, channels, master })

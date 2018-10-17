@@ -5,6 +5,8 @@ const container = css`
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin: 2px 0;
+  padding: 0.1rem 0.2rem;
 
   :hover {
     color: white;
