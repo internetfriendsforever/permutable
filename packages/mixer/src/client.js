@@ -33,8 +33,10 @@ animation.onValue(({ width, height, channels, master }) => {
       handler(values)
     }
 
-    master.context.globalAlpha = channel.values.mix.value
-    master.context.drawImage(channel.canvas, 0, 0)
+    if (channel.values.mix.value) {
+      master.context.globalAlpha = channel.values.mix.value
+      master.context.drawImage(channel.canvas, 0, 0)
+    }
   })
 
   master.outputs.forEach(output => {
