@@ -4,14 +4,15 @@ module.exports = {
     size: 0.5
   },
 
-  handler: (canvas, context) => {
+  handler: canvas => {
+    const context = canvas.getContext('2d')
+
     let t = 0
 
     return ({ speed, size }) => {
       t += speed
 
-      context.fillStyle = 'yellow'
-      context.fillRect(0, 0, canvas.width, canvas.height)
+      context.clearRect(0, 0, canvas.width, canvas.height)
 
       context.save()
       context.translate(canvas.width / 2, canvas.height / 2)
@@ -19,8 +20,8 @@ module.exports = {
 
       const scaled = size * 200
 
-      context.fillStyle = 'red'
-      context.fillRect(-scaled, -scaled, scaled, scaled)
+      context.strokeStyle = 'white'
+      context.strokeRect(-scaled, -scaled, scaled, scaled)
       context.restore()
     }
   }

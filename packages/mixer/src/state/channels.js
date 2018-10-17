@@ -36,8 +36,7 @@ const droppedItems = combine([drop, programs], (event, programs) => {
   const id = Math.random().toString(32).substring(2)
   const title = key
   const canvas = document.createElement('canvas')
-  const context = canvas.getContext('2d')
-  const handler = program.handler(canvas, context)
+  const handler = program.handler(canvas)
 
   const values = {
     play: true,
@@ -49,7 +48,6 @@ const droppedItems = combine([drop, programs], (event, programs) => {
     id,
     title,
     canvas,
-    context,
     values,
     handler
   }

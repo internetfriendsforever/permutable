@@ -41,6 +41,7 @@ animation.onValue(({ width, height, channels, master }) => {
 
   master.outputs.forEach(output => {
     if (!output.win.closed) {
+      output.context.clearRect(0, 0, master.canvas.width, master.canvas.height)
       output.context.drawImage(master.canvas, 0, 0)
     }
   })
