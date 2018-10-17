@@ -2,6 +2,7 @@ import html from 'nanohtml'
 import { css } from 'emotion'
 import program from './program'
 import channel from './channel'
+import button from './button'
 
 const styles = {
   container: css`
@@ -93,6 +94,7 @@ export default function mixer ({ programs, channels, master }) {
 
         <div className=${styles.player}>
           ${master.canvas}
+          ${button({ id: 'open-output', label: 'Open output window' })}
         </div>
       </div>
     </div>

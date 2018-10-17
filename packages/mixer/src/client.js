@@ -8,13 +8,18 @@ ui.onValue(value => morph(root, mixer(value)))
 
 size.onValue(({ width, height, channels, master }) => {
   channels.items.forEach(channel => {
-    const { canvas } = channel
-    updateCanvasSize(canvas, width, height)
-    canvas.style.width = `${width / 8}px`
+    updateCanvasSize(channel.canvas, width, height)
+    channel.canvas.style.width = `${width / 8}px`
   })
 
   updateCanvasSize(master.canvas, width, height)
   master.canvas.style.width = `${width / 2}px`
+
+  master.outputs.forEach(output => {
+    if (!output.win.closed) {
+      updateCanvasSize(output.canvas, width, height)
+    }
+  })
 })
 
 animation.onValue(({ width, height, channels, master }) => {
@@ -30,6 +35,12 @@ animation.onValue(({ width, height, channels, master }) => {
 
     master.context.globalAlpha = channel.values.mix.value
     master.context.drawImage(channel.canvas, 0, 0)
+  })
+
+  master.outputs.forEach(output => {
+    if (!output.win.closed) {
+      output.context.drawImage(master.canvas, 0, 0)
+    }
   })
 })
 
