@@ -36,14 +36,14 @@ const dropped = combine([drop], [programs], (event, programs) => {
   }
 
   const mapping = {
-    play: false,
-    mix: false
+    play: null,
+    mix: null
   }
 
   Object.keys(program.params).forEach(key => {
     params.push(key)
     values[key] = program.params[key]
-    mapping[key] = false
+    mapping[key] = null
   })
 
   return {

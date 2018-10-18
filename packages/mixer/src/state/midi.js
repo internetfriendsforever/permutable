@@ -6,7 +6,7 @@ export default stream(emitter => {
       input.addEventListener('midimessage', event => {
         const [type, port, rawValue] = event.data
         const value = rawValue / 127
-        emitter.value({ type, port, value })
+        emitter.value({ type, port, value, input })
       })
     }
   })

@@ -5,17 +5,16 @@ const container = css`
   margin-left: 0.5rem;
 `
 
-export default function control ({ key = 'midi', mapping, mapped, wires }) {
+export default function control ({ key = 'midi', mapping, input, wires }) {
   const { wire, next } = wires(key)
 
   return wire`
     <div className=${container} data-midi data-mapping=${mapping}>
-      ${button({ active: mapping, label: 'Midi', wires: next })}
+      ${button({
+        active: mapping && mapping.pending,
+        label: mapping ? `${mapping.input.name} #${mapping.port}` : 'Midi',
+        wires: next
+      })}
     </div>
   `
 }
-
-// const { mapping, mapped } = this.state
-// <Button mapping={mapping} onClick={this.onMapClick}>
-//     {mapped ? `${mapped.input.name} #${mapped.port}` : 'Map'}
-//   </Button>
