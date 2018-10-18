@@ -1,4 +1,3 @@
-import html from 'nanohtml'
 import { css } from 'emotion'
 import button from '../button'
 
@@ -6,10 +5,12 @@ const container = css`
   margin-left: 0.5rem;
 `
 
-export default function control ({ id, mapping, mapped }) {
-  return html`
+export default function control ({ key = 'midi', mapping, mapped, wires }) {
+  const { wire, next } = wires(key)
+
+  return wire`
     <div className=${container} data-midi data-mapping=${mapping}>
-      ${button({ id, active: mapping, label: 'Midi' })}
+      ${button({ active: mapping, label: 'Midi', wires: next })}
     </div>
   `
 }

@@ -1,4 +1,3 @@
-import html from 'nanohtml'
 import { css } from 'emotion'
 import controls from './controls'
 
@@ -22,19 +21,21 @@ const controlsContainer = css`
   padding: 0.75rem;
 `
 
-export default function channel ({ key, item }) {
-  return html`
-    <div id='channel-${key}' className=${container} data-channel data-id=${key}>
+export default function channel ({ key, item, wires }) {
+  const { wire, next } = wires(key)
+
+  return wire`
+    <div className=${container} data-channel data-id=${key}>
       <h2 className=${title}>
         ${item.title}
       </h2>
 
       <div className=${controlsContainer}>
-        ${item.params.map(paramKey => controls({
-          id: `control-${key}-${paramKey}`,
-          value: item.values[paramKey],
-          mapping: item.mapping[paramKey],
-          key: paramKey
+        ${item.params.map(key => controls({
+          key: key,
+          value: item.values[key],
+          mapping: item.mapping[key],
+          wires: next
         }))}
       </div>
 

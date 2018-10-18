@@ -1,4 +1,4 @@
-import html from 'nanohtml'
+import wires from '../wires'
 import { css } from 'emotion'
 import program from './program'
 import channel from './channel'
@@ -65,7 +65,9 @@ styles.player = css`
 `
 
 export default function mixer ({ programs, channels, master }) {
-  return html`
+  const { wire, next } = wires('mixer')
+
+  return wire`
     <div className=${styles.container}>
       <div className=${styles.programsPanel}>
         <h1 className=${styles.heading}>
@@ -73,7 +75,10 @@ export default function mixer ({ programs, channels, master }) {
         </h1>
 
         <div className=${styles.content}>
-          ${Object.keys(programs).map(name => program({ name }))}
+          ${Object.keys(programs).map(name => program({
+            name,
+            wires: next
+          }))}
         </div>
       </div>
 
@@ -83,7 +88,11 @@ export default function mixer ({ programs, channels, master }) {
         </h1>
 
         <div data-channels className=${styles.channels(channels.receiving)}>
-          ${Object.keys(channels.items).map(key => channel({ key, item: channels.items[key] }))}
+          ${Object.keys(channels.items).map(key => channel({
+            key,
+            item: channels.items[key],
+            wires: next
+          }))}
         </div>
       </div>
 
@@ -94,7 +103,12 @@ export default function mixer ({ programs, channels, master }) {
 
         <div className=${styles.player}>
           ${master.canvas}
-          ${button({ id: 'open-output', label: 'Open output window' })}
+          ${button({
+            key: 'open-output',
+            id: 'open-output',
+            label: 'Open output window',
+            wires: next
+          })}
         </div>
       </div>
     </div>

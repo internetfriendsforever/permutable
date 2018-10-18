@@ -1,4 +1,3 @@
-import html from 'nanohtml'
 import { css } from 'emotion'
 
 const styles = active => css`
@@ -30,8 +29,10 @@ const styles = active => css`
   `}
 `
 
-export default function button ({ id, active, label }) {
-  return html`
+export default function button ({ key = 'button', id, active, label, wires }) {
+  const { wire } = wires(key)
+
+  return wire`
     <button id=${id} className=${styles(active)}>
       ${label}
     </div>

@@ -1,4 +1,3 @@
-import html from 'nanohtml'
 import { css } from 'emotion'
 
 const styles = css`
@@ -19,8 +18,11 @@ const styles = css`
 `
 
 export default function program ({ name, wires }) {
-  return html`
-    <div id='program-${name}' className=${styles} data-program data-name=${name} draggable=${true}>
+  const { wire } = wires(name)
+  const id = `program-${name}`
+
+  return wire`
+    <div id=${id} className=${styles} data-program data-name=${name} draggable=${true}>
       ${name}
     </div>
   `

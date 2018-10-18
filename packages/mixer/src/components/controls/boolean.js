@@ -1,4 +1,3 @@
-import html from 'nanohtml'
 import { css } from 'emotion'
 import midi from './midi'
 
@@ -30,15 +29,17 @@ const valueContainer = css`
   flex: 0;
 `
 
-export default function control ({ id, value, mapping, key }) {
-  return html`
-    <div id=${id} className=${container} data-control='boolean' data-key=${key} data-value=${value}>
+export default function control ({ value, mapping, key, wires }) {
+  const { wire, next } = wires('key')
+
+  return wire`
+    <div className=${container} data-control='boolean' data-key=${key} data-value=${value}>
       <div className=${toggle} data-toggle>
         <div className=${nameContainer}>${key}</div>
         <div className=${valueContainer}>${value ? 'yes' : 'no'}</div>
       </div>
 
-      ${midi({ mapping })}
+      ${midi({ mapping, wires: next })}
     </div>
   `
 }
