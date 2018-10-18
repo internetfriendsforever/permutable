@@ -1,5 +1,5 @@
 import { css } from 'emotion'
-import midi from './midi'
+import input from './input'
 
 const container = css`
   display: flex;
@@ -41,7 +41,7 @@ const valueContainer = css`
 
 export default function control ({ value, mapping, key, wires }) {
   const { wire, next } = wires(key)
-  const style = `${value * 100}`
+  const style = `width: ${value * 100}%`
 
   return wire`
     <div className=${container} data-control='float' data-key=${key} data-value=${value}>
@@ -51,7 +51,7 @@ export default function control ({ value, mapping, key, wires }) {
         <div className=${valueContainer}>${value.toFixed(2)}</div>
       </div>
 
-      ${midi({ mapping, wires: next })}
+      ${input({ mapping, wires: next })}
     </div>
   `
 }

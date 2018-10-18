@@ -1,5 +1,5 @@
 import { css } from 'emotion'
-import midi from './midi'
+import input from './input'
 
 const container = css`
   display: flex;
@@ -39,7 +39,7 @@ export default function control ({ value, mapping, key, wires }) {
         <div className=${valueContainer}>${value ? 'yes' : 'no'}</div>
       </div>
 
-      ${midi({ mapping, wires: next })}
+      ${input({ mapping, wires: next })}
     </div>
   `
 }

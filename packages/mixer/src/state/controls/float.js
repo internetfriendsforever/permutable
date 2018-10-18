@@ -1,13 +1,15 @@
 import { merge, combine } from 'kefir'
 import events from '../events'
+import input from './input'
 
-const inFloat = event => event.target.closest(`[data-control=float]`)
-const inSlider = event => inFloat(event) && event.target.closest(`[data-slider]`)
+const findFloat = element => element.closest(`[data-control=float]`)
+const findSlider = element => findFloat(element) && element.closest(`[data-slider]`)
+const target = event => event.target
 
-const mouseTarget = events.mousedown.map(inFloat).filter()
+const mouseElement = events.mousedown.map(target).map(findFloat).filter()
 
 const draggingActive = merge([
-  events.mousedown.filter(inSlider).map(event => 1),
+  events.mousedown.map(target).filter(findSlider).map(event => 1),
   events.mouseup.map(event => 0)
 ])
 
@@ -20,13 +22,23 @@ const draggingDelta = events.mousemove
 
 const draggingValue = combine(
   [draggingDelta],
-  [draggingActive, mouseTarget],
+  [draggingActive, mouseElement],
   (delta, active, element) => {
     const prev = parseFloat(element.getAttribute('data-value'), 10)
     return active * Math.min(1, Math.max(0, prev + delta * 0.0025))
   }
 ).filter()
 
+const inputUpdates = input
+  .filter(input => findFloat(input.element))
+  .map(input => ({
+    ...input,
+    element: findFloat(input.element)
+  }))
+
+const draggingUpdates = combine({ value: draggingValue }, { element: mouseElement })
+
 export default merge([
-  combine({ value: draggingValue }, { element: mouseTarget })
+  draggingUpdates,
+  inputUpdates
 ])
