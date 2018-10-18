@@ -35,7 +35,7 @@ const dropped = combine([drop], [programs], (event, programs) => {
     mix: 0
   }
 
-  const mapping = {
+  const mappings = {
     play: null,
     mix: null
   }
@@ -43,7 +43,7 @@ const dropped = combine([drop], [programs], (event, programs) => {
   Object.keys(program.params).forEach(key => {
     params.push(key)
     values[key] = program.params[key]
-    mapping[key] = null
+    mappings[key] = null
   })
 
   return {
@@ -53,7 +53,7 @@ const dropped = combine([drop], [programs], (event, programs) => {
     handler,
     params,
     values,
-    mapping
+    mappings
   }
 })
 
@@ -75,7 +75,7 @@ const items = combine([allDropped, controlsProperty], (items, control) => {
     }
 
     if (mapping !== undefined) {
-      items[channel].mapping[key] = mapping
+      items[channel].mappings[key] = mapping
     }
   }
 

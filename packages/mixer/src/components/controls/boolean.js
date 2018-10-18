@@ -2,8 +2,6 @@ import { css } from 'emotion'
 import input from './input'
 
 const container = css`
-  display: flex;
-  align-items: center;
   margin: 2px 0;
 `
 
@@ -29,17 +27,23 @@ const valueContainer = css`
   flex: 0;
 `
 
+const inputContainer = css`
+  width: 1px;
+`
+
 export default function control ({ value, mapping, key, wires }) {
   const { wire, next } = wires('key')
 
   return wire`
-    <div className=${container} data-control='boolean' data-key=${key} data-value=${value}>
-      <div className=${toggle} data-toggle>
+    <tr className=${container} data-control='boolean' data-key=${key} data-value=${value}>
+      <td className=${toggle} data-toggle>
         <div className=${nameContainer}>${key}</div>
         <div className=${valueContainer}>${value ? 'yes' : 'no'}</div>
-      </div>
+      </td>
 
-      ${input({ mapping, wires: next })}
-    </div>
+      <td className=${inputContainer}>
+        ${input({ mapping, wires: next })}
+      </td>
+    </tr>
   `
 }

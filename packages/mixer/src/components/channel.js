@@ -31,12 +31,12 @@ export default function channel ({ key, item, wires }) {
       </h2>
 
       <div className=${controlsContainer}>
-        ${item.params.map(key => controls({
-          key: key,
-          value: item.values[key],
-          mapping: item.mapping[key],
+        ${controls({
+          params: item.params,
+          values: item.values,
+          mappings: item.mappings,
           wires: next
-        }))}
+        })}
       </div>
 
       <div className=${player}>

@@ -2,8 +2,6 @@ import { css } from 'emotion'
 import input from './input'
 
 const container = css`
-  display: flex;
-  align-items: center;
   margin: 2px 0;
 `
 
@@ -39,19 +37,23 @@ const valueContainer = css`
   flex: 0;
 `
 
+const inputContainer = css`
+  width: 1px;
+`
+
 export default function control ({ value, mapping, key, wires }) {
   const { wire, next } = wires(key)
   const style = `width: ${value * 100}%`
 
   return wire`
-    <div className=${container} data-control='float' data-key=${key} data-value=${value}>
-      <div className=${slider} data-slider>
+    <tr className=${container} data-control='float' data-key=${key} data-value=${value}>
+      <td className=${slider} data-slider>
         <div className=${indicator} style=${style}></div>
         <div className=${nameContainer}>${key}</div>
         <div className=${valueContainer}>${value.toFixed(2)}</div>
-      </div>
+      </td>
 
-      ${input({ mapping, wires: next })}
-    </div>
+      <td className=${inputContainer}>${input({ mapping, wires: next })}</td>
+    </tr>
   `
 }
