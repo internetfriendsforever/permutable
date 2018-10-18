@@ -1,11 +1,11 @@
 import floatControl from './float'
 import booleanControl from './boolean'
 
-export default function control ({ id, value, key }) {
-  switch (typeof value) {
-    case 'number':
-      return floatControl({ id, value, key })
-    default:
-      return booleanControl({ id, value, key })
+export default function control (props) {
+  switch (typeof props.value) {
+  case 'number':
+    return floatControl(props)
+  default:
+    return booleanControl(props)
   }
 }

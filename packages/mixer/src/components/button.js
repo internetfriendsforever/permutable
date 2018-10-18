@@ -1,7 +1,7 @@
 import html from 'nanohtml'
 import { css } from 'emotion'
 
-const styles = css`
+const styles = active => css`
   display: block;
   font: inherit;
   text-transform: inherit;
@@ -14,20 +14,25 @@ const styles = css`
   outline: 0;
   white-space: nowrap;
 
-  :hover {
-    color: white;
-    border-color: white;
-  }
-
-  :active {
+  ${active ? `
     color: gold;
     border-color: gold;
-  }
+  ` : `
+    :hover {
+      color: white;
+      border-color: white;
+    }
+
+    :active {
+      color: gold;
+      border-color: gold;
+    }
+  `}
 `
 
-export default function button ({ id, label }) {
+export default function button ({ id, active, label }) {
   return html`
-    <button id=${id} className=${styles}>
+    <button id=${id} className=${styles(active)}>
       ${label}
     </div>
   `

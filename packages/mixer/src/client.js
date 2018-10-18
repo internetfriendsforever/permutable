@@ -7,7 +7,7 @@ const root = document.getElementById('root')
 ui.onValue(value => morph(root, mixer(value)))
 
 size.onValue(({ width, height, channels, master }) => {
-  channels.items.forEach(channel => {
+  Object.values(channels.items).forEach(channel => {
     updateCanvasSize(channel.canvas, width, height)
     channel.canvas.style.width = `${width / 8}px`
   })
@@ -25,7 +25,7 @@ size.onValue(({ width, height, channels, master }) => {
 animation.onValue(({ width, height, channels, master }) => {
   master.context.clearRect(0, 0, master.canvas.width, master.canvas.height)
 
-  channels.items.forEach(channel => {
+  Object.values(channels.items).forEach(channel => {
     const { play, mix } = channel.values
 
     if (play) {

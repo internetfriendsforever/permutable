@@ -14,60 +14,78 @@ const receiving = merge([
   dragover.map(() => true),
   dragleave.map(() => false),
   drop.map(() => false)
-]).skipDuplicates()
+]).skipDuplicates().toProperty(() => false)
 
-const controlsByChannel = controls.scan((previous, control) => {
-  const channel = control.element.closest('[data-channel]').getAttribute('data-id')
-  const key = control.key
-  const controls = { ...previous }
+const dropped = combine([drop], [programs], (event, programs) => {
+  const programKey = event.dataTransfer.getData('application/json')
+  const program = programs[programKey]
 
-  if (!controls[channel]) {
-    controls[channel] = {}
-  }
-
-  controls[channel][key] = control.value
-
-  return controls
-}, {})
-
-const droppedItems = combine([drop, programs], (event, programs) => {
-  const key = event.dataTransfer.getData('application/json')
-  const program = programs[key]
-  const id = Math.random().toString(32).substring(2)
-  const title = key
+  const key = Math.random().toString(32).substring(2)
+  const title = programKey
   const canvas = document.createElement('canvas')
   const handler = program.handler(canvas)
 
+  const params = [
+    'play',
+    'mix'
+  ]
+
   const values = {
     play: true,
-    mix: 0,
-    ...program.params
+    mix: 0
   }
+
+  const mapping = {
+    play: false,
+    mix: false
+  }
+
+  Object.keys(program.params).forEach(key => {
+    params.push(key)
+    values[key] = program.params[key]
+    mapping[key] = false
+  })
 
   return {
-    id,
+    key,
     title,
     canvas,
+    handler,
+    params,
     values,
-    handler
+    mapping
   }
-}).scan((all, item) => [...all, item], [])
+})
 
-const items = combine([
-  droppedItems,
-  controlsByChannel
-], (items, controls) => items.map(item => {
-  for (let key in controls[item.id]) {
-    item.values[key] = controls[item.id][key]
+const allDropped = dropped.scan((all, { key, ...item }) => ({
+  ...all,
+  [key]: item
+}), {})
+
+const controlsProperty = controls.toProperty(() => null)
+
+const items = combine([allDropped, controlsProperty], (items, control) => {
+  if (control) {
+    const { element, value, mapping } = control
+    const channel = element.closest('[data-channel]').getAttribute('data-id')
+    const key = element.getAttribute('data-key')
+
+    if (value !== undefined) {
+      items[channel].values[key] = value
+    }
+
+    if (mapping !== undefined) {
+      items[channel].mapping[key] = mapping
+    }
   }
 
-  return item
-}))
+  return items
+})
 
 export default combine({
   receiving,
   items
 }).toProperty(() => ({
   receiving: false,
-  items: []
+  items: {}
 }))

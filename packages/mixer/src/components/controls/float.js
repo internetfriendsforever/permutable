@@ -1,5 +1,6 @@
 import html from 'nanohtml'
 import { css } from 'emotion'
+import midi from './midi'
 
 const container = css`
   display: flex;
@@ -39,7 +40,7 @@ const valueContainer = css`
   flex: 0;
 `
 
-export default function control ({ id, value, key }) {
+export default function control ({ id, value, mapping, key }) {
   return html`
     <div id=${id} className=${container} data-control='float' data-key=${key} data-value=${value}>
       <div className=${slider} data-slider>
@@ -47,6 +48,8 @@ export default function control ({ id, value, key }) {
         <div className=${nameContainer}>${key}</div>
         <div className=${valueContainer}>${value.toFixed(2)}</div>
       </div>
+
+      ${midi({ mapping })}
     </div>
   `
 }

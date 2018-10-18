@@ -1,6 +1,5 @@
 import html from 'nanohtml'
 import { css } from 'emotion'
-import map from 'lodash/map'
 import controls from './controls'
 
 const container = css`
@@ -23,17 +22,20 @@ const controlsContainer = css`
   padding: 0.75rem;
 `
 
-export default function channel ({ item }) {
-  const { id } = item
-
+export default function channel ({ key, item }) {
   return html`
-    <div id='channel-${item.id}' className=${container} data-channel data-id=${item.id}>
+    <div id='channel-${key}' className=${container} data-channel data-id=${key}>
       <h2 className=${title}>
         ${item.title}
       </h2>
 
       <div className=${controlsContainer}>
-        ${map(item.values, (value, key) => controls({ id: `control-${id}-${key}`, value, key }))}
+        ${item.params.map(paramKey => controls({
+          id: `control-${key}-${paramKey}`,
+          value: item.values[paramKey],
+          mapping: item.mapping[paramKey],
+          key: paramKey
+        }))}
       </div>
 
       <div className=${player}>

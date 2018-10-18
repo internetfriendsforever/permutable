@@ -1,10 +1,11 @@
 import events from '../events'
 
 const inBoolean = event => event.target.closest('[data-control=boolean]')
+const inToggle = event => inBoolean(event) && event.target.closest(`[data-toggle]`)
 
 export default events.click
+  .filter(inToggle)
   .map(inBoolean)
-  .filter()
   .map(target => ({
     element: target,
     key: target.getAttribute('data-key'),

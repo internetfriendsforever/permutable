@@ -83,7 +83,7 @@ export default function mixer ({ programs, channels, master }) {
         </h1>
 
         <div data-channels className=${styles.channels(channels.receiving)}>
-          ${channels.items.map(item => channel({ item }))}
+          ${Object.keys(channels.items).map(key => channel({ key, item: channels.items[key] }))}
         </div>
       </div>
 
