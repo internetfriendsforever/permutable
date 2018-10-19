@@ -1,0 +1,25 @@
+{
+  "name": "@permutable/program-partikler",
+  "version": "0.0.0",
+  "description": "Partikler",
+  "main": "lib/index.js",
+  "scripts": {
+    "prepublish": "npm run build",
+    "dev": "webpack -w",
+    "build": "webpack -p"
+  },
+  "dependencies": {
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "exports-loader": "^0.6.2",
+    "file-loader": "^0.8.4",
+    "json-loader": "^0.5.3",
+    "lodash": "^3.10.0",
+    "raw-loader": "^0.5.1",
+    "react": "^0.13.3",
+    "url-loader": "^1.1.2",
+    "webpack": "^1.13.1"
+  }
+}
