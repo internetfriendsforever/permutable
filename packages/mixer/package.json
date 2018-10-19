@@ -20,7 +20,7 @@
     "@cyberspace/webpack-development": "^0.3.4",
     "@permutable/program-circle": "^0.0.0",
     "@permutable/program-gra": "^0.0.0",
-    "@permutable/program-harmonic-vibration": "^0.0.0",
+    "@permutable/program-harmonic": "^0.0.0",
     "@permutable/program-rectangle": "^0.0.0",
     "@permutable/program-smudge": "^0.0.0",
     "emotion": "^9.2.8",

@@ -15,6 +15,7 @@ size.onValue(({ width, height, channels, master }) => {
   })
 
   updateCanvasSize(master.canvas, width, height)
+
   master.canvas.style.width = `${width / 2}px`
 
   master.outputs.forEach(output => {
@@ -25,6 +26,7 @@ size.onValue(({ width, height, channels, master }) => {
 })
 
 animation.onValue(({ width, height, channels, master }) => {
+  master.context.globalCompositeOperation = 'screen'
   master.context.clearRect(0, 0, master.canvas.width, master.canvas.height)
 
   Object.values(channels.items).forEach(channel => {
