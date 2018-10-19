@@ -1,6 +1,17 @@
-import { combine, merge } from 'kefir'
+import { stream, combine, merge } from 'kefir'
 import events from '../events'
-import midi from '../midi'
+
+const midi = stream(emitter => {
+  navigator.requestMIDIAccess().then(access => {
+    for (const input of access.inputs.values()) {
+      input.addEventListener('midimessage', event => {
+        const [type, port, rawValue] = event.data
+        const value = rawValue / 127
+        emitter.value({ type, port, value, input })
+      })
+    }
+  })
+})
 
 const findInput = event => event.target.closest('[data-input]')
 const isPending = element => element.getAttribute('data-pending') === 'true'
@@ -38,7 +49,7 @@ const remove = combine([backspace], [elements], (event, elements) => {
 }).flatten()
 
 const input = combine([midi], [elements], (midi, elements) => {
-  const { input, port, value } = midi
+  const { input, type, port, value } = midi
 
   const id = `${input.name} #${port}`
   const updates = []
@@ -51,6 +62,7 @@ const input = combine([midi], [elements], (midi, elements) => {
       updates.push({
         element,
         mapping,
+        type,
         value
       })
     }
@@ -58,6 +70,7 @@ const input = combine([midi], [elements], (midi, elements) => {
     if (element.getAttribute('data-id') === id) {
       updates.push({
         element,
+        type,
         value
       })
     }

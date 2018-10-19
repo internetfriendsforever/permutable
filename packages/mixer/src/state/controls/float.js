@@ -1,6 +1,6 @@
 import { merge, combine } from 'kefir'
 import events from '../events'
-import input from './input'
+import midi from './midi'
 
 const findFloat = element => element.closest(`[data-control=float]`)
 const findSlider = element => findFloat(element) && element.closest(`[data-slider]`)
@@ -29,16 +29,24 @@ const draggingValue = combine(
   }
 ).filter()
 
-const inputUpdates = input
+const midiUpdates = midi
   .filter(input => findFloat(input.element))
-  .map(input => ({
-    ...input,
-    element: findFloat(input.element)
-  }))
+  .map(input => {
+    const updates = { ...input }
+
+    updates.element = findFloat(input.element)
+
+    if (updates.value) {
+      if (input.type === 144) updates.value = 1
+      if (input.type === 128) updates.value = 0
+    }
+
+    return updates
+  })
 
 const draggingUpdates = combine({ value: draggingValue }, { element: mouseElement })
 
 export default merge([
   draggingUpdates,
-  inputUpdates
+  midiUpdates
 ])
