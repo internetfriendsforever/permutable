@@ -44,10 +44,8 @@ animation.onValue(({ width, height, channels, master }) => {
     }
   })
 
-  master.context.drawImage(master.buffer, 0, 0)
-
   const feedback = 0.5 * Math.log(master.filters.values.feedback) + 1
-
+  master.context.drawImage(master.buffer, 0, 0)
   master.bufferContext.globalCompositeOperation = 'source-over'
   master.bufferContext.drawImage(master.canvas, 0, 0)
   master.bufferContext.globalCompositeOperation = 'multiply'

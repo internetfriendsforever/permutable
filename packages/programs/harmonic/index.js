@@ -9,7 +9,8 @@ export default {
     phaseBase: 1 / 5,
     phaseInstance: 0 / 10,
     phaseMove: 0 / 0.2,
-    dash: 50 / 50
+    dash: true,
+    length: 0.5
   },
 
   handler
@@ -46,11 +47,12 @@ function handler (canvas) {
     frag: `
       precision mediump float;
       varying float t;
-      uniform float dash;
+      uniform bool dash;
+      uniform float length;
 
       void main () {
-        float alpha = smoothstep(0.5, 0.51, sin(t * dash));
-        gl_FragColor = vec4(vec3(1.0), alpha);
+        float alpha = float(!dash) + smoothstep(0.5, 0.51, sin(t * length));
+        gl_FragColor = vec4(vec3(1.0) * alpha, 1.0);
       }
     `,
 
@@ -62,6 +64,7 @@ function handler (canvas) {
       tick: (context, props) => context.time * 10,
       phase: regl.prop('phase'),
       dash: regl.prop('dash'),
+      length: regl.prop('length'),
       m: 4,
       n: 3,
       scale: regl.prop('scale')
@@ -91,13 +94,14 @@ function handler (canvas) {
     const scaleMin = params.scaleMin
     const scaleMax = params.scaleMax * 2
 
-    const dash = Math.ceil(Math.pow(params.dash * 50, 2))
+    const dash = params.dash
+    const length = Math.ceil(Math.pow(params.length * 50, 2))
 
     Array(instances).fill().forEach((v, i) => {
       const phase = phaseBase + phaseStep + (i / instances) * phaseInstance
       const scale = (i / instances) * scaleMax + scaleMin
 
-      draw({ count, phase, scale, dash })
+      draw({ count, phase, scale, dash, length })
     })
 
     phaseStep += phaseMove
