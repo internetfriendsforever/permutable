@@ -21,6 +21,7 @@
     "@permutable/program-circle": "^0.0.0",
     "@permutable/program-harmonic-vibration": "^0.0.0",
     "@permutable/program-rectangle": "^0.0.0",
+    "@permutable/program-smudge": "^0.0.0",
     "emotion": "^9.2.8",
     "express": "^4.16.3",
     "hyperhtml": "^2.14.0",
