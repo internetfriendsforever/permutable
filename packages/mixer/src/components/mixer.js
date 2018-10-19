@@ -3,6 +3,7 @@ import { css } from 'emotion'
 import program from './program'
 import channel from './channel'
 import button from './button'
+import controls from './controls'
 
 const styles = {
   container: css`
@@ -96,17 +97,25 @@ export default function mixer ({ programs, channels, master }) {
         </div>
       </div>
 
-      <div className=${styles.masterPanel}>
+      <div className=${styles.masterPanel} data-master>
         <h1 className=${styles.heading}>
           Master
         </h1>
 
         <div className=${styles.player}>
           ${master.canvas}
+
           ${button({
             key: 'open-output',
             id: 'open-output',
             label: 'Open output window',
+            wires: next
+          })}
+
+          ${controls({
+            params: ['feedback'],
+            values: master.filters.values,
+            mappings: master.filters.mappings,
             wires: next
           })}
         </div>

@@ -15,6 +15,7 @@ size.onValue(({ width, height, channels, master }) => {
   })
 
   updateCanvasSize(master.canvas, width, height)
+  updateCanvasSize(master.buffer, width, height)
 
   master.canvas.style.width = `${width / 2}px`
 
@@ -42,6 +43,16 @@ animation.onValue(({ width, height, channels, master }) => {
       master.context.drawImage(channel.canvas, 0, 0)
     }
   })
+
+  master.context.drawImage(master.buffer, 0, 0)
+
+  const feedback = 0.5 * Math.log(master.filters.values.feedback) + 1
+
+  master.bufferContext.globalCompositeOperation = 'source-over'
+  master.bufferContext.drawImage(master.canvas, 0, 0)
+  master.bufferContext.globalCompositeOperation = 'multiply'
+  master.bufferContext.fillStyle = `hsl(0, 0%, ${feedback * 100}%)`
+  master.bufferContext.fillRect(0, 0, master.buffer.width, master.buffer.height)
 
   master.outputs.forEach(output => {
     if (!output.win.closed) {

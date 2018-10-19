@@ -3,11 +3,13 @@ import { combine, merge } from 'kefir'
 import events from './events'
 import controls from './controls'
 
-const findChannels = event => event.target.closest('[data-channels]')
-const findRemove = event => event.target.closest('[data-remove]')
-const dragover = events.dragover.filter(findChannels)
-const dragleave = events.dragleave.filter(findChannels)
-const drop = events.drop.filter(findChannels)
+const findChannels = element => element.closest('[data-channels]')
+const findChannel = element => element.closest('[data-channel]')
+const findRemove = element => element.closest('[data-remove]')
+const findTarget = event => event.target
+const dragover = events.dragover.filter(event => findChannels(event.target))
+const dragleave = events.dragleave.filter(event => findChannels(event.target))
+const drop = events.drop.filter(event => findChannels(event.target))
 
 dragover.onValue(event => event.preventDefault())
 
@@ -59,9 +61,9 @@ const added = combine([drop], [programs], (event, programs) => {
 })
 
 const removed = events.click
+  .map(findTarget)
   .filter(findRemove)
-  .map(event => event.target.closest('[data-channel]'))
-  .filter()
+  .map(findChannel)
   .map(element => ({
     key: element.getAttribute('data-id')
   }))
@@ -83,9 +85,9 @@ const all = merge([
   return modified
 }, {})
 
-const controlsProperty = controls.toProperty(() => null)
+const channelControls = controls.filter(({ element }) => findChannels(element)).toProperty(() => null)
 
-const items = combine([all, controlsProperty], (items, control) => {
+const items = combine([all, channelControls], (items, control) => {
   if (control) {
     const { element, value, mapping } = control
     const channel = items[element.closest('[data-channel]').getAttribute('data-id')]
