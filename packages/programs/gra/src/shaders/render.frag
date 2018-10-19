@@ -1,7 +1,7 @@
 precision mediump float;
 
 varying vec2 uv;
-uniform float resolution;
+uniform vec2 resolution;
 uniform float time;
 uniform sampler2D state;
 uniform sampler2D environment;

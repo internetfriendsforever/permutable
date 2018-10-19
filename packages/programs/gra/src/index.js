@@ -16,20 +16,17 @@ export default {
       canvas
     })
 
-    const resolution = 512
-
-    const createFramebuffer = () => regl.framebuffer({
+    const createFramebuffer = (width, height) => regl.framebuffer({
       color: regl.texture({
-        radius: resolution,
-        type: 'float',
-        wrapS: 'mirror',
-        wrapT: 'mirror'
+        width,
+        height,
+        type: 'float'
       }),
       depthStencil: false
     })
 
-    const simulationBuffers = Array(2).fill().map(() => createFramebuffer())
-    const environmentBuffer = createFramebuffer()
+    const states = []
+    const environmentBuffer = createFramebuffer(1000, 1000)
 
     const quad = regl({
       vert: require('./shaders/quad.vert'),
@@ -49,23 +46,19 @@ export default {
       ]
     })
 
-    const currentSimulationBuffer = ({ tick }) => simulationBuffers[tick % 2]
-    const previousSimulationBuffer = ({ tick }) => simulationBuffers[1 - tick % 2]
+    const currentSimulationBuffer = ({ tick }) => states[tick % 2]
+    const previousSimulationBuffer = ({ tick }) => states[1 - tick % 2]
 
     const environment = regl({
       frag: require('./shaders/environment.frag'),
-      framebuffer: environmentBuffer,
-      uniforms: {
-        resolution: resolution,
-        time: ({ time }) => time
-      }
+      framebuffer: environmentBuffer
     })
 
     const simulate = regl({
       frag: require('./shaders/simulate.frag'),
       framebuffer: currentSimulationBuffer,
       uniforms: {
-        resolution: resolution,
+        resolution: regl.prop('resolution'),
         state: previousSimulationBuffer,
         time: ({ time }) => time,
         midiA: regl.prop('midiA'),
@@ -76,7 +69,7 @@ export default {
     const render = regl({
       frag: require('./shaders/render.frag'),
       uniforms: {
-        resolution: resolution,
+        resolution: regl.prop('resolution'),
         environment: environmentBuffer,
         state: currentSimulationBuffer,
         time: ({ time }) => time
@@ -87,7 +80,19 @@ export default {
       environment()
     })
 
+    let width = 0
+    let height = 0
+
     return values => {
+      if (width !== canvas.width || height !== canvas.height || states.length < 2) {
+        width = canvas.width
+        height = canvas.height
+
+        states.splice(0, states.length, ...(
+          Array(2).fill().map(() => createFramebuffer(width, height))
+        ))
+      }
+
       regl.poll()
 
       regl.clear({
@@ -95,15 +100,17 @@ export default {
         depth: 1
       })
 
+      const resolution = [width, height]
+
       quad(() => {
         simulate({
+          resolution,
           midiA: [
             values.verticalBar,
             values.verticalPoint,
             values.horizontalBars,
             values.floatingPoint
           ],
-
           midiB: [
             values.distortDirection,
             values.distortAmount,
@@ -112,7 +119,9 @@ export default {
           ]
         })
 
-        render()
+        render({
+          resolution
+        })
       })
     }
   }

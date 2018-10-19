@@ -3,7 +3,7 @@ precision mediump float;
 #pragma glslify: snoise2 = require(glsl-noise/simplex/2d)
 
 varying vec2 uv;
-uniform float resolution;
+uniform vec2 resolution;
 uniform float time;
 uniform vec4 midiA;
 uniform vec4 midiB;
