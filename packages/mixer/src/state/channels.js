@@ -4,6 +4,7 @@ import events from './events'
 import controls from './controls'
 
 const findChannels = event => event.target.closest('[data-channels]')
+const findRemove = event => event.target.closest('[data-remove]')
 const dragover = events.dragover.filter(findChannels)
 const dragleave = events.dragleave.filter(findChannels)
 const drop = events.drop.filter(findChannels)
@@ -16,7 +17,7 @@ const receiving = merge([
   drop.map(() => false)
 ]).skipDuplicates().toProperty(() => false)
 
-const dropped = combine([drop], [programs], (event, programs) => {
+const added = combine([drop], [programs], (event, programs) => {
   const programKey = event.dataTransfer.getData('application/json')
   const program = programs[programKey]
 
@@ -57,25 +58,47 @@ const dropped = combine([drop], [programs], (event, programs) => {
   }
 })
 
-const allDropped = dropped.scan((all, { key, ...item }) => ({
-  ...all,
-  [key]: item
-}), {})
+const removed = events.click
+  .filter(findRemove)
+  .map(event => event.target.closest('[data-channel]'))
+  .filter()
+  .map(element => ({
+    key: element.getAttribute('data-id')
+  }))
+
+const all = merge([
+  added.map(item => ({ type: 'add', item })),
+  removed.map(item => ({ type: 'remove', item }))
+]).scan((all, { type, item }) => {
+  const modified = { ...all }
+
+  if (type === 'add') {
+    modified[item.key] = item
+  }
+
+  if (type === 'remove') {
+    delete modified[item.key]
+  }
+
+  return modified
+}, {})
 
 const controlsProperty = controls.toProperty(() => null)
 
-const items = combine([allDropped, controlsProperty], (items, control) => {
+const items = combine([all, controlsProperty], (items, control) => {
   if (control) {
     const { element, value, mapping } = control
-    const channel = element.closest('[data-channel]').getAttribute('data-id')
+    const channel = items[element.closest('[data-channel]').getAttribute('data-id')]
     const key = element.getAttribute('data-key')
 
-    if (value !== undefined) {
-      items[channel].values[key] = value
-    }
+    if (channel) {
+      if (value !== undefined) {
+        channel.values[key] = value
+      }
 
-    if (mapping !== undefined) {
-      items[channel].mappings[key] = mapping
+      if (mapping !== undefined) {
+        channel.mappings[key] = mapping
+      }
     }
   }
 

@@ -1,4 +1,5 @@
 import { css } from 'emotion'
+import button from './button'
 import controls from './controls'
 
 const container = css`
@@ -26,9 +27,15 @@ export default function channel ({ key, item, wires }) {
 
   return wire`
     <div className=${container} data-channel data-id=${key}>
-      <h2 className=${title}>
+      <div className=${title}>
         ${item.title}
-      </h2>
+        <div data-remove>
+          ${button({
+            label: '×',
+            wires: next
+          })}
+        </div>
+      </div>
 
       <div className=${controlsContainer}>
         ${controls({
