@@ -4,6 +4,7 @@ import rectangle from '@permutable/program-rectangle'
 import circle from '@permutable/program-circle'
 import harmonicVibration from '@permutable/program-harmonic-vibration'
 import smudge from '@permutable/program-smudge'
+import gra from '@permutable/program-gra'
 
 const findProgram = event => event.target.closest('[data-program]')
 
@@ -16,5 +17,6 @@ export default constant({
   rectangle,
   circle,
   harmonicVibration,
-  smudge
+  smudge,
+  gra
 })

@@ -1,7 +1,7 @@
 {
-  "name": "@permutable/program-smudge",
+  "name": "@permutable/program-gra",
   "version": "0.0.0",
-  "description": "Smudge fbo",
+  "description": "Grå",
   "main": "lib/index.js",
   "scripts": {
     "prepublish": "npm run build",
@@ -12,6 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "babel-loader": "^8.0.4",
     "babel-plugin-glslify": "^2.0.0",

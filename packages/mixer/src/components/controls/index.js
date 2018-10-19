@@ -4,6 +4,7 @@ import booleanControl from './boolean'
 
 const container = css`
   width: 100%;
+  margin: calc(-0.1rem - 2px) -0.2rem;
 `
 
 export default function control ({ key, params, values, mappings, wires }) {
