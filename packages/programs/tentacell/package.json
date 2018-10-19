@@ -1,0 +1,11 @@
+{
+  "name": "@permutable/program-tentacell",
+  "version": "0.0.0",
+  "description": "Tentacell",
+  "main": "index.js",
+  "author": "Daniel Mahal <daniel@internetfriendsforever.com>",
+  "license": "MIT",
+  "dependencies": {
+    "simplex-noise": "^2.4.0"
+  }
+}

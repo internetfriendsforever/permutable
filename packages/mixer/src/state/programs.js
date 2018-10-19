@@ -1,10 +1,13 @@
 import { constant } from 'kefir'
 import events from './events'
-import rectangle from '@permutable/program-rectangle'
-import circle from '@permutable/program-circle'
 import harmonic from '@permutable/program-harmonic'
 import smudge from '@permutable/program-smudge'
 import gra from '@permutable/program-gra'
+import tentacell1 from '@permutable/program-tentacell/1'
+import tentacell2 from '@permutable/program-tentacell/2'
+import tentacell3 from '@permutable/program-tentacell/3'
+import tentacell4 from '@permutable/program-tentacell/4'
+import tentacell5 from '@permutable/program-tentacell/5'
 
 const findProgram = event => event.target.closest('[data-program]')
 
@@ -14,9 +17,12 @@ events.dragstart.filter(findProgram).onValue(event => {
 })
 
 export default constant({
-  rectangle,
-  circle,
   harmonic,
   smudge,
-  gra
+  gra,
+  tentacell1,
+  tentacell2,
+  tentacell3,
+  tentacell4,
+  tentacell5
 })
