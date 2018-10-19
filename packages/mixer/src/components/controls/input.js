@@ -8,15 +8,17 @@ const container = css`
 export default function input ({ key = 'input', mapping, wires }) {
   const { wire, next } = wires(key)
 
-  const mappingId = mapping ? mapping.id : ''
-  const active = mapping ? mapping.pending : false
-  const label = mapping && mapping.input ? `${mapping.input.name} #${mapping.port}` : 'Input'
+  const { id, port, pending } = Object.assign({
+    id: '',
+    port: '',
+    pending: false
+  }, mapping)
 
   return wire`
-    <div className=${container} data-input data-pending=${active} data-mapping-id=${mappingId}>
+    <div className=${container} data-input data-pending=${pending} data-port=${port} data-id=${id}>
       ${button({
-        active,
-        label,
+        label: id || 'input',
+        active: pending,
         wires: next
       })}
     </div>

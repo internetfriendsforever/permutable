@@ -10,21 +10,43 @@ const clicks = events.click.map(findInput).filter()
 const pending = clicks.map(element => ({
   element,
   mapping: {
+    id: element.getAttribute('data-id'),
     pending: !isPending(element)
   }
 }))
 
 const elements = merge([clicks]).scan((set, element) => set.add(element), new Set())
 
+const backspace = events.keydown.filter(event => event.keyCode === 8)
+
+const remove = combine([backspace], [elements], (event, elements) => {
+  const updates = []
+
+  for (const element of elements) {
+    if (isPending(element)) {
+      updates.push({
+        element,
+        mapping: {
+          id: null,
+          pending: false
+        }
+      })
+    }
+  }
+
+  return updates
+}).flatten()
+
 const input = combine([midi], [elements], (midi, elements) => {
   const { input, port, value } = midi
-  const id = `${input.id}-${port}`
+
+  const id = `${input.name} #${port}`
   const updates = []
 
   for (const element of elements) {
     if (isPending(element)) {
       const pending = false
-      const mapping = { id, pending, input, port, value }
+      const mapping = { id, pending, value }
 
       updates.push({
         element,
@@ -33,7 +55,7 @@ const input = combine([midi], [elements], (midi, elements) => {
       })
     }
 
-    if (element.getAttribute('data-mapping-id') === id) {
+    if (element.getAttribute('data-id') === id) {
       updates.push({
         element,
         value
@@ -46,5 +68,6 @@ const input = combine([midi], [elements], (midi, elements) => {
 
 export default merge([
   pending,
+  remove,
   input
 ])
