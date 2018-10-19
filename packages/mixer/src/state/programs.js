@@ -3,6 +3,7 @@ import events from './events'
 import harmonic from '@permutable/program-harmonic'
 import smudge from '@permutable/program-smudge'
 import gra from '@permutable/program-gra'
+import vertigo from '@permutable/program-vertigo'
 import tentacell1 from '@permutable/program-tentacell/1'
 import tentacell2 from '@permutable/program-tentacell/2'
 import tentacell3 from '@permutable/program-tentacell/3'
@@ -20,6 +21,7 @@ export default constant({
   harmonic,
   smudge,
   gra,
+  vertigo,
   tentacell1,
   tentacell2,
   tentacell3,
