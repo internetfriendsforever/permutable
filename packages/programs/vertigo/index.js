@@ -4,8 +4,9 @@ import createREGL from 'regl'
 export default {
   params: {
     speed: 0.1,
+    up: 0.5,
     distance: 0.6,
-    fov: 0.5
+    fov: 0.35
   },
 
   handler: canvas => {
@@ -75,7 +76,7 @@ export default {
           const t = props.time / 1500
           const r = t
           const distance = props.distance
-          const eye = [Math.sin(r) * distance, 0, Math.cos(r) * distance]
+          const eye = [Math.sin(r) * distance, props.up * distance, Math.cos(r) * distance]
           const center = [0, 0, 0]
           const up = [0, 1, 0]
           return mat4.lookAt([], eye, center, up)
@@ -104,6 +105,7 @@ export default {
 
       const props = {
         time,
+        up: values.up * 1,
         fov: values.fov * 10 + 1,
         distance: values.distance * 10
       }
