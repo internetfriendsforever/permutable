@@ -113,7 +113,7 @@ export default function mixer ({ programs, channels, master }) {
           })}
 
           ${controls({
-            params: ['feedback'],
+            params: master.filters.params,
             values: master.filters.values,
             mappings: master.filters.mappings,
             wires: next

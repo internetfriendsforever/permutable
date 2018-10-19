@@ -15,8 +15,13 @@ export default controls
 
     return controls
   }, {
+    params: [
+      'feedback',
+      'brightness'
+    ],
     values: {
-      feedback: 0
+      feedback: 0,
+      brightness: 1
     },
     mappings: {}
   })

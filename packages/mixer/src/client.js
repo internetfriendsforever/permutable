@@ -54,6 +54,11 @@ animation.onValue(({ width, height, channels, master }) => {
   master.bufferContext.fillStyle = `hsl(0, 0%, ${feedback * 100}%)`
   master.bufferContext.fillRect(0, 0, master.buffer.width, master.buffer.height)
 
+  master.context.globalCompositeOperation = 'source-over'
+  master.context.globalAlpha = 1 - master.filters.values.brightness
+  master.context.fillStyle = 'black'
+  master.context.fillRect(0, 0, master.canvas.width, master.canvas.height)
+
   master.outputs.forEach(output => {
     if (!output.win.closed) {
       output.context.clearRect(0, 0, master.canvas.width, master.canvas.height)
