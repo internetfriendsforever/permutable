@@ -29,7 +29,7 @@ export default function channel ({ key, item, wires }) {
     <div className=${container} data-channel data-id=${key}>
       <div className=${title}>
         ${item.title}
-        <div data-remove>
+        <div data-remove title='Remove'>
           ${button({
             label: '×',
             wires: next
