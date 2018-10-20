@@ -22,6 +22,11 @@ const controlsContainer = css`
   padding: 0.75rem;
 `
 
+const remove = css`
+  flex: 0;
+  padding: 0.75rem;
+`
+
 export default function channel ({ key, item, wires }) {
   const { wire, next } = wires(key)
 
@@ -29,12 +34,6 @@ export default function channel ({ key, item, wires }) {
     <div className=${container} data-channel data-id=${key}>
       <div className=${title}>
         ${item.title}
-        <div data-remove title='Remove'>
-          ${button({
-            label: '×',
-            wires: next
-          })}
-        </div>
       </div>
 
       <div className=${controlsContainer}>
@@ -48,6 +47,14 @@ export default function channel ({ key, item, wires }) {
 
       <div className=${player}>
         ${item.canvas}
+      </div>
+
+      <div data-remove title='Remove'>
+        ${button({
+          className: remove,
+          label: '×',
+          wires: next
+        })}
       </div>
     </div>
   `

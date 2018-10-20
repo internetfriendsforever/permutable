@@ -12,9 +12,12 @@ const toggle = css`
   display: flex;
   padding: 0.1rem 0.2rem;
 
-  :hover,
-  :active {
+  :hover {
     color: white;
+  }
+
+  :active {
+    color: gold;
   }
 `
 

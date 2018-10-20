@@ -10,6 +10,7 @@ const styles = {
   button: css`
     display: block;
     padding: 0.75rem;
+    padding-right: 1.75rem;
     width: 100%;
   `
 }

@@ -71,9 +71,9 @@ export default function mixer ({ programs, channels, master }) {
   return wire`
     <div className=${styles.container}>
       <div className=${styles.programsPanel}>
-        <h1 className=${styles.heading}>
+        <h2 className=${styles.heading}>
           Programs
-        </h1>
+        </h2>
 
         <div className=${styles.content}>
           ${Object.keys(programs).map(name => program({
@@ -84,9 +84,9 @@ export default function mixer ({ programs, channels, master }) {
       </div>
 
       <div className=${styles.panel}>
-        <h1 className=${styles.heading}>
+        <h2 className=${styles.heading}>
           Channels
-        </h1>
+        </h2>
 
         <div data-channels className=${styles.channels(channels.receiving)}>
           ${Object.keys(channels).map(key => channel({
@@ -98,9 +98,9 @@ export default function mixer ({ programs, channels, master }) {
       </div>
 
       <div className=${styles.masterPanel} data-master>
-        <h1 className=${styles.heading}>
+        <h2 className=${styles.heading}>
           Master
-        </h1>
+        </h2>
 
         <div className=${styles.player}>
           ${master.canvas}
