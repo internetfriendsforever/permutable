@@ -6,25 +6,19 @@ import controls from './controls'
 const findChannels = element => element.closest('[data-channels]')
 const findChannel = element => element.closest('[data-channel]')
 const findRemove = element => element.closest('[data-remove]')
+const findProgram = element => element.closest('[data-program]')
 const findTarget = event => event.target
-const dragover = events.dragover.filter(event => findChannels(event.target))
-const dragleave = events.dragleave.filter(event => findChannels(event.target))
-const drop = events.drop.filter(event => findChannels(event.target))
 
-dragover.onValue(event => event.preventDefault())
+const clicked = events.click
+  .map(findTarget)
+  .map(findProgram)
+  .filter()
+  .map(element => element.getAttribute('data-name'))
 
-const receiving = merge([
-  dragover.map(() => true),
-  dragleave.map(() => false),
-  drop.map(() => false)
-]).skipDuplicates().toProperty(() => false)
-
-const added = combine([drop], [programs], (event, programs) => {
-  const programKey = event.dataTransfer.getData('application/json')
-  const program = programs[programKey]
-
+const added = combine([clicked], [programs], (name, programs) => {
+  const program = programs[name]
   const key = Math.random().toString(32).substring(2)
-  const title = programKey
+  const title = name
   const canvas = document.createElement('canvas')
   const handler = program.handler(canvas)
 
@@ -87,7 +81,7 @@ const all = merge([
 
 const channelControls = controls.filter(({ element }) => findChannels(element)).toProperty(() => null)
 
-const items = combine([all, channelControls], (items, control) => {
+export default combine([all, channelControls], (items, control) => {
   if (control) {
     const { element, value, mapping } = control
     const channel = items[element.closest('[data-channel]').getAttribute('data-id')]
@@ -105,12 +99,4 @@ const items = combine([all, channelControls], (items, control) => {
   }
 
   return items
-})
-
-export default combine({
-  receiving,
-  items
-}).toProperty(() => ({
-  receiving: false,
-  items: {}
-}))
+}).toProperty(() => {})

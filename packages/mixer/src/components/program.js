@@ -1,29 +1,29 @@
 import { css } from 'emotion'
+import button from './button'
 
-const styles = css`
-  cursor: grab;
-  padding: 0.75rem;
-  border-bottom: 2px #aaa solid;
-  background: #222;
+const styles = {
+  container: css`
+    flex: auto;
+    border-bottom: 2px #aaa solid;
+  `,
 
-  &:hover {
-    background: #aaa;
-    color: black;
-  }
-
-  &:active {
-    background: gold;
-    color: black;
-  }
-`
+  button: css`
+    display: block;
+    padding: 0.75rem;
+    width: 100%;
+  `
+}
 
 export default function program ({ name, wires }) {
-  const { wire } = wires(name)
-  const id = `program-${name}`
+  const { wire, next } = wires(name)
 
   return wire`
-    <div id=${id} className=${styles} data-program data-name=${name} draggable=${true}>
-      ${name}
+    <div className=${styles.container} data-program data-name=${name}>
+      ${button({
+        className: styles.button,
+        label: name,
+        wires: next
+      })}
     </div>
   `
 }

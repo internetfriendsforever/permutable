@@ -12,6 +12,7 @@ const styles = active => css`
   padding: 0;
   outline: 0;
   white-space: nowrap;
+  text-align: left;
 
   ${active ? `
     color: gold;
@@ -29,11 +30,14 @@ const styles = active => css`
   `}
 `
 
-export default function button ({ key = 'button', id, active, label, wires }) {
+export default function button ({ key = 'button', id, active, label, wires, className }) {
   const { wire } = wires(key)
 
   return wire`
-    <button id=${id} className=${styles(active)}>
+    <button id=${id} className=${css`
+      ${styles(active)}
+      ${className}
+    `}>
       ${label}
     </div>
   `

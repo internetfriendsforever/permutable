@@ -9,7 +9,7 @@ ui.onValue(value => {
 })
 
 size.onValue(({ width, height, channels, master }) => {
-  Object.values(channels.items).forEach(channel => {
+  Object.values(channels).forEach(channel => {
     updateCanvasSize(channel.canvas, width, height)
     channel.canvas.style.width = `${width / 8}px`
   })
@@ -30,7 +30,7 @@ animation.onValue(({ width, height, channels, master }) => {
   master.context.globalCompositeOperation = 'screen'
   master.context.clearRect(0, 0, master.canvas.width, master.canvas.height)
 
-  Object.values(channels.items).forEach(channel => {
+  Object.values(channels).forEach(channel => {
     const { play, mix } = channel.values
 
     if (play) {
