@@ -1,9 +1,0 @@
-{
-  "name": "@permutable/program-rectangle",
-  "version": "0.0.0",
-  "description": "Permutable rectangle program",
-  "main": "index.js",
-  "repository": "https://github.com/internetfriendsforever/permutable/packages/programs/rectangle",
-  "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
-  "license": "ISC"
-}
