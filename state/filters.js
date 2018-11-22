@@ -6,7 +6,7 @@ export default controls
     const key = updates.element.getAttribute('data-key')
 
     if (updates.value) {
-      controls.values[key] = updates.value
+      controls.params[key].value = updates.value
     }
 
     if (updates.mapping) {
@@ -15,13 +15,15 @@ export default controls
 
     return controls
   }, {
-    params: [
-      'feedback',
-      'brightness'
-    ],
-    values: {
-      feedback: 0,
-      brightness: 1
+    params: {
+      feedback: {
+        type: 'float',
+        value: 0
+      },
+      brightness: {
+        type: 'float',
+        value: 1
+      }
     },
     mappings: {}
   })

@@ -5,7 +5,7 @@
   "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
   "license": "ISC",
   "scripts": {
-    "start": "http-server -c0"
+    "start": "http-server -c-1"
   },
   "dependencies": {
     "http-server": "^0.11.1"

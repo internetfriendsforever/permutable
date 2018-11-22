@@ -1,9 +1,7 @@
-import { combine, merge } from '../libraries/kefir.js'
-import programs from './programs.js'
-import events from './events.js'
-import controls from './controls/index.js'
+import { combine, merge } from '../../libraries/kefir.js'
+import programs from '../programs.js'
+import events from '../events.js'
 
-const findChannels = element => element.closest('[data-channels]')
 const findChannel = element => element.closest('[data-channel]')
 const findRemove = element => element.closest('[data-remove]')
 const findProgram = element => element.closest('[data-program]')
@@ -22,14 +20,16 @@ const added = combine([clicked], [programs], (name, programs) => {
   const canvas = document.createElement('canvas')
   const handler = program.handler(canvas)
 
-  const params = [
-    'play',
-    'mix'
-  ]
+  const params = {
+    play: {
+      type: 'boolean',
+      value: true
+    },
 
-  const values = {
-    play: true,
-    mix: 0
+    mix: {
+      type: 'float',
+      value: 0
+    }
   }
 
   const mappings = {
@@ -38,9 +38,21 @@ const added = combine([clicked], [programs], (name, programs) => {
   }
 
   Object.keys(program.params).forEach(key => {
-    params.push(key)
-    values[key] = program.params[key]
-    mappings[key] = null
+    const config = program.params[key]
+
+    if (typeof config === 'number') {
+      params[key] = {
+        type: 'float',
+        value: config
+      }
+    } else if (typeof config === 'boolean') {
+      params[key] = {
+        type: 'boolean',
+        value: config
+      }
+    } else {
+      params[key] = config
+    }
   })
 
   return {
@@ -49,7 +61,6 @@ const added = combine([clicked], [programs], (name, programs) => {
     canvas,
     handler,
     params,
-    values,
     mappings
   }
 })
@@ -62,7 +73,7 @@ const removed = events.click
     key: element.getAttribute('data-id')
   }))
 
-const all = merge([
+export default merge([
   added.map(item => ({ type: 'add', item })),
   removed.map(item => ({ type: 'remove', item }))
 ]).scan((all, { type, item }) => {
@@ -78,25 +89,3 @@ const all = merge([
 
   return modified
 }, {})
-
-const channelControls = controls.filter(({ element }) => findChannels(element)).toProperty(() => null)
-
-export default combine([all, channelControls], (items, control) => {
-  if (control) {
-    const { element, value, mapping } = control
-    const channel = items[element.closest('[data-channel]').getAttribute('data-id')]
-    const key = element.getAttribute('data-key')
-
-    if (channel) {
-      if (value !== undefined) {
-        channel.values[key] = value
-      }
-
-      if (mapping !== undefined) {
-        channel.mappings[key] = mapping
-      }
-    }
-  }
-
-  return items
-}).toProperty(() => {})

@@ -1,32 +1,39 @@
 import css from '../../libraries/css.js'
 import floatControl from './float.js'
 import booleanControl from './boolean.js'
+import samplerControl from './sampler.js'
 
 const container = css(`
   width: 100%;
   margin: calc(-0.1rem - 2px) -0.2rem;
 `)
 
-export default function control ({ key, params, values, mappings, wires }) {
+export default function control ({ key, params, mappings, channels, wires }) {
   const { wire, next } = wires(key || 'controls')
 
   return wire`
     <table className=${container}>
-      ${params.map(key => {
+      ${Object.keys(params).map(key => {
         const props = {
           key,
-          value: values[key],
+          type: params[key].type,
+          value: params[key].value,
           mapping: mappings[key],
+          channels: channels,
           wires: next
         }
 
-        switch (typeof props.value) {
-          case 'number':
+        switch (props.type) {
+          case 'float':
             return floatControl(props)
-          default:
+          case 'boolean':
             return booleanControl(props)
+          case 'sampler':
+            return samplerControl(props)
         }
-      })}
+
+        return null
+      }).filter(v => v)}
     </table>
   `
 }
