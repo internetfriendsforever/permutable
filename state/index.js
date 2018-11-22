@@ -1,6 +1,6 @@
 import { combine, constant } from '../libraries/kefir.js'
 import frame from './frame.js'
-import channels from './channels.js'
+import channels from './channels/controlable.js'
 import programs from './programs.js'
 import outputs from './outputs.js'
 import filters from './filters.js'
