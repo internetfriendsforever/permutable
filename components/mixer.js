@@ -80,6 +80,7 @@ export default function mixer ({ programs, channels, master }) {
         <div data-channels className=${styles.content}>
           ${Object.keys(channels).map(key => channel({
             key,
+            channels: channels,
             item: channels[key],
             wires: next
           }))}
@@ -103,7 +104,6 @@ export default function mixer ({ programs, channels, master }) {
 
           ${controls({
             params: master.filters.params,
-            values: master.filters.values,
             mappings: master.filters.mappings,
             wires: next
           })}

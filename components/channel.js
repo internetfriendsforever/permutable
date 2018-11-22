@@ -27,7 +27,7 @@ const remove = css(`
   padding: 0.75rem;
 `)
 
-export default function channel ({ key, item, wires }) {
+export default function channel ({ key, item, channels, wires }) {
   const { wire, next } = wires(key)
 
   return wire`
@@ -39,8 +39,8 @@ export default function channel ({ key, item, wires }) {
       <div className=${controlsContainer}>
         ${controls({
           params: item.params,
-          values: item.values,
           mappings: item.mappings,
+          channels: channels,
           wires: next
         })}
       </div>

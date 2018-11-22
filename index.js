@@ -31,20 +31,20 @@ animation.onValue(({ width, height, channels, master }) => {
   master.context.clearRect(0, 0, master.canvas.width, master.canvas.height)
 
   Object.values(channels).forEach(channel => {
-    const { play, mix } = channel.values
+    const { handler, params } = channel
+    const { play, mix } = params
 
-    if (play) {
-      const { handler, values } = channel
-      handler(values)
+    if (play.value) {
+      handler(params)
     }
 
-    if (mix) {
+    if (mix.value) {
       master.context.globalAlpha = mix
       master.context.drawImage(channel.canvas, 0, 0)
     }
   })
 
-  const feedback = 0.5 * Math.log(master.filters.values.feedback) + 1
+  const feedback = 0.5 * Math.log(master.filters.params.feedback.value) + 1
   master.context.drawImage(master.buffer, 0, 0)
   master.bufferContext.globalCompositeOperation = 'source-over'
   master.bufferContext.drawImage(master.canvas, 0, 0)
@@ -53,7 +53,7 @@ animation.onValue(({ width, height, channels, master }) => {
   master.bufferContext.fillRect(0, 0, master.buffer.width, master.buffer.height)
 
   master.context.globalCompositeOperation = 'source-over'
-  master.context.globalAlpha = 1 - master.filters.values.brightness
+  master.context.globalAlpha = 1 - master.filters.params.brightness.value
   master.context.fillStyle = 'black'
   master.context.fillRect(0, 0, master.canvas.width, master.canvas.height)
 

@@ -12,7 +12,7 @@ export default controls
 
       if (channel) {
         if (value !== undefined) {
-          channel.values[key] = value
+          channel.params[key].value = value
         }
 
         if (mapping !== undefined) {

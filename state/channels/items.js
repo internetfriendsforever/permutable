@@ -20,14 +20,16 @@ const added = combine([clicked], [programs], (name, programs) => {
   const canvas = document.createElement('canvas')
   const handler = program.handler(canvas)
 
-  const params = [
-    'play',
-    'mix'
-  ]
+  const params = {
+    play: {
+      type: 'boolean',
+      value: true
+    },
 
-  const values = {
-    play: true,
-    mix: 0
+    mix: {
+      type: 'float',
+      value: 0
+    }
   }
 
   const mappings = {
@@ -36,9 +38,21 @@ const added = combine([clicked], [programs], (name, programs) => {
   }
 
   Object.keys(program.params).forEach(key => {
-    params.push(key)
-    values[key] = program.params[key]
-    mappings[key] = null
+    const config = program.params[key]
+
+    if (typeof config === 'number') {
+      params[key] = {
+        type: 'float',
+        value: config
+      }
+    } else if (typeof config === 'boolean') {
+      params[key] = {
+        type: 'boolean',
+        value: config
+      }
+    } else {
+      params[key] = config
+    }
   })
 
   return {
@@ -47,7 +61,6 @@ const added = combine([clicked], [programs], (name, programs) => {
     canvas,
     handler,
     params,
-    values,
     mappings
   }
 })

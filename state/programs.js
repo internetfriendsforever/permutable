@@ -20,6 +20,6 @@ const urls = drops
   .flatMap(item => fromCallback(callback => item.getAsString(callback)))
 
 export default merge([files, urls])
-  .flatMap(url => fromPromise(window.import(url)))
+  .flatMap(url => fromPromise(import(url)))
   .scan((all, module) => ({ ...all, [module.name]: module }), {})
   .log()
