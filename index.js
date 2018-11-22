@@ -39,7 +39,7 @@ animation.onValue(({ width, height, channels, master }) => {
     }
 
     if (mix.value) {
-      master.context.globalAlpha = mix
+      master.context.globalAlpha = mix.value
       master.context.drawImage(channel.canvas, 0, 0)
     }
   })

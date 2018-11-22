@@ -11,7 +11,8 @@ const events = [
   'dragover',
   'dragleave',
   'drop',
-  'keydown'
+  'keydown',
+  'change'
 ]
 
 events.forEach(event => {

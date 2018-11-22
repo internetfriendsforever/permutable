@@ -11,6 +11,7 @@ const select = css(`
   border: 0;
   background: 0;
   padding: 0.1rem 0.2rem;
+  cursor: pointer;
 
   :hover {
     color: white;
@@ -26,15 +27,20 @@ const inputContainer = css(`
 `)
 
 export default function control ({ value, mapping, key, channels, wires }) {
-  const { wire } = wires('key')
+  const { wire, next } = wires(key)
 
   return wire`
-    <tr className=${container} data-control='select' data-key=${key} data-value=${value}>
+    <tr className=${container} data-control='sampler' data-key=${key}>
       <td>
         <select className=${select}>
-          <option>Select ${key}...</option>
+          <option value='' selected>
+            Select ${key}...
+          </option>
+
           ${Object.keys(channels).map(key => (
-            `<option>${channels[key].title}</option>`
+            next(key).wire`<option value=${key}>
+              ${channels[key].title}
+            </option>`
           ))}
         </select>
       </td>
