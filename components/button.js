@@ -34,10 +34,7 @@ export default function button ({ key = 'button', id, active, label, wires, clas
   const { wire } = wires(key)
 
   return wire`
-    <button id=${id} className=${[
-      styles(active),
-      className
-    ].filter(v => v).join(' ')}>
+    <button id=${id} className=${css(styles(active), className)}>
       ${label}
     </div>
   `
