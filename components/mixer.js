@@ -42,24 +42,26 @@ const styles = {
   `)
 }
 
-styles.programsPanel = `${styles.panel} ${css(`
-  flex: 0;
-`)}`
+Object.assign(styles, {
+  programs: css(styles.panel, `
+    flex: 0;
+  `),
 
-styles.masterPanel = `${styles.panel} ${css(`
-  flex: 0;
-`)}`
+  master: css(styles.panel, `
+    flex: 0;
+  `),
 
-styles.player = `${styles.content} ${css(`
-  padding: 0.5rem;
-`)}`
+  player: css(styles.panel, `
+    padding: 0.5rem;
+  `)
+})
 
 export default function mixer ({ programs, channels, master }) {
   const { wire, next } = wires('mixer')
 
   return wire`
     <div className=${styles.container}>
-      <div className=${styles.programsPanel}>
+      <div className=${styles.programs}>
         <h2 className=${styles.heading}>
           Programs
         </h2>
@@ -87,7 +89,7 @@ export default function mixer ({ programs, channels, master }) {
         </div>
       </div>
 
-      <div className=${styles.masterPanel} data-master>
+      <div className=${styles.mixer} data-master>
         <h2 className=${styles.heading}>
           Master
         </h2>
