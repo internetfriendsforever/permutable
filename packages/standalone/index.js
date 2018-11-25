@@ -9,6 +9,7 @@ const script = document.querySelector('script[data-program]')
 const program = script.getAttribute('data-program')
 const path = new URL(program, window.location).href
 
+console.log('TODO: Build module, and copy styles?')
 console.log('TODO: Load styles from:', new URL('styles.css', script.src).href)
 
 console.log('Loading program...')
