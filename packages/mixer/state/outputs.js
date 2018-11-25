@@ -1,4 +1,4 @@
-import events from './events.js'
+import events from '/node_modules/@permutable/events/index.js'
 
 const findOpenOutput = event => event.target.closest('#open-output')
 

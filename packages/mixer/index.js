@@ -1,4 +1,4 @@
-import { bind } from './libraries/hyperhtml.js'
+import { bind } from '/node_modules/hyperhtml/esm.js'
 import mixer from './components/mixer.js'
 import { ui, size, animation } from './state/index.js'
 

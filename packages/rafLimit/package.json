@@ -1,7 +1,7 @@
 {
-  "name": "@permutable/styles",
+  "name": "@permutable/rafLimit",
   "version": "0.0.0",
-  "description": "Permutable styles",
+  "description": "Permutable requestAnimationFrame limit Kefir stream",
   "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
   "license": "ISC"
 }

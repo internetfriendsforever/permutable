@@ -1,4 +1,4 @@
-import { wire } from './libraries/hyperhtml.js'
+import { wire } from './node_modules/hyperhtml/esm.js'
 
 const pool = {}
 

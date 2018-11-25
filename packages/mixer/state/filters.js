@@ -1,6 +1,6 @@
-import controls from './controls/index.js'
+import changes from '/node_modules/@permutable/controls/state/changes.js'
 
-export default controls
+export default changes
   .filter(({ element }) => element.closest('[data-master]'))
   .scan((controls, updates) => {
     const key = updates.element.getAttribute('data-key')

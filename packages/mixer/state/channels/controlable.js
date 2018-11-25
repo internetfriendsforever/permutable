@@ -1,7 +1,7 @@
 import items from './items.js'
-import controls from '../controls/index.js'
+import changes from '/node_modules/@permutable/controls/state/changes.js'
 
-export default controls
+export default changes
   .filter(({ element }) => element.closest('[data-channels]'))
   .toProperty(() => null)
   .combine(items, (control, items) => {

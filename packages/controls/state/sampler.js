@@ -1,6 +1,8 @@
-import { combine } from '../../libraries/kefir.js'
-import events from '../events.js'
-import items from '../channels/items.js'
+import { constant, combine } from '../node_modules/kefir/dist/kefir.esm.js'
+import events from '../node_modules/@permutable/events/index.js'
+// import items from '../channels/items.js'
+
+const items = constant({})
 
 const findSampler = element => element.closest('[data-control=sampler]')
 

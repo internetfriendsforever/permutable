@@ -1,9 +1,9 @@
-import css from '../libraries/css.js'
-import wires from '../wires.js'
+import wires from '/node_modules/@permutable/wires/index.js'
+import css from '/node_modules/@happycat/css/esm.js'
+import button from '/node_modules/@permutable/button/index.js'
+import controls from '/node_modules/@permutable/controls/components/index.js'
 import program from './program.js'
 import channel from './channel.js'
-import button from './button.js'
-import controls from './controls/index.js'
 
 const styles = {
   container: css(`

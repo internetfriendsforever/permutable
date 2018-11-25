@@ -1,0 +1,10 @@
+{
+  "name": "@permutable/events",
+  "version": "0.0.0",
+  "description": "Permutable events",
+  "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
+  "license": "ISC",
+  "dependencies": {
+    "kefir": "^3.8.5"
+  }
+}

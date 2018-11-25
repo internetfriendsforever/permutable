@@ -1,5 +1,5 @@
-import css from '../../libraries/css.js'
-import button from '../button.js'
+import css from '../node_modules/@happycat/css/esm.js'
+import button from '../node_modules/@permutable/button/index.js'
 
 const styles = {
   container: css(`

@@ -1,5 +1,5 @@
-import { merge, combine } from '../../libraries/kefir.js'
-import events from '../events.js'
+import { merge, combine } from '../node_modules/kefir/dist/kefir.esm.js'
+import events from '../node_modules/@permutable/events/index.js'
 import midi from './midi.js'
 
 const findFloat = element => element.closest(`[data-control=float]`)

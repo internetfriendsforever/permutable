@@ -1,4 +1,4 @@
-import css from '../../libraries/css.js'
+import css from '../node_modules/@happycat/css/esm.js'
 import floatControl from './float.js'
 import booleanControl from './boolean.js'
 import samplerControl from './sampler.js'

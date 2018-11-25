@@ -1,5 +1,5 @@
-import { merge, fromCallback, fromPromise } from '../libraries/kefir.js'
-import events from './events.js'
+import { merge, fromCallback, fromPromise } from '/node_modules/kefir/dist/kefir.esm.js'
+import events from '/node_modules/@permutable/events/index.js'
 
 events.dragover
   .onValue(event => {

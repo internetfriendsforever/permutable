@@ -1,4 +1,4 @@
-import css from '../../libraries/css.js'
+import css from '../node_modules/@happycat/css/esm.js'
 import input from './input.js'
 
 const styles = {

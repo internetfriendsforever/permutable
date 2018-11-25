@@ -1,6 +1,6 @@
-import css from '../libraries/css.js'
-import button from './button.js'
-import controls from './controls/index.js'
+import css from '/node_modules/@happycat/css/esm.js'
+import button from '/node_modules/@permutable/button/index.js'
+import controls from '/node_modules/@permutable/controls/components/index.js'
 
 const styles = {
   container: css(`

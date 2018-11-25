@@ -1,5 +1,5 @@
-import { stream, combine, merge } from '../../libraries/kefir.js'
-import events from '../events.js'
+import { stream, combine, merge } from '../node_modules/kefir/dist/kefir.esm.js'
+import events from '../node_modules/@permutable/events/index.js'
 
 const midi = stream(emitter => {
   navigator.requestMIDIAccess().then(access => {

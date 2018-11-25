@@ -1,6 +1,6 @@
-import { combine, merge } from '../../libraries/kefir.js'
+import { combine, merge } from '/node_modules/kefir/dist/kefir.esm.js'
+import events from '/node_modules/@permutable/events/index.js'
 import programs from '../programs.js'
-import events from '../events.js'
 
 const findChannel = element => element.closest('[data-channel]')
 const findRemove = element => element.closest('[data-remove]')

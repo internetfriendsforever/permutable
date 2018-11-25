@@ -1,5 +1,5 @@
 {
-  "name": "@permutable/mixer",
+  "name": "@permutable/standalone",
   "version": "0.0.0",
   "description": "Permutable mixer",
   "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
@@ -8,10 +8,7 @@
     "start": "http-server -c-1"
   },
   "dependencies": {
-    "@happycat/css": "^0.0.10",
-    "@permutable/button": "^0.0.0",
     "@permutable/controls": "^0.0.0",
-    "@permutable/events": "^0.0.0",
     "@permutable/styles": "^0.0.0",
     "@permutable/wires": "^0.0.0",
     "@permutable/rafLimit": "^0.0.0",
