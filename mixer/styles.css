@@ -35,7 +35,8 @@ footer, header, hgroup, menu, nav, section {
   font-family: 'IBM Plex Mono';
   font-style: normal;
   font-weight: 400;
-  src: url('./assets/fonts/IBM-Plex-Mono/IBMPlexMono-Light.woff2') format('woff2');
+  src: url('./assets/IBMPlexMono-Light.woff2') format('woff2'),
+			 url('./assets/IBMPlexMono-Light.woff') format('woff');
 }
 
 html {
