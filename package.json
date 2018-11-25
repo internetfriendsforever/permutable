@@ -1,8 +1,13 @@
 {
-  "name": "root",
-  "private": true,
-  "devDependencies": {
-    "lerna": "^3.4.1"
+  "name": "@permutable/mixer",
+  "version": "0.0.0",
+  "description": "Permutable mixer",
+  "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
+  "license": "ISC",
+  "scripts": {
+    "start": "http-server -c-1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
 }

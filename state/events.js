@@ -1,0 +1,22 @@
+import { fromEvents } from '../libraries/kefir.js'
+
+const streams = {}
+
+const events = [
+  'mousedown',
+  'mouseup',
+  'mousemove',
+  'click',
+  'dragstart',
+  'dragover',
+  'dragleave',
+  'drop',
+  'keydown',
+  'change'
+]
+
+events.forEach(event => {
+  streams[event] = fromEvents(document.body, event)
+})
+
+export default streams
