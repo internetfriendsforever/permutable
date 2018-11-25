@@ -2,10 +2,10 @@ import { bind } from './libraries/hyperhtml.js'
 import mixer from './components/mixer.js'
 import { ui, size, animation } from './state/index.js'
 
-const root = document.getElementById('root')
+const element = document.getElementById('mixer')
 
 ui.onValue(value => {
-  bind(root)`${mixer(value)}`
+  bind(element)`${mixer(value)}`
 })
 
 size.onValue(({ width, height, channels, master }) => {

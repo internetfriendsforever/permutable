@@ -8,6 +8,10 @@
     "start": "http-server -c-1"
   },
   "dependencies": {
-    "http-server": "^0.11.1"
+    "@happycat/css": "^0.0.10",
+    "@permutable/styles": "^0.0.0",
+    "http-server": "^0.11.1",
+    "hyperhtml": "^2.18.0",
+    "kefir": "^3.8.5"
   }
 }
