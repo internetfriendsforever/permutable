@@ -2,5 +2,13 @@
   "version": 2,
   "builds": [
     { "src": "**", "use": "@now/static" }
+  ],
+  "routes": [
+    {
+      "src": ".*",
+      "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
+    }
   ]
 }
