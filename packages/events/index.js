@@ -1,4 +1,4 @@
-import { fromEvents } from './node_modules/kefir/dist/kefir.esm.js'
+import { fromEvents } from '../../libraries/kefir.js'
 
 const streams = {}
 

@@ -1,18 +1,20 @@
-import { bind } from '/node_modules/hyperhtml/esm.js'
-import { merge, constant } from '/node_modules/kefir/dist/kefir.esm.js'
-import css from '/node_modules/@happycat/css/esm.js'
-import wires from '/node_modules/@permutable/wires/index.js'
-import controls from '/node_modules/@permutable/controls/index.js'
-import rafLimit from '/node_modules/@permutable/rafLimit/index.js'
+import { bind } from '../../libraries/hyperhtml.js'
+import { merge, constant } from '../../libraries/kefir.js'
+import css from '../../libraries/css.js'
+import wires from '../wires/index.js'
+import controls from '../controls/index.js'
+import rafLimit from '../rafLimit/index.js'
 
 const script = document.querySelector('script[data-program]')
 const program = script.getAttribute('data-program')
 const path = new URL(program, window.location).href
 
-console.log('TODO: Build module, and copy styles?')
-console.log('TODO: Load styles from:', new URL('styles.css', script.src).href)
+const style = document.createElement('link')
 
-console.log('Loading program...')
+style.setAttribute('rel', 'stylesheet')
+style.setAttribute('href', new URL('../styles/styles.css', script.src).href)
+
+document.head.appendChild(style)
 
 const styles = {
   controls: css(`

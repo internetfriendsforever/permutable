@@ -1,5 +1,5 @@
-import { combine, constant } from '/node_modules/kefir/dist/kefir.esm.js'
-import rafLimit from '/node_modules/@permutable/rafLimit/index.js'
+import { combine, constant } from '../../../libraries/kefir.js'
+import rafLimit from '../../rafLimit/index.js'
 import frame from './frame.js'
 import channels from './channels/controlable.js'
 import programs from './programs.js'

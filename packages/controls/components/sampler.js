@@ -1,4 +1,4 @@
-import css from '../node_modules/@happycat/css/esm.js'
+import css from '../../../libraries/css.js'
 
 const styles = {
   container: css(`

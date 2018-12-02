@@ -1,4 +1,4 @@
-import { stream } from '/node_modules/kefir/dist/kefir.esm.js'
+import { stream } from '../../../libraries/kefir.js'
 
 export default stream(emitter => {
   let frame = 0

@@ -1,5 +1,5 @@
-import { merge } from '../node_modules/kefir/dist/kefir.esm.js'
-import events from '../node_modules/@permutable/events/index.js'
+import { merge } from '../../../libraries/kefir.js'
+import events from '../../events/index.js'
 import midi from './midi.js'
 
 const findBoolean = element => element.closest('[data-control=boolean]')
