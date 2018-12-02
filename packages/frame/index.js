@@ -1,4 +1,4 @@
-import { stream } from '../../../libraries/kefir.js'
+import { stream } from '../../libraries/kefir.js'
 
 export default stream(emitter => {
   let frame = 0

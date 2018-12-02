@@ -1,6 +1,6 @@
 import { combine, constant } from '../../../libraries/kefir.js'
 import rafLimit from '../../rafLimit/index.js'
-import frame from './frame.js'
+import frame from '../../frame/index.js'
 import channels from './channels/controlable.js'
 import programs from './programs.js'
 import outputs from './outputs.js'
