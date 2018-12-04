@@ -1,7 +1,6 @@
 import { bind } from '../../libraries/hyperhtml.js'
 import { combine } from '../../libraries/kefir.js'
 import css from '../../libraries/css.js'
-import frame from '../frame/index.js'
 import wires from '../wires/index.js'
 import controls from '../controls/index.js'
 import rafLimit from '../rafLimit/index.js'
@@ -37,8 +36,7 @@ import(path)
     const update = program.handler(canvas)
 
     rafLimit(combine({
-      params: controls.state(program.params),
-      frame: frame
+      params: controls.state(program.params)
     })).onValue(({ params }) => {
       if (update) {
         canvas.width = window.innerWidth * window.devicePixelRatio
