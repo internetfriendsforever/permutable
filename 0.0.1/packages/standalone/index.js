@@ -33,16 +33,18 @@ import(path)
 
     const { wire, next } = wires('standalone')
     const canvas = document.createElement('canvas')
+
+    canvas.width = window.innerWidth * window.devicePixelRatio
+    canvas.height = window.innerHeight * window.devicePixelRatio
+    canvas.style.width = '100%'
+    canvas.style.height = '100%'
+
     const update = program.handler(canvas)
 
     rafLimit(combine({
       params: controls.state(program.params)
     })).onValue(({ params }) => {
       if (update) {
-        canvas.width = window.innerWidth * window.devicePixelRatio
-        canvas.height = window.innerHeight * window.devicePixelRatio
-        canvas.style.width = '100%'
-        canvas.style.height = '100%'
         update(params)
       }
 
