@@ -1,1 +1,6 @@
-<script data-program='circle.js' type='module' src='../index.js'></script>
+<link rel="stylesheet" href="../../styles/styles.css" />
+
+<script type="module">
+  import standalone from '../index.js'
+  import('./circle.js').then(standalone)
+</script>

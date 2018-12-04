@@ -1,20 +1,8 @@
 import { bind } from '../../libraries/hyperhtml.js'
-import { combine } from '../../libraries/kefir.js'
 import css from '../../libraries/css.js'
 import wires from '../wires/index.js'
 import controls from '../controls/index.js'
 import rafLimit from '../rafLimit/index.js'
-
-const script = document.querySelector('script[data-program]')
-const program = script.getAttribute('data-program')
-const path = new URL(program, window.location).href
-
-const style = document.createElement('link')
-
-style.setAttribute('rel', 'stylesheet')
-style.setAttribute('href', new URL('../styles/styles.css', script.src).href)
-
-document.head.appendChild(style)
 
 const styles = {
   controls: css(`
@@ -26,46 +14,33 @@ const styles = {
   `)
 }
 
-import(path)
-  .then(program => {
-    console.log('Program loaded...')
-    console.log(JSON.stringify(program))
+export default program => {
+  const canvas = document.createElement('canvas')
+  const context = canvas.getContext(program.context || '2d')
 
-    const { wire, next } = wires('standalone')
-    const canvas = document.createElement('canvas')
+  canvas.width = window.innerWidth * window.devicePixelRatio
+  canvas.height = window.innerHeight * window.devicePixelRatio
+  canvas.style.width = '100%'
+  canvas.style.height = '100%'
 
-    canvas.width = window.innerWidth * window.devicePixelRatio
-    canvas.height = window.innerHeight * window.devicePixelRatio
-    canvas.style.width = '100%'
-    canvas.style.height = '100%'
+  rafLimit(controls.state(program.params)).onValue(params => {
+    program.render(canvas, context, params)
 
-    const update = program.handler(canvas)
+    bind(document.body)`
+      ${canvas}
 
-    rafLimit(combine({
-      params: controls.state(program.params)
-    })).onValue(({ params }) => {
-      if (update) {
-        update(params)
-      }
+      <div className=${styles.controls}>
+        ${controls.component({
+          params,
 
-      bind(document.body)`
-        ${canvas}
+          mappings: {
+            play: null,
+            mix: null
+          },
 
-        <div className=${styles.controls}>
-          ${controls.component({
-            params,
-
-            mappings: {
-              play: null,
-              mix: null
-            },
-
-            wires: next
-          })}
-        </div>
-      `
-    })
+          wires
+        })}
+      </div>
+    `
   })
-  .catch(error => {
-    console.error('Error loading program', error)
-  })
+}
