@@ -10,7 +10,7 @@ const styles = {
     top: 0;
     left: 0;
     background: rgba(0, 0, 0, 0.9);
-    padding: 0.5em;
+    padding: 1px;
   `)
 }
 

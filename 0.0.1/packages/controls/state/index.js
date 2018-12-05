@@ -9,7 +9,7 @@ export default (initial = {}) => changes
       ...all,
       [key]: {
         type: type,
-        value: change.value
+        ...change
       }
     }
   }, initial)

@@ -1,12 +1,12 @@
 import css from '../../../libraries/css.js'
-import floatControl from './float.js'
+import numberControl from './number.js'
 import booleanControl from './boolean.js'
 import samplerControl from './sampler.js'
 
 const styles = {
   container: css(`
     width: 100%;
-    margin: calc(-0.1rem - 2px) -0.2rem;
+    border-collapse: collapse;
   `)
 }
 
@@ -18,16 +18,15 @@ export default function control ({ key, params, mappings, channels, wires }) {
       ${Object.keys(params).map(key => {
         const props = {
           key,
-          type: params[key].type,
-          value: params[key].value,
+          ...params[key],
           mapping: mappings[key],
           channels: channels,
           wires: next
         }
 
         switch (props.type) {
-          case 'float':
-            return floatControl(props)
+          case 'number':
+            return numberControl(props)
           case 'boolean':
             return booleanControl(props)
           case 'sampler':

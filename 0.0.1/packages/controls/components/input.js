@@ -2,8 +2,8 @@ import css from '../../../libraries/css.js'
 import button from '../../button/index.js'
 
 const styles = {
-  container: css(`
-    margin-left: 0.5rem;
+  button: css(`
+    padding: 0.15em 0.4em;
   `)
 }
 
@@ -17,9 +17,10 @@ export default function input ({ key = 'input', mapping, wires }) {
   }, mapping)
 
   return wire`
-    <div className=${styles.container} data-input data-pending=${pending} data-port=${port} data-id=${id}>
+    <div data-input data-pending=${pending} data-port=${port} data-id=${id}>
       ${button({
         label: id || 'input',
+        className: styles.button,
         active: pending,
         wires: next
       })}

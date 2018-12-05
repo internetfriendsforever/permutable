@@ -3,15 +3,15 @@ import input from './input.js'
 
 const styles = {
   container: css(`
-    margin: 2px 0;
+    border-top: 1px transparent solid;
   `),
 
-  toggle: css(`
+  toggle: on => css(`
     position: relative;
     flex: auto;
     cursor: pointer;
     display: flex;
-    padding: 0.1rem 0.2rem;
+    padding: 0.15rem 0.4rem;
 
     :hover {
       color: white;
@@ -20,6 +20,10 @@ const styles = {
     :active {
       color: gold;
     }
+
+    ${on && `
+      background: #333;
+    `}
   `),
 
   name: css(`
@@ -41,7 +45,7 @@ export default function boolean ({ value, mapping, key, wires }) {
 
   return wire`
     <tr className=${styles.container} data-control='boolean' data-key=${key} data-value=${value}>
-      <td className=${styles.toggle} data-toggle>
+      <td className=${styles.toggle(value)} data-toggle>
         <div className=${styles.name}>${key}</div>
         <div className=${styles.value}>${value ? 'yes' : 'no'}</div>
       </td>

@@ -1,10 +1,10 @@
 import { merge } from '../../../libraries/kefir.js'
 import booleanControl from './boolean.js'
-import floatControl from './float.js'
+import numberControl from './number.js'
 import samplerControl from './sampler.js'
 
 export default merge([
   booleanControl,
-  floatControl,
+  numberControl,
   samplerControl
 ])

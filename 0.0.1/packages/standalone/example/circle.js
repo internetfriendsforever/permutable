@@ -1,16 +1,19 @@
+export const context = '2d'
+
 export const params = {
   radius: {
-    type: 'float',
-    value: 0.5
+    type: 'number',
+    min: 50,
+    max: 200,
+    step: 10,
+    value: 100
   },
 
   hue: {
-    type: 'float',
+    type: 'number',
     value: 0
   }
 }
-
-export const context = '2d'
 
 export function render (canvas, context, params) {
   const { width, height } = canvas
@@ -20,8 +23,7 @@ export function render (canvas, context, params) {
 
   const x = width / 2
   const y = height / 2
-  const scale = Math.min(width, height) * 0.45
-  const radius = params.radius.value * scale
+  const radius = params.radius.value
 
   context.fillStyle = 'black'
   context.beginPath()
