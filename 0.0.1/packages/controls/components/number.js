@@ -3,7 +3,6 @@ import input from './input.js'
 
 const styles = {
   container: css(`
-    border-top: 1px transparent solid;
   `),
 
   slider: css(`
@@ -11,15 +10,15 @@ const styles = {
     flex: auto;
     cursor: ew-resize;
     display: flex;
-    padding: 0.15rem 0.4rem;
+    padding: 0.4rem 0.5rem;
 
     :hover {
       color: white;
     }
 
-    :active {
-      color: gold;
-    }
+    // :active {
+    //   color: gold;
+    // }
   `),
 
   indicator: css(`
@@ -27,7 +26,9 @@ const styles = {
     top: 0;
     left: 0;
     bottom: 0;
-    background: #333;
+    background: gold;
+    border-left: 1px solid gold;
+    mix-blend-mode: difference;
   `),
 
   name: css(`
@@ -64,9 +65,9 @@ export default function number ({ min = 0, max = 1, step = 0.05, value, mapping,
   return wire`
     <tr className=${styles.container} data-control='number' data-key=${key}>
       <td className=${styles.slider} style=${sliderStyle} data-slider data-min=${min} data-max=${max} data-step=${step}>
-        <div className=${styles.indicator} style=${indicatorStyle}></div>
         <div className=${styles.name}>${key}</div>
         <div className=${styles.value} style=${valueStyle}>${displayValue}</div>
+        <div className=${styles.indicator} style=${indicatorStyle}></div>
       </td>
 
       <td className=${styles.input}>

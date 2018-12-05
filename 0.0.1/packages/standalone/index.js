@@ -7,10 +7,9 @@ import rafLimit from '../rafLimit/index.js'
 const styles = {
   controls: css(`
     position: absolute;
-    top: 0;
-    left: 0;
+    bottom: 10px;
+    left: 10px;
     background: rgba(0, 0, 0, 0.9);
-    padding: 1px;
   `)
 }
 
