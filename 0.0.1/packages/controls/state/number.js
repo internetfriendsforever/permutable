@@ -8,53 +8,18 @@ const target = event => event.target
 
 const mouseElement = events.mousedown.map(target).map(findNumber).filter()
 
-// const draggingActive = merge([
-//   events.mousedown.map(target).filter(findSlider).map(event => 1),
-//   events.mouseup.map(event => 0)
-// ])
-
-// const draggingDelta = events.mousemove
-//   .map(event => event.clientX)
-//   .slidingWindow(2, 2)
-//   .map(([prev, next]) => next - prev)
-//   .toProperty(() => 0)
-//   .filter()
-//
-// const draggingValue = combine(
-//   [draggingDelta],
-//   [draggingActive, mouseElement],
-//   (delta, active, element) => {
-//     const prev = parseFloat(element.getAttribute('data-value'), 10)
-//     return active * Math.min(1, Math.max(0, prev + delta * 0.0025))
-//   }
-// ).filter()
-
-const draggingActive = merge([
-  events.mousedown.map(target).filter(findSlider).map(event => true),
-  events.mouseup.map(event => false)
-])
-
-const midiUpdates = midi
-  .filter(input => findNumber(input.element))
-  .map(input => {
-    const updates = { ...input }
-
-    updates.element = findNumber(input.element)
-
-    if (updates.value) {
-      if (input.type === 144) updates.value = 1
-      if (input.type === 128) updates.value = 0
-    }
-
-    return updates
-  })
+const mouseActive = merge([
+  events.mousedown.map(target).filter(findNumber).map(() => true),
+  events.mouseup.map(target).filter(findNumber).map(() => false),
+  events.mousemove.map(event => event.buttons === 1).filter(value => !value),
+]).skipDuplicates()
 
 const mouseUpdates = combine([
-  draggingActive,
-  events.mousemove
+  events.mousemove,
+  mouseActive
 ], [
   mouseElement
-], (active, event, element) => {
+], (event, active, element) => {
   if (active && element) {
     const slider = element.querySelector('[data-slider]')
 
@@ -71,6 +36,21 @@ const mouseUpdates = combine([
 })
   .filter(value => value !== null)
 
+const midiUpdates = midi
+  .filter(input => findNumber(input.element))
+  .map(input => {
+    const updates = { ...input }
+
+    updates.element = findNumber(input.element)
+
+    if (updates.value) {
+      if (input.type === 144) updates.value = 1
+      if (input.type === 128) updates.value = 0
+    }
+
+    return updates
+  })
+
 export default merge([
   midiUpdates,
   mouseUpdates
@@ -80,7 +60,8 @@ export default merge([
   const max = parseFloat(slider.getAttribute('data-max'), 10)
   const step = parseFloat(slider.getAttribute('data-step'), 10)
   const range = (max - min)
-  const value = Math.min(max, min + Math.floor((position * range) / step) * step)
+  const stepped = min + Math.floor((position * range) / step) * step
+  const value = Math.max(min, Math.min(max, stepped))
 
   return {
     element,
