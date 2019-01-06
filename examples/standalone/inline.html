@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="../../../library/styles/styles.css" />
+
+<script type="module">
+  import standalone from '../../../library/standalone.js'
+
+  standalone({
+    render (canvas, context) {
+      const { width, height } = canvas
+
+      context.translate(width / 2, height / 2)
+      context.fillStyle = 'white'
+      context.fillRect(-50, -50, 100, 100)
+    }
+  })
+</script>
