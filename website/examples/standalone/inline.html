@@ -1,0 +1,14 @@
+<script type="module">
+  import standalone from 'https://unpkg.com/permutable@0.1.8/standalone.js'
+
+  standalone({
+    setup (canvas) {
+      const context = canvas.getContext('2d')
+      const { width, height } = canvas
+
+      context.translate(width / 2, height / 2)
+      context.fillStyle = 'white'
+      context.fillRect(-50, -50, 100, 100)
+    }
+  })
+</script>

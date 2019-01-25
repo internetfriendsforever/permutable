@@ -1,0 +1,11 @@
+{
+  "name": "permutable",
+  "version": "0.1.8",
+  "description": "Tools for programming graphics",
+  "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
+  "main": "standalone.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/internetfriendsforever/permutable.git/library"
+  }
+}
