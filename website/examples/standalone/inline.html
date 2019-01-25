@@ -1,10 +1,9 @@
-<link rel="stylesheet" href="https://unpkg.com/permutable@0.1.1/styles.css" />
-
 <script type="module">
-  import standalone from 'https://unpkg.com/permutable@0.1.1/standalone.js'
+  import standalone from 'https://unpkg.com/permutable@0.1.8/standalone.js'
 
   standalone({
-    render (canvas, context) {
+    setup (canvas) {
+      const context = canvas.getContext('2d')
       const { width, height } = canvas
 
       context.translate(width / 2, height / 2)

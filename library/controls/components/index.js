@@ -7,6 +7,7 @@ const styles = {
   container: css(`
     width: 100%;
     border-collapse: collapse;
+    color: inherit;
   `)
 }
 

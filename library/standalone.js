@@ -3,32 +3,39 @@ import css from './css.js'
 import wires from './wires.js'
 import controls from './controls/index.js'
 import rafLimit from './rafLimit.js'
+import styles from './styles.js'
 
-const styles = {
-  controls: css(`
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background: rgba(0, 0, 0, 0.9);
-  `)
-}
+const controlStyles = css(styles, `
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 1px;
+`)
 
 export default program => {
   const canvas = document.createElement('canvas')
-  const context = canvas.getContext(program.context || '2d')
 
   canvas.width = window.innerWidth * window.devicePixelRatio
   canvas.height = window.innerHeight * window.devicePixelRatio
   canvas.style.width = '100%'
   canvas.style.height = '100%'
 
-  rafLimit(controls.state(program.params)).onValue(params => {
-    program.render(canvas, context, params)
+  document.body.style.background = 'black'
+  document.body.style.margin = 0
+
+  const render = program.setup(canvas)
+  const state = controls.state(program.params)
+
+  rafLimit(state).onValue(params => {
+    if (render) {
+      render(params)
+    }
 
     bind(document.body)`
       ${canvas}
 
-      <div className=${styles.controls}>
+      <div className=${controlStyles}>
         ${controls.component({
           params,
 

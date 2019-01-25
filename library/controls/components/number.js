@@ -47,13 +47,10 @@ const styles = {
   `)
 }
 
-export default function number ({ min = 0, max = 1, step = 0.05, value, mapping, key, wires }) {
+export default function number ({ min = 0, max = 1, step = 0.01, value, mapping, key, wires }) {
   const { wire, next } = wires(key)
 
   const range = max - min
-  const steps = range / step
-  const sliderStyle = `min-width: ${steps}px;`
-
   const percent = ((value - min) / range) * 100
   const indicatorStyle = `width: ${percent}%`
 
@@ -64,7 +61,8 @@ export default function number ({ min = 0, max = 1, step = 0.05, value, mapping,
 
   return wire`
     <tr className=${styles.container} data-control='number' data-key=${key}>
-      <td className=${styles.slider} style=${sliderStyle} data-slider data-min=${min} data-max=${max} data-step=${step}>
+      <td className=${styles.slider} data-slider data-min=${min} data-max=${max} data-step=${step}>
+        <div className=${styles.indicator} style=${indicatorStyle}></div>
         <div className=${styles.name}>${key}</div>
         <div className=${styles.value} style=${valueStyle}>${displayValue}</div>
         <div className=${styles.indicator} style=${indicatorStyle}></div>
