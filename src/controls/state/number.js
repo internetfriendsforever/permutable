@@ -3,7 +3,6 @@ import events from '../../events.js'
 import midi from './midi.js'
 
 const findNumber = element => element.closest(`[data-control=number]`)
-const findSlider = element => findNumber(element) && element.closest(`[data-slider]`)
 const target = event => event.target
 
 const mouseElement = events.mousedown.map(target).map(findNumber).filter()
@@ -11,7 +10,7 @@ const mouseElement = events.mousedown.map(target).map(findNumber).filter()
 const mouseActive = merge([
   events.mousedown.map(target).filter(findNumber).map(() => true),
   events.mouseup.map(target).filter(findNumber).map(() => false),
-  events.mousemove.map(event => event.buttons === 1).filter(value => !value),
+  events.mousemove.map(event => event.buttons === 1).filter(value => !value)
 ]).skipDuplicates()
 
 const mouseUpdates = combine([
