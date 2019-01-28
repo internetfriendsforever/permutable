@@ -56,15 +56,12 @@ export default function number ({ min = 0, max = 1, step = 0.01, value, mapping,
 
   const decimals = (step.toString().split('.')[1] || '').length
   const displayValue = value.toFixed(decimals)
-  const maxDigits = max.toString().length + (decimals ? decimals + 1 : 0)
-  const valueStyle = `width: ${maxDigits}em`
 
   return wire`
     <tr className=${styles.container} data-control='number' data-key=${key}>
       <td className=${styles.slider} data-slider data-min=${min} data-max=${max} data-step=${step}>
-        <div className=${styles.indicator} style=${indicatorStyle}></div>
         <div className=${styles.name}>${key}</div>
-        <div className=${styles.value} style=${valueStyle}>${displayValue}</div>
+        <div className=${styles.value}>${displayValue}</div>
         <div className=${styles.indicator} style=${indicatorStyle}></div>
       </td>
 

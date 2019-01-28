@@ -10,7 +10,6 @@ const controlStyles = css(styles, `
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.9);
-  padding: 1px;
 `)
 
 export default async program => {

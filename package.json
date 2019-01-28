@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "start": "http-server -c-1",
+    "start": "rollup -c -w & http-server -c-1",
     "build": "rollup -c",
     "deploy": "npm run build && now"
   },
