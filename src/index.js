@@ -13,7 +13,7 @@ const controlStyles = css(styles, `
   padding: 1px;
 `)
 
-export default program => {
+export default async program => {
   const canvas = document.createElement('canvas')
 
   canvas.width = window.innerWidth * window.devicePixelRatio
@@ -24,7 +24,7 @@ export default program => {
   document.body.style.background = 'black'
   document.body.style.margin = 0
 
-  const render = program.setup(canvas)
+  const render = await Promise.resolve(program.setup(canvas))
   const state = controls.state(program.params)
 
   rafLimit(state).onValue(params => {
