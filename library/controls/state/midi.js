@@ -2,15 +2,17 @@ import { stream, combine, merge } from '../../kefir.js'
 import events from '../../events.js'
 
 const midi = stream(emitter => {
-  navigator.requestMIDIAccess().then(access => {
-    for (const input of access.inputs.values()) {
-      input.addEventListener('midimessage', event => {
-        const [type, port, rawValue] = event.data
-        const value = rawValue / 127
-        emitter.value({ type, port, value, input })
-      })
-    }
-  })
+  if ('requestMIDIAccess' in navigator) {
+    navigator.requestMIDIAccess().then(access => {
+      for (const input of access.inputs.values()) {
+        input.addEventListener('midimessage', event => {
+          const [type, port, rawValue] = event.data
+          const value = rawValue / 127
+          emitter.value({ type, port, value, input })
+        })
+      }
+    })
+  }
 })
 
 const findInput = event => event.target.closest('[data-input]')
