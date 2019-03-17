@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "name": "permutable",
+  "builds": [
+    { "src": "**/*.html", "use": "@now/static" },
+    { "src": "dist/*.js", "use": "@now/static" }
+  ],
+
+  "routes": [
+    { "src": "/examples/(.*)", "dest": "/examples/$1"},
+    { "src": "/dist/(.*)", "dest": "/dist/$1"},
+    { "src": "/", "dest": "/index.html"}
+  ]
+}
