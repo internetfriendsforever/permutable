@@ -17,11 +17,11 @@ export default changes
   }, {
     params: {
       feedback: {
-        type: 'float',
+        type: 'number',
         value: 0
       },
       brightness: {
-        type: 'float',
+        type: 'number',
         value: 1
       }
     },

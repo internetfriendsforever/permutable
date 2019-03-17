@@ -1,4 +1,5 @@
 import css from '@happycat/css'
+import baseStyles from '../../styles.js'
 import wires from '../../wires.js'
 import button from '../../button.js'
 import controls from '../../controls/components/index.js'
@@ -6,7 +7,7 @@ import program from './program.js'
 import channel from './channel.js'
 
 const styles = {
-  container: css(`
+  container: css(baseStyles, `
     display: flex;
     min-height: 100vh;
     max-height: 100vh;
@@ -30,6 +31,9 @@ const styles = {
     flex: 0;
     padding: 0.75rem;
     border-bottom: 2px #aaa solid;
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
   `),
 
   content: css(`
@@ -67,8 +71,8 @@ export default function mixer ({ programs, channels, master }) {
         </h2>
 
         <div className=${styles.content}>
-          ${Object.keys(programs).map(name => program({
-            name,
+          ${programs.map(({ name }) => program({
+            name: name || 'no name',
             wires: next
           }))}
         </div>

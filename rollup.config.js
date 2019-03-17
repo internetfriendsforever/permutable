@@ -1,38 +1,56 @@
 import pkg from './package.json'
 
-export default {
-  input: './src/index.js',
+const external = [
+  'kefir',
+  'hyperhtml',
+  '@happycat/css'
+]
 
-  external: [
-    'kefir',
-    'hyperhtml',
-    '@happycat/css'
-  ],
-
-  output: [
-    {
-      file: 'dist/esm.js',
-      format: 'esm',
-      paths: id => {
-        const version = pkg.dependencies[id]
-        return `//unpkg.com/${id}@${version}?module`
-      }
-    },
-
-    {
-      file: 'dist/cjs.js',
-      format: 'cjs'
-    },
-
-    {
-      file: 'dist/iife.js',
-      format: 'iife',
-      name: 'permutable',
-      globals: {
-        'kefir': 'Kefir',
-        'hyperhtml': 'hyperHTML',
-        '@happycat/css': 'happycat.css'
-      }
-    }
-  ]
+const unpkg = id => {
+  const version = pkg.dependencies[id]
+  return `//unpkg.com/${id}@${version}?module`
 }
+
+export default [
+  {
+    input: './src/index.js',
+
+    external: external,
+
+    output: [
+      {
+        file: 'dist/esm.js',
+        format: 'esm',
+        paths: unpkg
+      },
+
+      {
+        file: 'dist/cjs.js',
+        format: 'cjs'
+      },
+
+      {
+        file: 'dist/iife.js',
+        format: 'iife',
+        name: 'permutable',
+        globals: {
+          'kefir': 'Kefir',
+          'hyperhtml': 'hyperHTML',
+          '@happycat/css': 'happycat.css'
+        }
+      }
+    ]
+  },
+
+  {
+    input: './src/mixer/index.js',
+
+    external: external,
+
+    output: {
+      file: 'dist/mixer.js',
+      format: 'esm',
+      paths: unpkg
+    }
+  }
+]

@@ -1,34 +1,21 @@
 import { combine, constant } from 'kefir'
 import rafLimit from '../../rafLimit.js'
 import frame from '../../frame.js'
-import channels from './channels/controlable.js'
-import programs from './programs.js'
+import channels from './channels/controllable.js'
 import outputs from './outputs.js'
 import filters from './filters.js'
 
-const canvas = constant(document.createElement('canvas'))
-const context = canvas.map(canvas => canvas.getContext('2d'))
-
-const buffer = constant(document.createElement('canvas'))
-const bufferContext = buffer.map(buffer => buffer.getContext('2d'))
-
 const master = combine({
-  canvas,
-  context,
-  buffer,
-  bufferContext,
   outputs,
   filters
 }).toProperty()
 
 export const ui = rafLimit(combine({
-  programs,
   channels,
   master
 }))
 
 export const animation = combine({ frame }, {
-  programs,
   channels,
   master
 })
