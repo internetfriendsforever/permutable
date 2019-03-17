@@ -1,5 +1,5 @@
 import { bind } from 'hyperhtml'
-import mixer from './components/mixer.js'
+import mix from './components/mix.js'
 // import { ui, size, animation } from './state/index.js'
 
 export default programs => {
@@ -15,7 +15,7 @@ export default programs => {
   const buffer = document.createElement('canvas')
   const bufferContext = buffer.getContext('2d')
 
-  bind(container)`${mixer({
+  bind(container)`${mix({
     programs,
     channels: [],
     master: {
@@ -41,7 +41,7 @@ export default programs => {
 // })
 //
 // ui.onValue(value => {
-//   bind(container)`${mixer(value)}`
+//   bind(container)`${mix(value)}`
 // })
 //
 // size.onValue(({ width, height, channels, master }) => {

@@ -1,7 +1,7 @@
 <script type="module">
-  import mixer from '/dist/mixer.js'
+  import { mix } from '/dist/esm.js'
 
-  const circle = {
+  mix([{
     params: {
       radius: {
         type: 'number',
@@ -36,9 +36,5 @@
         context.fill()
       }
     }
-  }
-
-  mixer([
-    circle
-  ])
+  }])
 </script>

@@ -40,17 +40,5 @@ export default [
         }
       }
     ]
-  },
-
-  {
-    input: './src/mixer/index.js',
-
-    external: external,
-
-    output: {
-      file: 'dist/mixer.js',
-      format: 'esm',
-      paths: unpkg
-    }
   }
 ]

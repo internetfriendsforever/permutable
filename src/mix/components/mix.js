@@ -60,8 +60,8 @@ Object.assign(styles, {
   `)
 })
 
-export default function mixer ({ programs, channels, master }) {
-  const { wire, next } = wires('mixer')
+export default function mix ({ programs, channels, master }) {
+  const { wire, next } = wires('mix')
 
   return wire`
     <div className=${styles.container}>
@@ -93,7 +93,7 @@ export default function mixer ({ programs, channels, master }) {
         </div>
       </div>
 
-      <div className=${styles.mixer} data-master>
+      <div data-master>
         <h2 className=${styles.heading}>
           Master
         </h2>
