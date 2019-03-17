@@ -1,0 +1,28 @@
+{
+  "name": "permutable",
+  "version": "0.1.14",
+  "description": "Tools for programming graphics",
+  "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
+  "main": "dist/cjs.js",
+  "module": "dist/esm.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/internetfriendsforever/permutable.git/library"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1",
+    "rollup": "^1.6.0"
+  },
+  "dependencies": {
+    "@happycat/css": "0.0.12",
+    "hyperhtml": "^2.25.4",
+    "kefir": "^3.8.6"
+  }
+}
