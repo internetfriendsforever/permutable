@@ -1,3 +1,4 @@
+import { html } from 'lighterhtml'
 import css from '@happycat/css'
 
 const styles = {
@@ -28,10 +29,8 @@ const styles = {
   `)
 }
 
-export default function sampler ({ value, mapping, key, channels, wires }) {
-  const { wire, next } = wires(key)
-
-  return wire`
+export default function sampler ({ value, mapping, key, channels }) {
+  return html`
     <tr className=${styles.container} data-control='sampler' data-key=${key}>
       <td>
         <select className=${styles.select}>
@@ -40,9 +39,11 @@ export default function sampler ({ value, mapping, key, channels, wires }) {
           </option>
 
           ${Object.keys(channels).map(key => (
-            next(key).wire`<option value=${key}>
-              ${channels[key].title}
-            </option>`
+            html`
+              <option value=${key}>
+                ${channels[key].title}
+              </option>
+            `
           ))}
         </select>
       </td>

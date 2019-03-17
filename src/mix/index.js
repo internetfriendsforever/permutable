@@ -1,4 +1,4 @@
-import { bind } from 'hyperhtml'
+import { render, html } from 'lighterhtml'
 import mix from './components/mix.js'
 // import { ui, size, animation } from './state/index.js'
 
@@ -15,19 +15,21 @@ export default programs => {
   const buffer = document.createElement('canvas')
   const bufferContext = buffer.getContext('2d')
 
-  bind(container)`${mix({
-    programs,
-    channels: [],
-    master: {
-      canvas,
-      buffer,
-      outputs: [],
-      filters: {
-        params: {},
-        mappings: {}
+  render(container, () => html`
+    ${mix({
+      programs,
+      channels: [],
+      master: {
+        canvas,
+        buffer,
+        outputs: [],
+        filters: {
+          params: {},
+          mappings: {}
+        }
       }
-    }
-  })}`
+    })}
+  `)
 }
 
 

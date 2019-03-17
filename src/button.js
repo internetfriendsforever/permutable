@@ -1,3 +1,4 @@
+import { html } from 'lighterhtml'
 import css from '@happycat/css'
 
 const styles = {
@@ -32,12 +33,10 @@ const styles = {
   `)
 }
 
-export default function button ({ key = 'button', id, active, label, wires, className }) {
-  const { wire } = wires(key)
-
-  return wire`
+export default function button ({ key = 'button', id, active, label, className }) {
+  return html`
     <button id=${id} className=${css(styles.button(active), className)}>
       ${label}
-    </div>
+    </button>
   `
 }

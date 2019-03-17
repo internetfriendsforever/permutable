@@ -1,3 +1,4 @@
+import { html } from 'lighterhtml'
 import css from '@happycat/css'
 import input from './input.js'
 
@@ -47,9 +48,7 @@ const styles = {
   `)
 }
 
-export default function number ({ min = 0, max = 1, step = 0.01, value, mapping, key, wires }) {
-  const { wire, next } = wires(key)
-
+export default function number ({ min = 0, max = 1, step = 0.01, value, mapping, key }) {
   const range = max - min
   const percent = ((value - min) / range) * 100
   const indicatorStyle = `width: ${percent}%`
@@ -57,7 +56,7 @@ export default function number ({ min = 0, max = 1, step = 0.01, value, mapping,
   const decimals = (step.toString().split('.')[1] || '').length
   const displayValue = value.toFixed(decimals)
 
-  return wire`
+  return html`
     <tr className=${styles.container} data-control='number' data-key=${key}>
       <td className=${styles.slider} data-slider data-min=${min} data-max=${max} data-step=${step}>
         <div className=${styles.name}>${key}</div>
@@ -66,7 +65,7 @@ export default function number ({ min = 0, max = 1, step = 0.01, value, mapping,
       </td>
 
       <td className=${styles.input}>
-        ${input({ mapping, wires: next })}
+        ${input({ mapping })}
       </td>
     </tr>
   `

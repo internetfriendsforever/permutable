@@ -1,3 +1,4 @@
+import { html } from 'lighterhtml'
 import css from '@happycat/css'
 import button from '../../button.js'
 
@@ -7,22 +8,19 @@ const styles = {
   `)
 }
 
-export default function input ({ key = 'input', mapping, wires }) {
-  const { wire, next } = wires(key)
-
+export default function input ({ key = 'input', mapping }) {
   const { id, port, pending } = Object.assign({
     id: '',
     port: '',
     pending: false
   }, mapping)
 
-  return wire`
+  return html`
     <div data-input data-pending=${pending} data-port=${port} data-id=${id}>
       ${button({
         label: id || 'input',
         className: styles.button,
-        active: pending,
-        wires: next
+        active: pending
       })}
     </div>
   `

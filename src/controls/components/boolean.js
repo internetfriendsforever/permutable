@@ -1,3 +1,4 @@
+import { html } from 'lighterhtml'
 import css from '@happycat/css'
 import input from './input.js'
 
@@ -40,10 +41,8 @@ const styles = {
   `)
 }
 
-export default function boolean ({ value, mapping, key, wires }) {
-  const { wire, next } = wires('key')
-
-  return wire`
+export default function boolean ({ value, mapping, key }) {
+  return html`
     <tr className=${styles.container} data-control='boolean' data-key=${key} data-value=${value}>
       <td className=${styles.toggle(value)} data-toggle>
         <div className=${styles.name}>${key}</div>
@@ -51,7 +50,9 @@ export default function boolean ({ value, mapping, key, wires }) {
       </td>
 
       <td className=${styles.input}>
-        ${input({ mapping, wires: next })}
+        ${input({
+          mapping
+        })}
       </td>
     </tr>
   `

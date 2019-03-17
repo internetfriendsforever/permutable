@@ -1,6 +1,5 @@
-import { bind } from 'hyperhtml'
+import { html, render } from 'lighterhtml'
 import css from '@happycat/css'
-import wires from '../wires.js'
 import controls from '../controls/index.js'
 import rafLimit from '../rafLimit.js'
 import styles from '../styles.js'
@@ -23,15 +22,15 @@ export default async program => {
   document.body.style.background = 'black'
   document.body.style.margin = 0
 
-  const render = await Promise.resolve(program.setup(canvas))
+  const renderProgram = await Promise.resolve(program.setup(canvas))
   const state = controls.state(program.params)
 
   rafLimit(state).onValue(params => {
-    if (render) {
-      render(params)
+    if (renderProgram) {
+      renderProgram(params)
     }
 
-    bind(document.body)`
+    render(document.body, () => html`
       ${canvas}
 
       <div className=${controlStyles}>
@@ -41,11 +40,9 @@ export default async program => {
           mappings: {
             play: null,
             mix: null
-          },
-
-          wires
+          }
         })}
       </div>
-    `
+    `)
   })
 }

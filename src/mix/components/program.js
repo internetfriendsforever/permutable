@@ -1,3 +1,4 @@
+import { html } from 'lighterhtml'
 import css from '@happycat/css'
 import button from '../../button.js'
 
@@ -15,15 +16,12 @@ const styles = {
   `)
 }
 
-export default function program ({ name, wires }) {
-  const { wire, next } = wires(name)
-
-  return wire`
+export default function program ({ name }) {
+  return html`
     <div className=${styles.container} data-program data-name=${name}>
       ${button({
         className: styles.button,
-        label: name,
-        wires: next
+        label: name
       })}
     </div>
   `

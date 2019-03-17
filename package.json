@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@happycat/css": "0.0.12",
-    "hyperhtml": "^2.25.4",
-    "kefir": "^3.8.6"
+    "kefir": "^3.8.6",
+    "lighterhtml": "^0.9.2"
   }
 }

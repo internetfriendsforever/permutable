@@ -2,7 +2,7 @@ import pkg from './package.json'
 
 const external = [
   'kefir',
-  'hyperhtml',
+  'lighterhtml',
   '@happycat/css'
 ]
 
@@ -35,7 +35,7 @@ export default [
         name: 'permutable',
         globals: {
           'kefir': 'Kefir',
-          'hyperhtml': 'hyperHTML',
+          'lighterhtml': 'lighterhtml',
           '@happycat/css': 'happycat.css'
         }
       }

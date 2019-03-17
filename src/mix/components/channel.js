@@ -1,3 +1,4 @@
+import { html } from 'lighterhtml'
 import css from '@happycat/css'
 import button from '../../button.js'
 import controls from '../../controls/components/index.js'
@@ -30,10 +31,8 @@ const styles = {
 
 }
 
-export default function channel ({ key, item, channels, wires }) {
-  const { wire, next } = wires(key)
-
-  return wire`
+export default function channel ({ key, item, channels }) {
+  return html`
     <div className=${styles.container} data-channel data-id=${key}>
       <div className=${styles.title}>
         ${item.title}
@@ -43,8 +42,7 @@ export default function channel ({ key, item, channels, wires }) {
         ${controls({
           params: item.params,
           mappings: item.mappings,
-          channels: channels,
-          wires: next
+          channels: channels
         })}
       </div>
 
@@ -55,8 +53,7 @@ export default function channel ({ key, item, channels, wires }) {
       <div data-remove title='Remove'>
         ${button({
           className: styles.remove,
-          label: '×',
-          wires: next
+          label: '×'
         })}
       </div>
     </div>

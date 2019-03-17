@@ -1,6 +1,6 @@
+import { html } from 'lighterhtml'
 import css from '@happycat/css'
 import baseStyles from '../../styles.js'
-import wires from '../../wires.js'
 import button from '../../button.js'
 import controls from '../../controls/components/index.js'
 import program from './program.js'
@@ -61,9 +61,7 @@ Object.assign(styles, {
 })
 
 export default function mix ({ programs, channels, master }) {
-  const { wire, next } = wires('mix')
-
-  return wire`
+  return html`
     <div className=${styles.container}>
       <div className=${styles.programs}>
         <h2 className=${styles.heading}>
@@ -72,8 +70,7 @@ export default function mix ({ programs, channels, master }) {
 
         <div className=${styles.content}>
           ${programs.map(({ name }) => program({
-            name: name || 'no name',
-            wires: next
+            name: name || 'no name'
           }))}
         </div>
       </div>
@@ -87,8 +84,7 @@ export default function mix ({ programs, channels, master }) {
           ${Object.keys(channels).map(key => channel({
             key,
             channels: channels,
-            item: channels[key],
-            wires: next
+            item: channels[key]
           }))}
         </div>
       </div>
@@ -104,14 +100,12 @@ export default function mix ({ programs, channels, master }) {
           ${button({
             key: 'open-output',
             id: 'open-output',
-            label: 'Open output window',
-            wires: next
+            label: 'Open output window'
           })}
 
           ${controls({
             params: master.filters.params,
-            mappings: master.filters.mappings,
-            wires: next
+            mappings: master.filters.mappings
           })}
         </div>
       </div>

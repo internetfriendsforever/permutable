@@ -1,3 +1,4 @@
+import { html } from 'lighterhtml'
 import css from '@happycat/css'
 import numberControl from './number.js'
 import booleanControl from './boolean.js'
@@ -11,18 +12,15 @@ const styles = {
   `)
 }
 
-export default function control ({ key, params, mappings, channels, wires }) {
-  const { wire, next } = wires(key || 'controls')
-
-  return wire`
+export default function control ({ key, params, mappings, channels }) {
+  return html`
     <table className=${styles.container}>
       ${Object.keys(params).map(key => {
         const props = {
           key,
           ...params[key],
           mapping: mappings[key],
-          channels: channels,
-          wires: next
+          channels: channels
         }
 
         switch (props.type) {
