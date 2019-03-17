@@ -2,7 +2,7 @@ import { render, html } from 'lighterhtml'
 import css from '@happycat/css'
 import baseStyles from './styles.js'
 import button from './components/button.js'
-import control from './components/control.js'
+import controls from './components/controls.js'
 import program from './components/program.js'
 import channel from './components/channel.js'
 
@@ -125,7 +125,7 @@ export default programs => {
             label: 'Open output window'
           })}
 
-          ${control({
+          ${controls({
             params: master.filters.params,
             mappings: master.filters.mappings
           })}

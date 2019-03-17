@@ -12,7 +12,7 @@ const styles = {
   `)
 }
 
-export default function control ({ key, params, mappings, channels }) {
+export default function controls ({ key, params, mappings, channels }) {
   return html`
     <table className=${styles.container}>
       ${Object.keys(params).map(key => {

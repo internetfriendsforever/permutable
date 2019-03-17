@@ -1,7 +1,7 @@
 import { html } from 'lighterhtml'
 import css from '@happycat/css'
 import button from './button.js'
-import control from './control.js'
+import controls from './controls.js'
 
 const styles = {
   container: css(`
@@ -39,7 +39,7 @@ export default function channel ({ key, item, channels }) {
       </div>
 
       <div className=${styles.controls}>
-        ${control({
+        ${controls({
           params: item.params,
           mappings: item.mappings,
           channels: channels
