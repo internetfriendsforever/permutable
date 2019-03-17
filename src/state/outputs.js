@@ -1,4 +1,4 @@
-import events from '../../events.js'
+import events from './events.js'
 
 const findOpenOutput = event => event.target.closest('#open-output')
 

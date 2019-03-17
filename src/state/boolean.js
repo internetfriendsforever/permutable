@@ -1,5 +1,5 @@
 import { merge } from 'kefir'
-import events from '../../events.js'
+import events from './events.js'
 import midi from './midi.js'
 
 const findBoolean = element => element.closest('[data-control=boolean]')

@@ -1,5 +1,5 @@
 import { merge, combine } from 'kefir'
-import events from '../../events.js'
+import events from './events.js'
 import midi from './midi.js'
 
 const findNumber = element => element.closest(`[data-control=number]`)

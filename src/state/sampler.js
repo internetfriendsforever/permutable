@@ -1,5 +1,5 @@
 import { constant, combine } from 'kefir'
-import events from '../../events.js'
+import events from './events.js'
 // import items from '../channels/items.js'
 
 const items = constant({})

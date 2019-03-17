@@ -1,6 +1,7 @@
+import changes from './controlChanges.js'
 import { combine, merge } from 'kefir'
-import events from '../../../events.js'
-import programs from '../programs.js'
+import events from './events.js'
+import programs from './programs.js'
 
 const findChannel = element => element.closest('[data-channel]')
 const findRemove = element => element.closest('[data-remove]')
@@ -73,7 +74,7 @@ const removed = events.click
     key: element.getAttribute('data-id')
   }))
 
-export default merge([
+const items = merge([
   added.map(item => ({ type: 'add', item })),
   removed.map(item => ({ type: 'remove', item }))
 ]).scan((all, { type, item }) => {
@@ -89,3 +90,27 @@ export default merge([
 
   return modified
 }, {})
+
+export default changes
+  .filter(({ element }) => element.closest('[data-channels]'))
+  .toProperty(() => null)
+  .combine(items, (control, items) => {
+    if (control) {
+      const { element, value, mapping } = control
+      const channel = items[element.closest('[data-channel]').getAttribute('data-id')]
+      const key = element.getAttribute('data-key')
+
+      if (channel) {
+        if (value !== undefined) {
+          channel.params[key].value = value
+        }
+
+        if (mapping !== undefined) {
+          channel.mappings[key] = mapping
+        }
+      }
+    }
+
+    return items
+  })
+  .toProperty(() => {})

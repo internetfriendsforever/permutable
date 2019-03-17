@@ -1,6 +1,6 @@
 import { html } from 'lighterhtml'
 import css from '@happycat/css'
-import button from '../../button.js'
+import button from './button.js'
 
 const styles = {
   container: css(`

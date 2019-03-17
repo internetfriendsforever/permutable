@@ -1,4 +1,4 @@
-import changes from '../../controls/state/changes.js'
+import changes from './controlChanges.js'
 
 export default changes
   .filter(({ element }) => element.closest('[data-master]'))

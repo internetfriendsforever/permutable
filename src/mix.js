@@ -1,6 +1,64 @@
 import { render, html } from 'lighterhtml'
-import mix from './components/mix.js'
-// import { ui, size, animation } from './state/index.js'
+import css from '@happycat/css'
+import baseStyles from './styles.js'
+import button from './components/button.js'
+import control from './components/control.js'
+import program from './components/program.js'
+import channel from './components/channel.js'
+
+const styles = {
+  container: css(baseStyles, `
+    display: flex;
+    min-height: 100vh;
+    max-height: 100vh;
+    border: 2px #aaa solid;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+  `),
+
+  panel: css(`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-right: 2px #aaa solid;
+
+    &:last-child {
+      border-right: 0;
+    }
+  `),
+
+  heading: css(`
+    flex: 0;
+    padding: 0.75rem;
+    border-bottom: 2px #aaa solid;
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+  `),
+
+  content: css(`
+    flex: 1;
+    overflow: auto;
+
+    &:last-child {
+      border-right: 0;
+    }
+  `)
+}
+
+Object.assign(styles, {
+  programs: css(styles.panel, `
+    flex: 0;
+  `),
+
+  master: css(styles.panel, `
+    flex: 0;
+  `),
+
+  player: css(styles.panel, `
+    padding: 0.5rem;
+  `)
+})
 
 export default programs => {
   const container = document.createElement('div')
@@ -15,22 +73,103 @@ export default programs => {
   const buffer = document.createElement('canvas')
   const bufferContext = buffer.getContext('2d')
 
+  const channels = []
+
+  const master = {
+    outputs: [],
+    filters: {
+      params: {},
+      mappings: {}
+    }
+  }
+
   render(container, () => html`
-    ${mix({
-      programs,
-      channels: [],
-      master: {
-        canvas,
-        buffer,
-        outputs: [],
-        filters: {
-          params: {},
-          mappings: {}
-        }
-      }
-    })}
+    <div className=${styles.container}>
+      <div className=${styles.programs}>
+        <h2 className=${styles.heading}>
+          Programs
+        </h2>
+
+        <div className=${styles.content}>
+          ${programs.map(({ name }) => program({
+            name: name || 'no name'
+          }))}
+        </div>
+      </div>
+
+      <div className=${styles.panel}>
+        <h2 className=${styles.heading}>
+          Channels
+        </h2>
+
+        <div data-channels className=${styles.content}>
+          ${Object.keys(channels).map(key => channel({
+            key,
+            channels: channels,
+            item: channels[key]
+          }))}
+        </div>
+      </div>
+
+      <div data-master>
+        <h2 className=${styles.heading}>
+          Master
+        </h2>
+
+        <div className=${styles.player}>
+          ${canvas}
+
+          ${button({
+            key: 'open-output',
+            id: 'open-output',
+            label: 'Open output window'
+          })}
+
+          ${control({
+            params: master.filters.params,
+            mappings: master.filters.mappings
+          })}
+        </div>
+      </div>
+    </div>
   `)
 }
+
+
+
+// import { ui, size, animation } from './state/index.js'
+
+// import { combine, constant } from 'kefir'
+// import rafLimit from '../../rafLimit.js'
+// import frame from '../../frame.js'
+// import channels from './channels/controllable.js'
+// import outputs from './outputs.js'
+// import filters from './filters.js'
+//
+// const master = combine({
+//   outputs,
+//   filters
+// }).toProperty()
+//
+// export const ui = rafLimit(combine({
+//   channels,
+//   master
+// }))
+//
+// export const animation = combine({ frame }, {
+//   channels,
+//   master
+// })
+//
+// const width = constant(1280)
+// const height = constant(720)
+//
+// export const size = rafLimit(combine({
+//   width,
+//   height,
+//   channels,
+//   master
+// }))
 
 
 //

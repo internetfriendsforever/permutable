@@ -1,4 +1,4 @@
-import changes from './changes.js'
+import changes from './controlChanges.js'
 
 export default (initial = {}) => changes
   .scan((all, change) => {

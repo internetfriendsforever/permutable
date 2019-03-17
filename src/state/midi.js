@@ -1,5 +1,5 @@
 import { stream, combine, merge } from 'kefir'
-import events from '../../events.js'
+import events from './events.js'
 
 const midi = stream(emitter => {
   if ('requestMIDIAccess' in navigator) {

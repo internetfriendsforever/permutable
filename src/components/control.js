@@ -1,8 +1,8 @@
 import { html } from 'lighterhtml'
 import css from '@happycat/css'
-import numberControl from './number.js'
-import booleanControl from './boolean.js'
-import samplerControl from './sampler.js'
+import number from './number.js'
+import boolean from './boolean.js'
+import sampler from './sampler.js'
 
 const styles = {
   container: css(`
@@ -25,11 +25,11 @@ export default function control ({ key, params, mappings, channels }) {
 
         switch (props.type) {
           case 'number':
-            return numberControl(props)
+            return number(props)
           case 'boolean':
-            return booleanControl(props)
+            return boolean(props)
           case 'sampler':
-            return samplerControl(props)
+            return sampler(props)
         }
 
         return null

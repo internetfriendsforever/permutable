@@ -1,8 +1,9 @@
 import { html, render } from 'lighterhtml'
 import css from '@happycat/css'
-import controls from '../controls/index.js'
-import rafLimit from '../rafLimit.js'
-import styles from '../styles.js'
+import controls from './state/controls'
+import control from './components/control'
+import rafLimit from './state/rafLimit.js'
+import styles from './styles.js'
 
 const controlStyles = css(styles, `
   position: absolute;
@@ -23,7 +24,7 @@ export default async program => {
   document.body.style.margin = 0
 
   const renderProgram = await Promise.resolve(program.setup(canvas))
-  const state = controls.state(program.params)
+  const state = controls(program.params)
 
   rafLimit(state).onValue(params => {
     if (renderProgram) {
@@ -34,7 +35,7 @@ export default async program => {
       ${canvas}
 
       <div className=${controlStyles}>
-        ${controls.component({
+        ${control({
           params,
 
           mappings: {
