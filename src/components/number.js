@@ -11,15 +11,11 @@ const styles = {
     flex: auto;
     cursor: ew-resize;
     display: flex;
-    padding: 0.4rem 0.5rem;
+    padding: 0.15rem 0.4rem;
 
     :hover {
       color: white;
     }
-
-    // :active {
-    //   color: gold;
-    // }
   `),
 
   indicator: css(`
