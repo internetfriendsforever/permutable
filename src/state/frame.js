@@ -1,6 +1,6 @@
 import { stream } from 'kefir'
 
-export default stream(emitter => {
+export default () => stream(emitter => {
   let frame = 0
 
   function tick () {

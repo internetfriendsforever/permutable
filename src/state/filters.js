@@ -1,6 +1,6 @@
 import changes from './controlChanges.js'
 
-export default changes
+export default () => changes
   .filter(({ element }) => element.closest('[data-master]'))
   .scan((controls, updates) => {
     const key = updates.element.getAttribute('data-key')
@@ -16,10 +16,6 @@ export default changes
     return controls
   }, {
     params: {
-      feedback: {
-        type: 'number',
-        value: 0
-      },
       brightness: {
         type: 'number',
         value: 1
