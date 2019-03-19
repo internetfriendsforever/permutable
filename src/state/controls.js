@@ -8,6 +8,7 @@ export default (initial = {}) => changes
     return {
       ...all,
       [key]: {
+        ...all[key],
         type: type,
         ...change
       }
