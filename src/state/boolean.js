@@ -15,7 +15,6 @@ const toggleUpdates = events.click
   .map(findBoolean)
   .map(element => ({
     element: element,
-    key: element.getAttribute('data-key'),
     value: !getValue(element)
   }))
 
@@ -42,4 +41,4 @@ const midiUpdates = midi
 export default merge([
   toggleUpdates,
   midiUpdates
-])
+]).log()

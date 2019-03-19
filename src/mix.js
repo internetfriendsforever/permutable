@@ -115,11 +115,13 @@ export default programs => {
     })
   })
 
-  rafLimit(combine({
-    channels,
-    filters,
-    outputs
-  })).skipDuplicates().onValue(value => {
+  rafLimit(
+    combine({
+      channels,
+      filters,
+      outputs
+    }).skipDuplicates()
+  ).onValue(value => {
     context.clearRect(0, 0, canvas.width, canvas.height)
 
     Object.values(value.channels).forEach(channel => {
@@ -141,10 +143,12 @@ export default programs => {
     })
   })
 
-  combine({
-    channels,
-    filters
-  }).onValue(value => {
+  rafLimit(
+    combine({
+      channels,
+      filters
+    })
+  ).onValue(value => {
     render(container, () => html`
       <div className=${styles.container}>
         <div className=${styles.programs}>

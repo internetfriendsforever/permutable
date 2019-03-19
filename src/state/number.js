@@ -3,13 +3,14 @@ import events from './events.js'
 import midi from './midi.js'
 
 const findNumber = element => element.closest(`[data-control=number]`)
+const findSlider = element => element.closest(`[data-slider]`)
 const target = event => event.target
 
 const mouseElement = events.mousedown.map(target).map(findNumber).filter()
 
 const mouseActive = merge([
-  events.mousedown.map(target).filter(findNumber).map(() => true),
-  events.mouseup.map(target).filter(findNumber).map(() => false),
+  events.mousedown.map(target).filter(findSlider).map(() => true),
+  events.mouseup.map(target).filter(findSlider).map(() => false),
   events.mousemove.map(event => event.buttons === 1).filter(value => !value)
 ]).skipDuplicates()
 
@@ -21,19 +22,25 @@ const mouseUpdates = combine([
 ], (event, active, element) => {
   if (active && element) {
     const slider = element.querySelector('[data-slider]')
-
     const rect = slider.getBoundingClientRect()
     const position = (event.clientX - Math.floor(rect.left)) / Math.floor(rect.width)
+    const min = parseFloat(slider.getAttribute('data-min'), 10)
+    const max = parseFloat(slider.getAttribute('data-max'), 10)
+    const step = parseFloat(slider.getAttribute('data-step'), 10)
+    const range = (max - min)
+    const stepped = min + Math.floor((position * range) / step) * step
+    const value = Math.max(min, Math.min(max, stepped))
 
     return {
       element,
-      position
+      value
     }
   }
 
   return null
 })
   .filter(value => value !== null)
+  .skipDuplicates((a, b) => a.value === b.value)
 
 const midiUpdates = midi
   .filter(input => findNumber(input.element))
@@ -53,21 +60,4 @@ const midiUpdates = midi
 export default merge([
   midiUpdates,
   mouseUpdates
-]).map(({ element, position }) => {
-  const slider = element.querySelector('[data-slider]')
-  const min = parseFloat(slider.getAttribute('data-min'), 10)
-  const max = parseFloat(slider.getAttribute('data-max'), 10)
-  const step = parseFloat(slider.getAttribute('data-step'), 10)
-  const range = (max - min)
-  const stepped = min + Math.floor((position * range) / step) * step
-  const value = Math.max(min, Math.min(max, stepped))
-
-  return {
-    element,
-    min,
-    max,
-    step,
-    value
-  }
-})
-  .skipDuplicates((a, b) => a.value === b.value)
+])
