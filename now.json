@@ -1,6 +1,16 @@
 {
   "version": 2,
+  "name": "permutable",
   "builds": [
-    { "src": "**", "use": "@now/static" }
+    { "src": "index.html", "use": "@now/static" },
+    { "src": "examples/**/*", "use": "@now/static" },
+    { "src": "dist/*.js", "use": "@now/static" }
+  ],
+
+  "routes": [
+    { "src": "/examples/(.*)", "dest": "/examples/$1"},
+    { "src": "/dist/(.*)", "dest": "/dist/$1"},
+    { "src": "/mixer", "dest": "/mixer.html"},
+    { "src": "/", "dest": "/index.html"}
   ]
 }

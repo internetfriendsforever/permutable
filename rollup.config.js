@@ -1,27 +1,44 @@
-import remote from 'rollup-plugin-remote'
+import pkg from './package.json'
 
-export default {
-  input: './src/index.js',
+const external = [
+  'kefir',
+  'lighterhtml',
+  '@happycat/css'
+]
 
-  output: [
-    {
-      file: 'dist/cjs.js',
-      format: 'cjs'
-    },
-
-    {
-      file: 'dist/esm.js',
-      format: 'esm'
-    },
-
-    {
-      file: 'dist/iife.js',
-      format: 'iife',
-      name: 'permutable'
-    }
-  ],
-
-  plugins: [
-    remote()
-  ]
+const unpkg = id => {
+  const version = pkg.dependencies[id]
+  return `//unpkg.com/${id}@${version}?module`
 }
+
+export default [
+  {
+    input: './src/index.js',
+
+    external: external,
+
+    output: [
+      {
+        file: 'dist/esm.js',
+        format: 'esm',
+        paths: unpkg
+      },
+
+      {
+        file: 'dist/cjs.js',
+        format: 'cjs'
+      },
+
+      {
+        file: 'dist/iife.js',
+        format: 'iife',
+        name: 'permutable',
+        globals: {
+          'kefir': 'Kefir',
+          'lighterhtml': 'lighterhtml',
+          '@happycat/css': 'happycat.css'
+        }
+      }
+    ]
+  }
+]

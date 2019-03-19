@@ -1,8 +1,7 @@
-import css from './css.js'
+import css from '@happycat/css'
 
 export default css(`
   font-family: monospace;
-  font-size: 16px;
   margin: 0;
   background: black;
   color: #aaa;
