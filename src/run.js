@@ -1,16 +1,6 @@
-import { html, render } from 'lighterhtml'
 import css from '@happycat/css'
-import controlsState from './state/controls'
-import controlsComponent from './components/controls'
-import rafLimit from './state/rafLimit.js'
 import styles from './styles.js'
-
-const controlStyles = css(styles, `
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.9);
-`)
+import './elements/index.js'
 
 export default async program => {
   const canvas = document.createElement('canvas')
@@ -22,28 +12,58 @@ export default async program => {
 
   document.body.style.background = 'black'
   document.body.style.margin = 0
+  document.body.appendChild(canvas)
 
-  const renderProgram = await Promise.resolve(program.setup(canvas))
-  const state = controlsState(program.params)
+  const { setup, params } = program
+  const render = await Promise.resolve(setup(canvas))
 
-  rafLimit(state).onValue(params => {
-    if (renderProgram) {
-      renderProgram(params)
+  const paramsContainer = document.createElement('table')
+
+  paramsContainer.className = css(styles, `
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.9);
+  `)
+
+  document.body.appendChild(paramsContainer)
+
+  for (let key in params) {
+    const { type, ...props } = params[key]
+    const element = document.createElement('tr', {
+      is: `p-${type}-param`
+    })
+
+    element.setAttribute('key', key)
+
+    for (let prop in props) {
+      element.setAttribute(prop, props[prop])
     }
 
-    render(document.body, () => html`
-      ${canvas}
+    paramsContainer.appendChild(element)
+  }
 
-      <div className=${controlStyles}>
-        ${controlsComponent({
-          params,
+  let renderRequest
 
-          mappings: {
-            play: null,
-            mix: null
-          }
-        })}
-      </div>
-    `)
-  })
+  function queueRender () {
+    if (!renderRequest) {
+      renderRequest = window.requestAnimationFrame(() => {
+        renderRequest = null
+
+        const values = {}
+
+        for (let element of paramsContainer.childNodes) {
+          values[element.getAttribute('key')] = element.value
+        }
+
+        if (render) {
+          render(values)
+        }
+      })
+    }
+  }
+
+  document.addEventListener('change', queueRender)
+
+  queueRender()
 }

@@ -3,33 +3,25 @@
 
   run({
     params: {
-      radius: {
-        type: 'number',
-        min: 50,
-        max: 200,
-        step: 1,
-        value: 100
-      },
-
-      hue: {
-        type: 'number',
-        value: 0
+      time: {
+        type: 'timer'
       }
     },
 
     setup (canvas) {
       const context = canvas.getContext('2d')
 
-      return function render ({ hue, radius }) {
+      return function render ({ hue, time }) {
         const { width, height } = canvas
 
-        context.fillStyle = `hsl(${hue * 360}, 50%, 50%)`
+        context.fillStyle = 'black'
         context.fillRect(0, 0, width, height)
 
         const x = width / 2
         const y = height / 2
+        const radius = (Math.sin(time / 1000) + 1) * width / 8
 
-        context.fillStyle = 'black'
+        context.fillStyle = 'white'
         context.beginPath()
         context.arc(x, y, radius, 0, Math.PI * 2)
         context.fill()
