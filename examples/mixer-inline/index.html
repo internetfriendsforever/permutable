@@ -43,13 +43,18 @@
     params: {
       time: {
         type: 'timer'
+      },
+
+      offset: {
+        type: 'number',
+        max: Math.PI
       }
     },
 
     setup (canvas) {
       const context = canvas.getContext('2d')
 
-      return function render ({ time }) {
+      return function render ({ time, offset }) {
         const { width, height } = canvas
 
         context.fillStyle = 'black'
@@ -57,7 +62,7 @@
 
         const x = width / 2
         const y = height / 2
-        const radius = (Math.sin(time / 1000) + 1) * width / 8
+        const radius = (Math.sin(time + offset) + 1) * width / 8
 
         context.fillStyle = 'white'
         context.beginPath()

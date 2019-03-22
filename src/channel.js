@@ -1,4 +1,5 @@
 import css from '@happycat/css'
+import createParams from './params'
 import './elements/ButtonElement.js'
 
 const styles = {
@@ -42,9 +43,19 @@ class Channel {
     this.element = document.createElement('tr')
     this.element.classList.add(styles.row)
 
+    this.params = createParams({
+      mix: {
+        type: 'number',
+        value: 0
+      }
+    })
+
     this.element.innerHTML = `
       <td class=${styles.title}>${program.name}</td>
-      <td data-params class=${styles.params}></td>
+      <td class=${styles.params}>
+        <div data-channel-params class=${styles.channelParams}></div>
+        <div data-program-params></div>
+      </td>
       <td data-canvas class=${styles.canvas}>
         <button data-remove is='p-button' class=${styles.removeButton}>
           ×
@@ -56,10 +67,13 @@ class Channel {
     this.removeButton = this.element.querySelector('[data-remove]')
     this.removeButton.addEventListener('click', this.remove)
 
-    this.paramsContainer = this.element.querySelector('[data-params]')
-    this.paramsContainer.appendChild(program.paramsElement)
+    this.channelParamsContainer = this.element.querySelector('[data-channel-params]')
+    this.channelParamsContainer.appendChild(this.params.element)
 
-    program.paramsElement.style.width = '100%'
+    this.programParamsContainer = this.element.querySelector('[data-program-params]')
+    this.programParamsContainer.appendChild(program.params.element)
+
+    program.params.element.style.width = '100%'
 
     this.canvasContainer = this.element.querySelector('[data-canvas]')
     this.canvasContainer.appendChild(program.canvasElement)

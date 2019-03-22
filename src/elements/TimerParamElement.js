@@ -3,11 +3,11 @@ import css from '@happycat/css'
 const styles = {
   name: css(`
     position: relative;
-    padding: 0.4rem 0.4rem 0.15rem;
+    padding: 0.4rem 0.3rem 0.15rem 0.5rem;
   `),
 
   value: css(`
-    padding: 0.4rem 0.4rem 0.15rem;
+    padding: 0.4rem 0.3rem 0.15rem 0.5rem;
     position: relative;
     width: 1%;
   `)
@@ -47,7 +47,7 @@ class TimerParamElement extends HTMLTableRowElement {
   }
 
   update (time) {
-    this.setAttribute('value', time)
+    this.setAttribute('value', (time / 1000).toFixed(2))
     this.dispatchEvent(new CustomEvent('change', { bubbles: true }))
     this.queueUpdate()
   }
@@ -61,7 +61,7 @@ class TimerParamElement extends HTMLTableRowElement {
       case 'key':
         return this.nameElement.innerText = this.getAttribute('key')
       case 'value':
-        return this.valueElement.innerText = parseFloat(this.getAttribute('value'), 10).toFixed(3)
+        return this.valueElement.innerText = this.getAttribute('value')
     }
   }
 }

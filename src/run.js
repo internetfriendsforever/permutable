@@ -29,10 +29,10 @@ export default function run (description, options = {}) {
   document.body.style.margin = 0
 
   program.canvasElement.classList.add(styles.canvas)
-  program.paramsElement.classList.add(styles.params)
+  program.params.element.classList.add(styles.params)
 
   document.body.appendChild(program.canvasElement)
-  document.body.appendChild(program.paramsElement)
+  document.body.appendChild(program.params.element)
 
   if (options.fullscreen !== false) {
     window.addEventListener('resize', resize)

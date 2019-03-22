@@ -10,7 +10,7 @@ const styles = {
     flex: auto;
     cursor: ew-resize;
     display: flex;
-    padding: 0.4rem 0.4rem 0.15rem;
+    padding: 0.4rem 0.3rem 0.15rem 0.3rem;
     background: rgba(255, 255, 255, 0.15);
 
     :hover {
@@ -34,7 +34,7 @@ const styles = {
 
   value: css(`
     position: relative;
-    padding: 0.4rem 0.4rem 0.15rem;
+    padding: 0.4rem 0.3rem 0.15rem 0.5rem;
     width: 1%;
     text-align: right;
   `)
@@ -51,7 +51,7 @@ class NumberParamElement extends HTMLTableRowElement {
     this.setAttribute('min', 0)
     this.setAttribute('max', 1)
     this.setAttribute('step', 0.01)
-    this.setAttribute('value', 0.5)
+    this.setAttribute('value', 0)
 
     this.onMouseDown = this.onMouseDown.bind(this)
     this.className = styles.container
