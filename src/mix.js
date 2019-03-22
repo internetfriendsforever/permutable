@@ -45,7 +45,7 @@ const styles = {
     flex: 0;
   `),
 
-  player: css(`
+  canvas: css(`
     padding: 0.5rem;
   `),
 
@@ -74,7 +74,7 @@ const styles = {
   `)
 }
 
-export default descriptions => {
+export default (descriptions, options = {}) => {
   document.body.classList.add(baseStyles)
   document.body.innerHTML = `
     <div class=${styles.container}>
@@ -91,8 +91,7 @@ export default descriptions => {
           Channels
         </h2>
 
-        <div data-channels class=${styles.content}>
-        </div>
+        <div data-channels class=${styles.content}></div>
       </div>
 
       <div class="${styles.panel} ${styles.master}">
@@ -100,12 +99,21 @@ export default descriptions => {
           Master
         </h2>
 
-        <div class=${styles.player}>
+        <div class=${styles.canvas}>
+          <canvas data-canvas />
         </div>
       </div>
     </div>
   `
 
+  const canvas = document.body.querySelector('[data-canvas]')
+  const context = canvas.getContext('2d')
+
+  canvas.width = options.width || 1280
+  canvas.height = options.height || 720
+  canvas.style.width = canvas.width / 2
+
+  const channels = []
   const programList = document.querySelector('[data-programs]')
   const channelList = document.querySelector('[data-channels]')
 
@@ -114,16 +122,46 @@ export default descriptions => {
 
     button.classList.add(styles.programButton)
     button.innerText = description.name
-    button.addEventListener('click', () => {
-      const channel = createChannel({
-        program: createProgram(description)
-      })
 
+    button.addEventListener('click', () => {
+      const channel = createChannel(createProgram(description))
+
+      channel.program.canvasElement.width = canvas.width
+      channel.program.canvasElement.height = canvas.height
+      channel.program.canvasElement.style.width = canvas.width / 4
+
+      channels.push(channel)
       channelList.appendChild(channel.element)
+
+      channel.element.addEventListener('render', queueRender)
+      channel.element.addEventListener('remove', function onRemove () {
+        channels.splice(channels.indexOf(channel), 1)
+        channel.element.removeEventListener('render', queueRender)
+        channel.element.removeEventListener('remove', onRemove)
+        queueRender()
+      })
     })
 
     programList.appendChild(button)
   })
+
+  let renderRequest
+
+  function render () {
+    renderRequest = null
+
+    context.fillRect(0, 0, canvas.width, canvas.height)
+
+    channels.forEach(channel => {
+      context.drawImage(channel.program.canvasElement, 0, 0)
+    })
+  }
+
+  function queueRender () {
+    if (!renderRequest) {
+      renderRequest = window.requestAnimationFrame(render)
+    }
+  }
 
   // const container = document.createElement('div')
   //

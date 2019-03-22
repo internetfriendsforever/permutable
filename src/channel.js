@@ -9,7 +9,7 @@ const styles = {
 
   title: css(`
     flex: 1;
-    padding: 0.75rem;
+    padding: 1rem;
   `),
 
   canvas: css(`
@@ -29,8 +29,9 @@ const styles = {
 }
 
 class Channel {
-  constructor ({ program }) {
+  constructor (program) {
     this.program = program
+
     this.element = document.createElement('div')
     this.element.innerHTML = `
       <div class=${styles.container}>
@@ -64,6 +65,7 @@ class Channel {
   }
 
   remove () {
+    this.element.dispatchEvent(new CustomEvent('remove'))
     this.removeButton.removeEventListener('click', this.remove)
     this.program.remove()
     this.element.remove()

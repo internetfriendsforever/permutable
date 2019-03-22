@@ -1,9 +1,18 @@
+import css from '@happycat/css'
+
+const styles = {
+  params: css(`
+    border-collapse: collapse;
+  `)
+}
+
 class Program {
   constructor ({ name, params, setup }) {
     if (!name) {
       throw new Error('Program should have a name')
     }
 
+    this.render = this.render.bind(this)
     this.queueRender = this.queueRender.bind(this)
 
     this.name = name
@@ -11,10 +20,12 @@ class Program {
 
     this.canvasElement = document.createElement('canvas')
     this.paramsElement = document.createElement('table')
-
+    this.paramsElement.classList.add(styles.params)
     this.paramsElement.addEventListener('change', this.queueRender)
 
-    this.renderHandler = setup(this.canvasElement)
+    Promise.resolve(setup(this.canvasElement)).then(renderHandler => {
+      this.renderHandler = renderHandler
+    })
 
     for (let key in params) {
       const { type, ...props } = params[key]
@@ -50,17 +61,20 @@ class Program {
     return values
   }
 
+  render () {
+    this.renderRequest = null
+
+    if (this.renderHandler) {
+      this.renderHandler(this.values)
+      this.canvasElement.dispatchEvent(new CustomEvent('render', {
+        bubbles: true
+      }))
+    }
+  }
+
   queueRender () {
     if (!this.renderRequest) {
-      this.renderRequest = window.requestAnimationFrame(async () => {
-        this.renderRequest = null
-
-        const render = await Promise.resolve(this.renderHandler)
-
-        if (render) {
-          render(this.values)
-        }
-      })
+      this.renderRequest = window.requestAnimationFrame(this.render)
     }
   }
 }

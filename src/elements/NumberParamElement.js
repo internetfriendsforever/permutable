@@ -10,7 +10,7 @@ const styles = {
     flex: auto;
     cursor: ew-resize;
     display: flex;
-    padding: 0.15rem 0.4rem;
+    padding: 0.25rem 0.5rem;
 
     :hover {
       color: white;
@@ -29,12 +29,11 @@ const styles = {
 
   name: css(`
     position: relative;
-    flex: auto;
   `),
 
   value: css(`
     position: relative;
-    flex: 0;
+    padding: 0.25rem 0.5rem;
   `)
 }
 
@@ -59,7 +58,7 @@ class NumberParamElement extends HTMLTableRowElement {
         <div class="name ${styles.name}"></div>
         <div class="indicator ${styles.indicator}"></div>
       </td>
-      <td class="value ${styles.name}"></td>
+      <td class="value ${styles.value}"></td>
     `
 
     this.sliderElement = this.querySelector('.slider')

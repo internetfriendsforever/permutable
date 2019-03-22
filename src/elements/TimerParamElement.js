@@ -7,13 +7,12 @@ const styles = {
 
   name: css(`
     position: relative;
-    flex: auto;
-    margin-right: 0.75rem;
+    padding: 0.25rem 0.5rem;
   `),
 
   value: css(`
+    padding: 0.25rem 0.5rem;
     position: relative;
-    flex: 0;
   `)
 }
 
@@ -66,7 +65,7 @@ class TimerParamElement extends HTMLTableRowElement {
       case 'key':
         return this.nameElement.innerText = this.getAttribute('key')
       case 'value':
-        return this.valueElement.innerText = this.getAttribute('value')
+        return this.valueElement.innerText = parseFloat(this.getAttribute('value'), 10).toFixed(3)
     }
   }
 }
