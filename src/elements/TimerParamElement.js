@@ -3,11 +3,11 @@ import css from '@happycat/css'
 const styles = {
   name: css(`
     position: relative;
-    padding: 0.25rem 0.5rem;
+    padding: 0.4rem 0.4rem 0.15rem;
   `),
 
   value: css(`
-    padding: 0.25rem 0.5rem;
+    padding: 0.4rem 0.4rem 0.15rem;
     position: relative;
     width: 1%;
   `)

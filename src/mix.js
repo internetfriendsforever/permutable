@@ -46,18 +46,18 @@ const styles = {
   `),
 
   canvas: css(`
-    padding: 0.5em;
+    padding: 0.5rem;
   `),
 
   programButton: css(`
     width: 100%;
-    padding: 0.75em 1em;
+    padding: 0.8rem 0.8rem 0.6rem;
     border-bottom: 2px #aaa solid;
   `),
 
   heading: css(`
     flex: 0;
-    padding: 0.75rem;
+    padding: 0.8rem 0.8rem 0.6rem;
     border-bottom: 2px #aaa solid;
     font-size: 1em;
     font-weight: normal;

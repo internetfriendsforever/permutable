@@ -10,8 +10,8 @@ const styles = {
     flex: auto;
     cursor: ew-resize;
     display: flex;
-    padding: 0.25rem 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
+    padding: 0.4rem 0.4rem 0.15rem;
+    background: rgba(255, 255, 255, 0.15);
 
     :hover {
       color: white;
@@ -23,8 +23,8 @@ const styles = {
     top: 0;
     left: 0;
     bottom: 0;
-    background: gold;
-    border-left: 1px solid gold;
+    background: white;
+    border-left: 1px solid white;
     mix-blend-mode: difference;
   `),
 
@@ -34,7 +34,7 @@ const styles = {
 
   value: css(`
     position: relative;
-    padding: 0.25rem 0.5rem;
+    padding: 0.4rem 0.4rem 0.15rem;
     width: 1%;
     text-align: right;
   `)

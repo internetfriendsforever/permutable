@@ -11,28 +11,27 @@ const styles = {
   `),
 
   title: css(`
-    padding: 1rem;
+    padding: 0.9rem;
     width: 1%;
   `),
 
   params: css(`
-    padding: 0.75rem 0.5em;
+    padding: 0.5rem 0.5em;
   `),
 
   canvas : css(`
     position: relative;
     width: 1%;
-    padding: 0.5em;
+    padding: 0.5rem;
   `),
 
   removeButton: css(`
     position: absolute;
-    top: 0;
-    right: 0;
-    width: 2em;
-    height: 2em;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 1.5em;
+    height: 1.5em;
     text-align: center;
-    background: black;
   `)
 }
 

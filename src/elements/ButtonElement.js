@@ -4,7 +4,7 @@ const styles = css(`
   display: block;
   font: inherit;
   text-transform: inherit;
-  background: transparent;
+  background: #222;
   color: #aaa;
   cursor: pointer;
   border: 0;
@@ -15,7 +15,7 @@ const styles = css(`
   text-align: left;
 
   [active] {
-    color: gold;
+    color: white;
   }
 
   :not([active]) {
@@ -24,7 +24,7 @@ const styles = css(`
     }
 
     :active {
-      color: gold;
+      background: #111;
     }
   }
 `)

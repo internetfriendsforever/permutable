@@ -9,6 +9,7 @@ const styles = {
     top: 0;
     left: 0;
     background: black;
+    max-width: 250px;
   `),
 
   canvas: css(`
