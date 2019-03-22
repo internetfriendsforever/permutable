@@ -1,7 +1,7 @@
 import css from '@happycat/css'
 import createProgram from './program'
-import bodyStyles from './styles.js'
-import './elements/index.js'
+import baseStyles from './styles.js'
+import './elements/allParams.js'
 
 const styles = {
   params: css(`
@@ -23,17 +23,25 @@ const styles = {
 export default function run (description, options = {}) {
   const program = createProgram(description)
 
-  document.body.classList.add(bodyStyles)
+  document.body.classList.add(baseStyles)
   document.body.style.background = 'black'
   document.body.style.margin = 0
-
-  if (options.fullscreen !== false) {
-    program.fullscreen()
-  }
 
   program.canvasElement.classList.add(styles.canvas)
   program.paramsElement.classList.add(styles.params)
 
   document.body.appendChild(program.canvasElement)
   document.body.appendChild(program.paramsElement)
+
+  if (options.fullscreen !== false) {
+    window.addEventListener('resize', resize)
+  }
+
+  function resize () {
+    program.canvasElement.width = window.innerWidth * window.devicePixelRatio
+    program.canvasElement.height = window.innerHeight * window.devicePixelRatio
+    program.queueRender()
+  }
+
+  resize()
 }

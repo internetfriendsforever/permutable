@@ -4,7 +4,6 @@ class Program {
       throw new Error('Program should have a name')
     }
 
-    this.resize = this.resize.bind(this)
     this.queueRender = this.queueRender.bind(this)
 
     this.name = name
@@ -35,6 +34,12 @@ class Program {
     this.queueRender()
   }
 
+  remove () {
+    this.paramsElement.removeEventListener('change', this.queueRender)
+    this.paramsElement.remove()
+    this.canvasElement.remove()
+  }
+
   get values () {
     const values = {}
 
@@ -45,23 +50,16 @@ class Program {
     return values
   }
 
-  fullscreen () {
-    this.resize()
-    window.addEventListener('resize', this.resize)
-  }
-
-  resize () {
-    this.canvasElement.width = window.innerWidth * window.devicePixelRatio
-    this.canvasElement.height = window.innerHeight * window.devicePixelRatio
-    this.queueRender()
-  }
-
   queueRender () {
     if (!this.renderRequest) {
       this.renderRequest = window.requestAnimationFrame(async () => {
         this.renderRequest = null
+
         const render = await Promise.resolve(this.renderHandler)
-        render(this.values)
+
+        if (render) {
+          render(this.values)
+        }
       })
     }
   }

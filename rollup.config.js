@@ -6,7 +6,7 @@ const external = [
 
 const unpkg = id => {
   const version = pkg.dependencies[id]
-  return `//unpkg.com/${id}@${version}?module`
+  return `https://unpkg.com/${id}@${version}?module`
 }
 
 export default [
