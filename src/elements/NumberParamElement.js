@@ -11,6 +11,7 @@ const styles = {
     cursor: ew-resize;
     display: flex;
     padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
 
     :hover {
       color: white;
@@ -34,6 +35,8 @@ const styles = {
   value: css(`
     position: relative;
     padding: 0.25rem 0.5rem;
+    width: 1%;
+    text-align: right;
   `)
 }
 

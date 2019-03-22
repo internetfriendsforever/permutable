@@ -1,10 +1,6 @@
 import css from '@happycat/css'
 
 const styles = {
-  container: css(`
-    display: table-row;
-  `),
-
   name: css(`
     position: relative;
     padding: 0.25rem 0.5rem;
@@ -13,6 +9,7 @@ const styles = {
   value: css(`
     padding: 0.25rem 0.5rem;
     position: relative;
+    width: 1%;
   `)
 }
 
@@ -27,7 +24,6 @@ class TimerParamElement extends HTMLTableRowElement {
     this.setAttribute('value', 0)
 
     this.update = this.update.bind(this)
-    this.className = styles.container
 
     this.innerHTML = `
       <td class="name ${styles.name}">Name</td>

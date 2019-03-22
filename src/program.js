@@ -3,6 +3,10 @@ import css from '@happycat/css'
 const styles = {
   params: css(`
     border-collapse: collapse;
+  `),
+
+  canvas: css(`
+    display: block;
   `)
 }
 
@@ -19,6 +23,8 @@ class Program {
     this.params = params
 
     this.canvasElement = document.createElement('canvas')
+    this.canvasElement.classList.add(styles.canvas)
+
     this.paramsElement = document.createElement('table')
     this.paramsElement.classList.add(styles.params)
     this.paramsElement.addEventListener('change', this.queueRender)

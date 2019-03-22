@@ -46,7 +46,7 @@ const styles = {
   `),
 
   canvas: css(`
-    padding: 0.5rem;
+    padding: 0.5em;
   `),
 
   programButton: css(`
@@ -71,6 +71,11 @@ const styles = {
     &:last-child {
       border-right: 0;
     }
+  `),
+
+  channelsTable: css(`
+    width: 100%;
+    border-collapse: collapse;
   `)
 }
 
@@ -91,7 +96,9 @@ export default (descriptions, options = {}) => {
           Channels
         </h2>
 
-        <div data-channels class=${styles.content}></div>
+        <div class=${styles.content}>
+          <table data-channels class=${styles.channelsTable}></table>
+        </div>
       </div>
 
       <div class="${styles.panel} ${styles.master}">
@@ -128,7 +135,7 @@ export default (descriptions, options = {}) => {
 
       channel.program.canvasElement.width = canvas.width
       channel.program.canvasElement.height = canvas.height
-      channel.program.canvasElement.style.width = canvas.width / 4
+      channel.program.canvasElement.style.width = canvas.width / 8
 
       channels.push(channel)
       channelList.appendChild(channel.element)

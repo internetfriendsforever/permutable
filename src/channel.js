@@ -2,29 +2,37 @@ import css from '@happycat/css'
 import './elements/ButtonElement.js'
 
 const styles = {
-  container: css(`
-    display: flex;
+  row: css(`
     border-bottom: 2px #aaa solid;
+
+    td {
+      vertical-align: top;
+    }
   `),
 
   title: css(`
-    flex: 1;
     padding: 1rem;
-  `),
-
-  canvas: css(`
-    flex 0;
-    border: 0.5rem transparent solid;
+    width: 1%;
   `),
 
   params: css(`
-    flex 2;
-    padding: 0.75rem;
+    padding: 0.75rem 0.5em;
   `),
 
-  remove: css(`
-    flex: 0;
-    padding: 0.75rem;
+  canvas : css(`
+    position: relative;
+    width: 1%;
+    padding: 0.5em;
+  `),
+
+  removeButton: css(`
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2em;
+    height: 2em;
+    text-align: center;
+    background: black;
   `)
 }
 
@@ -32,25 +40,17 @@ class Channel {
   constructor (program) {
     this.program = program
 
-    this.element = document.createElement('div')
+    this.element = document.createElement('tr')
+    this.element.classList.add(styles.row)
+
     this.element.innerHTML = `
-      <div class=${styles.container}>
-        <div class=${styles.title}>
-          ${program.name}
-        </div>
-
-        <div data-params class=${styles.params}>
-        </div>
-
-        <div data-canvas class=${styles.canvas}>
-        </div>
-
-        <div title='Remove'>
-          <button data-remove is='p-button' class=${styles.remove}>
-            ×
-          </button>
-        </div>
-      </div>
+      <td class=${styles.title}>${program.name}</td>
+      <td data-params class=${styles.params}></td>
+      <td data-canvas class=${styles.canvas}>
+        <button data-remove is='p-button' class=${styles.removeButton}>
+          ×
+        </button>
+      </td>
     `
 
     this.remove = this.remove.bind(this)
@@ -59,6 +59,8 @@ class Channel {
 
     this.paramsContainer = this.element.querySelector('[data-params]')
     this.paramsContainer.appendChild(program.paramsElement)
+
+    program.paramsElement.style.width = '100%'
 
     this.canvasContainer = this.element.querySelector('[data-canvas]')
     this.canvasContainer.appendChild(program.canvasElement)
