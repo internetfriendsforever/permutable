@@ -7,12 +7,13 @@ const styles = css(`
 
 export default class MidiInput extends HTMLElement {
   static get observedAttributes() {
-    return ['pairing', 'name']
+    return ['pairing', 'name', 'port']
   }
 
   constructor () {
     super()
 
+    this.onKeyDown = this.onKeyDown.bind(this)
     this.onMidiMessage = this.onMidiMessage.bind(this)
 
     this.innerHTML = `
@@ -25,6 +26,7 @@ export default class MidiInput extends HTMLElement {
   }
 
   connectedCallback () {
+    document.addEventListener('keydown', this.onKeyDown)
     this.addEventListener('click', this.onClick)
 
     navigator.requestMIDIAccess().then(access => {
@@ -37,6 +39,7 @@ export default class MidiInput extends HTMLElement {
   }
 
   disconnectedCallback () {
+    document.addEventListener('keydown', this.onKeyDown)
     this.removeEventListener('click', this.onClick)
 
     if (this.access) {
@@ -52,6 +55,16 @@ export default class MidiInput extends HTMLElement {
       for (const input of this.access.inputs.values()) {
         console.log('Available for pairing:', input.name)
       }
+    }
+  }
+
+  onKeyDown (event) {
+    if ([46, 8].includes(event.keyCode) && this.hasAttribute('pairing')) {
+      event.preventDefault()
+      this.removeAttribute('id')
+      this.removeAttribute('name')
+      this.removeAttribute('port')
+      this.removeAttribute('pairing')
     }
   }
 
