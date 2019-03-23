@@ -1,13 +1,17 @@
 import css from '@happycat/css'
 
 const styles = {
+  container: css(`
+    line-height: 1.8rem;
+  `),
+
   name: css(`
     position: relative;
-    padding: 0.4rem 0.3rem 0.15rem 0.5rem;
+    padding: 0 0.5rem;
   `),
 
   value: css(`
-    padding: 0.4rem 0.3rem 0.15rem 0.5rem;
+    padding: 0 0.4rem;
     position: relative;
     width: 1%;
   `)
@@ -22,6 +26,7 @@ export default class TimerParamElement extends HTMLTableRowElement {
     super()
 
     this.setAttribute('value', 0)
+    this.classList.add(styles.container)
 
     this.update = this.update.bind(this)
 

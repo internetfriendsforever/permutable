@@ -8,12 +8,18 @@ export default css(`
   color: #aaa;
   user-select: none;
   text-transform: uppercase;
+  font-size: 0.8em;
   line-height: 1.2;
+  letter-spacing: 0.05em;
 
   @font-face {
     font-family: 'IBM Plex Mono';
     font-weight: normal;
     font-style: normal;
     src: url(${plex}) format('woff2')
+  }
+
+  table {
+    font-size: 100%;
   }
 `)

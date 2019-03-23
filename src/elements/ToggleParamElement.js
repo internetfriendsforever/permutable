@@ -3,7 +3,7 @@ import './ButtonElement'
 
 const styles = {
   container: css(`
-    display: table-row;
+    line-height: 1.8rem;
   `),
 
   name: css(`
@@ -13,13 +13,13 @@ const styles = {
 
   button: css(`
     display: block;
-    padding: 0.4rem 0.3rem 0.15rem 0.3rem;
+    padding: 0 0.5rem;
     width: 100%;
   `),
 
   value: css(`
     position: relative;
-    padding: 0.4rem 0.3rem 0.15rem 0.5rem;
+    padding: 0 0.4rem;
     width: 1%;
     text-align: right;
   `),
@@ -40,7 +40,7 @@ export default class ToggleParamElement extends HTMLTableRowElement {
 
     this.onClick = this.onClick.bind(this)
     this.onMidiInput = this.onMidiInput.bind(this)
-    this.className = styles.container
+    this.classList.add(styles.container)
 
     this.innerHTML = `
       <td class="name ${styles.name}">

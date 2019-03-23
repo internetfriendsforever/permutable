@@ -3,7 +3,7 @@ import './MidiInput.js'
 
 const styles = {
   container: css(`
-    display: table-row;
+    line-height: 1.8rem;
   `),
 
   slider: css(`
@@ -11,8 +11,9 @@ const styles = {
     flex: auto;
     cursor: ew-resize;
     display: flex;
-    padding: 0.4rem 0.3rem 0.15rem 0.3rem;
+    padding: 0 0.5rem;
     background: rgba(255, 255, 255, 0.15);
+    border-left: 1px solid #ddd;
 
     :hover {
       color: white;
@@ -25,7 +26,6 @@ const styles = {
     left: 0;
     bottom: 0;
     background: white;
-    border-left: 1px solid white;
     mix-blend-mode: difference;
   `),
 
@@ -35,7 +35,7 @@ const styles = {
 
   value: css(`
     position: relative;
-    padding: 0.4rem 0.5rem 0.15rem 0.5rem;
+    padding: 0 0.4rem;
     width: 1%;
     text-align: right;
   `),
@@ -61,7 +61,8 @@ class NumberParamElement extends HTMLTableRowElement {
 
     this.onMidiInput = this.onMidiInput.bind(this)
     this.onMouseDown = this.onMouseDown.bind(this)
-    this.className = styles.container
+
+    this.classList.add(styles.container)
 
     this.innerHTML = `
       <td class="slider ${styles.slider}">

@@ -3,6 +3,7 @@ import css from '@happycat/css'
 const styles = css(`
   display: block;
   font: inherit;
+  letter-spacing: inherit;
   text-transform: inherit;
   cursor: pointer;
   border: 0;
@@ -16,6 +17,7 @@ const styles = css(`
 
   :hover {
     background: #333;
+    color: white;
   }
 
   :active {
@@ -28,6 +30,7 @@ const styles = css(`
 
     :hover {
       background: white;
+      color: black;
     }
 
     :active {

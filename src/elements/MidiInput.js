@@ -3,7 +3,8 @@ import ButtonElement from './ButtonElement'
 
 const styles = css(`
   margin: 0;
-  padding: 0.4rem 0.3rem 0.15rem 0.3rem;
+  padding: 0 0.4rem;
+  line-height: inherit;
 `)
 
 export default class MidiInput extends HTMLElement {

@@ -12,12 +12,12 @@ const styles = {
   `),
 
   title: css(`
-    padding: 0.9rem;
+    padding: 0.7rem;
     width: 1%;
   `),
 
   params: css(`
-    padding: 0.5rem 0.5em;
+    padding: 0.4rem;
 
     table {
       border-collapse: collapse;
@@ -27,15 +27,15 @@ const styles = {
   canvas : css(`
     position: relative;
     width: 1%;
-    padding: 0.5rem;
+    padding: 0.35rem;
   `),
 
   removeButton: css(`
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    width: 1.5em;
-    height: 1.5em;
+    top: 0.35rem;
+    right: 0.35rem;
+    width: 1.8rem;
+    height: 1.8rem;
     text-align: center;
   `)
 }
@@ -73,8 +73,6 @@ class Channel {
     this.paramsElement = this.element.querySelector('[data-params]')
     this.paramsElement.appendChild(this.params.element)
     this.paramsElement.appendChild(program.params.element)
-
-    program.params.element.style.width = '100%'
 
     this.canvasContainer = this.element.querySelector('[data-canvas]')
     this.canvasContainer.appendChild(program.canvasElement)
