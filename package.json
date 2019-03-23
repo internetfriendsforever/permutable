@@ -1,6 +1,6 @@
 {
   "name": "permutable",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Tools for programming graphics",
   "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
   "main": "dist/cjs.js",
