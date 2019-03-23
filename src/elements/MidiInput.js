@@ -27,6 +27,7 @@ export default class MidiInput extends HTMLElement {
 
   connectedCallback () {
     document.addEventListener('keydown', this.onKeyDown)
+
     this.addEventListener('click', this.onClick)
 
     navigator.requestMIDIAccess().then(access => {
@@ -39,12 +40,12 @@ export default class MidiInput extends HTMLElement {
   }
 
   disconnectedCallback () {
-    document.addEventListener('keydown', this.onKeyDown)
+    document.removeEventListener('keydown', this.onKeyDown)
+
     this.removeEventListener('click', this.onClick)
 
     if (this.access) {
       for (const input of this.access.inputs.values()) {
-        console.log(input)
         input.removeEventListener('midimessage', this.onMidiMessage)
       }
     }
