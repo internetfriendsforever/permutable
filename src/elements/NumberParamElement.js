@@ -35,13 +35,14 @@ const styles = {
 
   value: css(`
     position: relative;
-    padding: 0.4rem 0.3rem 0.15rem 0.5rem;
+    padding: 0.4rem 0.5rem 0.15rem 0.5rem;
     width: 1%;
     text-align: right;
   `),
 
   input: css(`
     width: 1%;
+    padding: 0;
   `)
 }
 

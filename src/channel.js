@@ -18,6 +18,10 @@ const styles = {
 
   params: css(`
     padding: 0.5rem 0.5em;
+
+    table {
+      border-collapse: collapse;
+    }
   `),
 
   canvas : css(`
@@ -53,8 +57,7 @@ class Channel {
     this.element.innerHTML = `
       <td class=${styles.title}>${program.name}</td>
       <td class=${styles.params}>
-        <div data-channel-params class=${styles.channelParams}></div>
-        <div data-program-params></div>
+        <table data-params></table>
       </td>
       <td data-canvas class=${styles.canvas}>
         <button data-remove is='p-button' class=${styles.removeButton}>
@@ -67,11 +70,9 @@ class Channel {
     this.removeButton = this.element.querySelector('[data-remove]')
     this.removeButton.addEventListener('click', this.remove)
 
-    this.channelParamsContainer = this.element.querySelector('[data-channel-params]')
-    this.channelParamsContainer.appendChild(this.params.element)
-
-    this.programParamsContainer = this.element.querySelector('[data-program-params]')
-    this.programParamsContainer.appendChild(program.params.element)
+    this.paramsElement = this.element.querySelector('[data-params]')
+    this.paramsElement.appendChild(this.params.element)
+    this.paramsElement.appendChild(program.params.element)
 
     program.params.element.style.width = '100%'
 

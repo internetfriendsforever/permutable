@@ -10,6 +10,7 @@ const styles = {
     left: 0;
     background: black;
     max-width: 200px;
+    border-collapse: collapse;
   `),
 
   canvas: css(`
@@ -28,11 +29,15 @@ export default function run (description, options = {}) {
   document.body.style.background = 'black'
   document.body.style.margin = 0
 
+  const paramsTable = document.createElement('table')
+
   program.canvasElement.classList.add(styles.canvas)
-  program.params.element.classList.add(styles.params)
+  paramsTable.classList.add(styles.params)
+
+  paramsTable.appendChild(program.params.element)
 
   document.body.appendChild(program.canvasElement)
-  document.body.appendChild(program.params.element)
+  document.body.appendChild(paramsTable)
 
   if (options.fullscreen !== false) {
     window.addEventListener('resize', resize)

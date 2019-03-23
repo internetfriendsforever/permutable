@@ -2,6 +2,7 @@ import css from '@happycat/css'
 import ButtonElement from './ButtonElement'
 
 const styles = css(`
+  margin: 0;
   padding: 0.4rem 0.3rem 0.15rem 0.3rem;
 `)
 

@@ -8,7 +8,7 @@ const styles = {
 
 class Params {
   constructor (description) {
-    this.element = document.createElement('table')
+    this.element = document.createElement('tbody')
     this.element.classList.add(styles.params)
 
     for (let key in description) {
