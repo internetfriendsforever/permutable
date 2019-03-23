@@ -1,4 +1,5 @@
 import css from '@happycat/css'
+import './MidiInput.js'
 
 const styles = {
   container: css(`
@@ -37,12 +38,16 @@ const styles = {
     padding: 0.4rem 0.3rem 0.15rem 0.5rem;
     width: 1%;
     text-align: right;
+  `),
+
+  input: css(`
+    width: 1%;
   `)
 }
 
 class NumberParamElement extends HTMLTableRowElement {
   static get observedAttributes() {
-    return ['key', 'value']
+    return ['key', 'value', 'min', 'max', 'step']
   }
 
   constructor () {
@@ -62,6 +67,9 @@ class NumberParamElement extends HTMLTableRowElement {
         <div class="indicator ${styles.indicator}"></div>
       </td>
       <td class="value ${styles.value}"></td>
+      <td class="input ${styles.input}">
+        <p-midi-input />
+      </td>
     `
 
     this.sliderElement = this.querySelector('.slider')
@@ -120,18 +128,13 @@ class NumberParamElement extends HTMLTableRowElement {
   }
 
   attributeChangedCallback (name) {
-    switch (name) {
-      case 'key':
-        this.nameElement.innerText = this.getAttribute('key')
-      break
-      case 'value':
-        const percent = ((this.value - this.min) / this.range) * 100
-        const decimals = (this.step.toString().split('.')[1] || '').length
-        const displayValue = this.value.toFixed(decimals)
-        this.indicatorElement.style.width = `${percent}%`
-        this.valueElement.innerText = displayValue
-      break
-    }
+    const percent = ((this.value - this.min) / this.range) * 100
+    const decimals = (this.step.toString().split('.')[1] || '').length
+    const displayValue = this.value.toFixed(decimals)
+
+    this.indicatorElement.style.width = `${percent}%`
+    this.nameElement.innerText = this.getAttribute('key')
+    this.valueElement.innerText = displayValue
   }
 }
 

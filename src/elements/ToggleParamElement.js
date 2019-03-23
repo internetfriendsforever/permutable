@@ -25,7 +25,7 @@ const styles = {
   `)
 }
 
-class ToggleParamElement extends HTMLTableRowElement {
+export default class ToggleParamElement extends HTMLTableRowElement {
   static get observedAttributes() {
     return ['key', 'active']
   }

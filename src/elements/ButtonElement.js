@@ -4,8 +4,6 @@ const styles = css(`
   display: block;
   font: inherit;
   text-transform: inherit;
-  background: #222;
-  color: #aaa;
   cursor: pointer;
   border: 0;
   margin: 0;
@@ -13,23 +11,32 @@ const styles = css(`
   outline: 0;
   white-space: nowrap;
   text-align: left;
+  background: #222;
+  color: #aaa;
 
-  [active] {
-    color: white;
+  :hover {
+    background: #333;
   }
 
-  :not([active]) {
+  :active {
+    background: #111;
+  }
+
+  &[active] {
+    background: #ccc;
+    color: #222;
+
     :hover {
-      color: white;
+      background: white;
     }
 
     :active {
-      background: #111;
+      background: #aaa;
     }
   }
 `)
 
-class ButtonElement extends HTMLButtonElement {
+export default class ButtonElement extends HTMLButtonElement {
   constructor () {
     super()
     this.classList.add(styles)

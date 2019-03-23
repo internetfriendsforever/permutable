@@ -25,7 +25,7 @@ const styles = {
   `)
 }
 
-class Trigger extends HTMLTableRowElement {
+export default class Trigger extends HTMLTableRowElement {
   static get observedAttributes() {
     return ['key', 'active']
   }

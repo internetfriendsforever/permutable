@@ -13,7 +13,7 @@ const styles = {
   `)
 }
 
-class TimerParamElement extends HTMLTableRowElement {
+export default class TimerParamElement extends HTMLTableRowElement {
   static get observedAttributes() {
     return ['key', 'value']
   }
