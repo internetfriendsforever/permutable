@@ -22,6 +22,11 @@ const styles = {
     padding: 0.4rem 0.3rem 0.15rem 0.5rem;
     width: 1%;
     text-align: right;
+  `),
+
+  input: css(`
+    width: 1%;
+    padding: 0;
   `)
 }
 
@@ -34,6 +39,7 @@ export default class ToggleParamElement extends HTMLTableRowElement {
     super()
 
     this.onClick = this.onClick.bind(this)
+    this.onMidiInput = this.onMidiInput.bind(this)
     this.className = styles.container
 
     this.innerHTML = `
@@ -41,21 +47,34 @@ export default class ToggleParamElement extends HTMLTableRowElement {
         <button is="p-button" class=${styles.button}></button>
       </td>
       <td class="value ${styles.value}"></td>
+      <td class="input ${styles.input}">
+        <p-midi-input />
+      </td>
     `
 
     this.button = this.querySelector('button')
     this.nameElement = this.querySelector('.name')
     this.valueElement = this.querySelector('.value')
+    this.midiInput = this.querySelector('p-midi-input')
 
     this.update()
   }
 
   connectedCallback () {
     this.nameElement.addEventListener('click', this.onClick)
+    this.midiInput.addEventListener('input', this.onMidiInput)
   }
 
   disconnectedCallback () {
     this.nameElement.removeEventListener('click', this.onClick)
+    this.midiInput.removeEventListener('input', this.onMidiInput)
+  }
+
+  set value (value) {
+    this.toggleAttribute('active', value)
+    this.dispatchEvent(new CustomEvent('change', {
+      bubbles: true
+    }))
   }
 
   get value () {
@@ -63,8 +82,17 @@ export default class ToggleParamElement extends HTMLTableRowElement {
   }
 
   onClick (event) {
-    this.toggleAttribute('active')
-    this.dispatchEvent(new CustomEvent('change', { bubbles: true }))
+    this.value = !this.value
+  }
+
+  onMidiInput (event) {
+    const { type, value } = event.detail
+
+    if (type === 144) {
+      this.value = !this.value
+    } else if (type !== 128) {
+      this.value = value > 0.5
+    }
   }
 
   attributeChangedCallback () {
