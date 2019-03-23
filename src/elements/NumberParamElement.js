@@ -58,6 +58,7 @@ class NumberParamElement extends HTMLTableRowElement {
     this.setAttribute('step', 0.01)
     this.setAttribute('value', 0)
 
+    this.onMidiInput = this.onMidiInput.bind(this)
     this.onMouseDown = this.onMouseDown.bind(this)
     this.className = styles.container
 
@@ -76,13 +77,16 @@ class NumberParamElement extends HTMLTableRowElement {
     this.nameElement = this.querySelector('.name')
     this.indicatorElement = this.querySelector('.indicator')
     this.valueElement = this.querySelector('.value')
+    this.midiInput = this.querySelector('p-midi-input')
   }
 
   connectedCallback () {
+    this.midiInput.addEventListener('input', this.onMidiInput)
     this.sliderElement.addEventListener('mousedown', this.onMouseDown)
   }
 
   disconnectedCallback () {
+    this.midiInput.removeEventListener('input', this.onMidiInput)
     this.sliderElement.removeEventListener('mousedown', this.onMouseDown)
   }
 
@@ -102,6 +106,13 @@ class NumberParamElement extends HTMLTableRowElement {
     return parseFloat(this.getAttribute('value'), 10)
   }
 
+  set value (value) {
+    this.setAttribute('value', value)
+    this.dispatchEvent(new CustomEvent('change', {
+      bubbles: true
+    }))
+  }
+
   get range () {
     return this.max - this.min
   }
@@ -111,9 +122,7 @@ class NumberParamElement extends HTMLTableRowElement {
       const rect = this.sliderElement.getBoundingClientRect()
       const position = (event.clientX - Math.floor(rect.left)) / Math.floor(rect.width)
       const stepped = this.min + Math.floor((position * this.range) / this.step) * this.step
-      const value = Math.max(this.min, Math.min(this.max, stepped))
-      this.setAttribute('value', value)
-      this.dispatchEvent(new CustomEvent('change', { bubbles: true }))
+      this.value = Math.max(this.min, Math.min(this.max, stepped))
     }
 
     const onEnd = () => {
@@ -125,6 +134,10 @@ class NumberParamElement extends HTMLTableRowElement {
 
     document.addEventListener('mousemove', onDrag)
     document.addEventListener('mouseup', onEnd)
+  }
+
+  onMidiInput (event) {
+    this.value = this.min + this.range * event.detail.value
   }
 
   attributeChangedCallback (name) {
