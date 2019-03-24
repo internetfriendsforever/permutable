@@ -1,0 +1,33 @@
+<script type="module">
+  import { run } from '/dist/esm.js'
+
+  run({
+    name: 'timer',
+
+    params: {
+      time: {
+        type: 'timer'
+      }
+    },
+
+    setup (canvas) {
+      const context = canvas.getContext('2d')
+
+      return function render ({ time }) {
+        const { width, height } = canvas
+
+        context.fillStyle = 'black'
+        context.fillRect(0, 0, width, height)
+
+        const x = width / 2
+        const y = height / 2
+        const radius = (Math.sin(time) + 1) * width / 8
+
+        context.fillStyle = 'white'
+        context.beginPath()
+        context.arc(x, y, radius, 0, Math.PI * 2)
+        context.fill()
+      }
+    }
+  })
+</script>

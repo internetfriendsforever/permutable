@@ -1,6 +1,6 @@
 {
   "name": "permutable",
-  "version": "0.1.16",
+  "version": "0.2.2",
   "description": "Tools for programming graphics",
   "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
   "main": "dist/cjs.js",
@@ -23,8 +23,6 @@
     "rollup": "^1.6.0"
   },
   "dependencies": {
-    "@happycat/css": "0.0.12",
-    "kefir": "^3.8.6",
-    "lighterhtml": "^0.9.2"
+    "@happycat/css": "0.0.12"
   }
 }

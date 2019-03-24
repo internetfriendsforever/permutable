@@ -1,49 +1,53 @@
-import { html, render } from 'lighterhtml'
 import css from '@happycat/css'
-import controlsState from './state/controls'
-import controlsComponent from './components/controls'
-import rafLimit from './state/rafLimit.js'
-import styles from './styles.js'
+import createProgram from './program'
+import baseStyles from './styles.js'
+import './elements/allParams.js'
 
-const controlStyles = css(styles, `
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.9);
-`)
+const styles = {
+  params: css(`
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: black;
+    max-width: 200px;
+    border-collapse: collapse;
+  `),
 
-export default async program => {
-  const canvas = document.createElement('canvas')
+  canvas: css(`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  `)
+}
 
-  canvas.width = window.innerWidth * window.devicePixelRatio
-  canvas.height = window.innerHeight * window.devicePixelRatio
-  canvas.style.width = '100%'
-  canvas.style.height = '100%'
+export default function run (description, options = {}) {
+  const program = createProgram(description)
 
+  document.body.classList.add(baseStyles)
   document.body.style.background = 'black'
   document.body.style.margin = 0
 
-  const renderProgram = await Promise.resolve(program.setup(canvas))
-  const state = controlsState(program.params)
+  const paramsTable = document.createElement('table')
 
-  rafLimit(state).onValue(params => {
-    if (renderProgram) {
-      renderProgram(params)
-    }
+  program.canvasElement.classList.add(styles.canvas)
+  paramsTable.classList.add(styles.params)
 
-    render(document.body, () => html`
-      ${canvas}
+  paramsTable.appendChild(program.params.element)
 
-      <div className=${controlStyles}>
-        ${controlsComponent({
-          params,
+  document.body.appendChild(program.canvasElement)
+  document.body.appendChild(paramsTable)
 
-          mappings: {
-            play: null,
-            mix: null
-          }
-        })}
-      </div>
-    `)
-  })
+  if (options.fullscreen !== false) {
+    window.addEventListener('resize', resize)
+  }
+
+  function resize () {
+    program.canvasElement.width = window.innerWidth * window.devicePixelRatio
+    program.canvasElement.height = window.innerHeight * window.devicePixelRatio
+    program.queueRender()
+  }
+
+  resize()
 }

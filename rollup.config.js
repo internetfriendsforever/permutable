@@ -1,14 +1,12 @@
 import pkg from './package.json'
 
 const external = [
-  'kefir',
-  'lighterhtml',
   '@happycat/css'
 ]
 
 const unpkg = id => {
   const version = pkg.dependencies[id]
-  return `//unpkg.com/${id}@${version}?module`
+  return `https://unpkg.com/${id}@${version}?module`
 }
 
 export default [
@@ -34,8 +32,6 @@ export default [
         format: 'iife',
         name: 'permutable',
         globals: {
-          'kefir': 'Kefir',
-          'lighterhtml': 'lighterhtml',
           '@happycat/css': 'happycat.css'
         }
       }
