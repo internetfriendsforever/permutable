@@ -20,11 +20,6 @@
     },
 
     setup (canvas) {
-      canvas.width = 500
-      canvas.height = 500
-      canvas.style.width = '500px'
-      canvas.style.height = '500px'
-
       const context = canvas.getContext('2d')
 
       return function render ({ start, end }) {
@@ -47,6 +42,8 @@
       }
     }
   }, {
-    fullscreen: false
+    fullscreen: false,
+    width: 500,
+    height: 500
   })
 </script>

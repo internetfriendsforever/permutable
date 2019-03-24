@@ -18,6 +18,7 @@ class Program {
     }
 
     this.name = name
+    this.setupHandler = setup
 
     this.render = this.render.bind(this)
     this.queueRender = this.queueRender.bind(this)
@@ -27,12 +28,13 @@ class Program {
 
     this.params = createParams(params)
     this.params.element.addEventListener('change', this.queueRender)
+  }
 
-    Promise.resolve(setup(this.canvasElement)).then(renderHandler => {
+  setup () {
+    Promise.resolve(this.setupHandler(this.canvasElement)).then(renderHandler => {
       this.renderHandler = renderHandler
+      this.queueRender()
     })
-
-    this.queueRender()
   }
 
   remove () {

@@ -198,6 +198,7 @@ export default (descriptions, options = {}) => {
       program.canvasElement.width = canvas.width
       program.canvasElement.height = canvas.height
       program.canvasElement.style.width = canvas.width / 8
+      program.setup()
 
       channels.push(channel)
       channelList.appendChild(channel.element)

@@ -17,6 +17,9 @@ const styles = {
     position: absolute;
     top: 0;
     left: 0;
+  `),
+
+  fullscreen: css(`
     width: 100%;
     height: 100%;
   `)
@@ -40,14 +43,20 @@ export default function run (description, options = {}) {
   document.body.appendChild(paramsTable)
 
   if (options.fullscreen !== false) {
-    window.addEventListener('resize', resize)
+    window.addEventListener('resize', () => resize().then(program.queueRender))
+    program.canvasElement.classList.add(styles.fullscreen)
   }
 
-  function resize () {
-    program.canvasElement.width = window.innerWidth * window.devicePixelRatio
-    program.canvasElement.height = window.innerHeight * window.devicePixelRatio
-    program.queueRender()
+  async function resize (initial) {
+    const ratio = options.ratio || window.devicePixelRatio
+    const width = options.width || window.innerWidth * ratio
+    const height = options.height || window.innerHeight * ratio
+    program.canvasElement.width = width
+    program.canvasElement.height = height
+    program.canvasElement.style.width = options.fullscreen ? '100%' : width / ratio
+    program.canvasElement.style.height = options.fullscreen ? '100%' : height / ratio
   }
 
   resize()
+  program.setup()
 }

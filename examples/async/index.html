@@ -9,12 +9,18 @@
 
       console.log('Waiting 1000ms in setup...')
 
+      context.fillStyle = `red`
+      context.fillRect(50, 50, 100, 100)
+
       await wait(1000)
 
       console.log('Done!')
 
       return async function render (params) {
         const { width, height } = canvas
+
+        context.fillStyle = `blue`
+        context.fillRect(50, 50, 100, 100)
 
         console.log('Waiting 1000ms in render...')
 

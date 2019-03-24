@@ -18,15 +18,14 @@ export const params = {
 export function setup (canvas) {
   const context = canvas.getContext('2d')
 
-  return function render (params) {
+  return function render ({ hue, radius }) {
     const { width, height } = canvas
 
-    context.fillStyle = `hsl(${params.hue.value * 360}, 50%, 50%)`
+    context.fillStyle = `hsl(${hue * 360}, 50%, 50%)`
     context.fillRect(0, 0, width, height)
 
     const x = width / 2
     const y = height / 2
-    const radius = params.radius.value
 
     context.fillStyle = 'black'
     context.beginPath()
