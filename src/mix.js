@@ -2,6 +2,7 @@ import css from '@happycat/css'
 import baseStyles from './styles.js'
 import createProgram from './program'
 import createChannel from './channel'
+import createParams from './params'
 import './elements/ButtonElement.js'
 import './elements/allParams.js'
 
@@ -75,11 +76,17 @@ const styles = {
   channelsTable: css(`
     width: 100%;
     border-collapse: collapse;
+  `),
+
+  params: css(`
+    border-collapse: collapse;
+    margin: 0 0.35rem;
   `)
 }
 
 export default (descriptions, options = {}) => {
   document.body.classList.add(baseStyles)
+
   document.body.innerHTML = `
     <div class=${styles.container}>
       <div class="${styles.panel} ${styles.programs}"}>
@@ -112,6 +119,8 @@ export default (descriptions, options = {}) => {
         <div class=${styles.canvas}>
           <canvas data-canvas />
         </div>
+
+        <table data-params class=${styles.params}></table>
       </div>
     </div>
   `
@@ -128,9 +137,20 @@ export default (descriptions, options = {}) => {
   const channels = []
   const outputs = []
 
+  const params = createParams({
+    brightness: {
+      type: 'number',
+      value: 1
+    }
+  })
+
   const programList = document.querySelector('[data-programs]')
   const channelList = document.querySelector('[data-channels]')
   const outputButton = document.querySelector('[data-open-output]')
+  const paramsContainer = document.querySelector('[data-params]')
+
+  paramsContainer.appendChild(params.element)
+  paramsContainer.addEventListener('change', queueRender)
 
   outputButton.addEventListener('click', event => {
     const name = `Output ${outputs.length + 1}`
@@ -207,6 +227,13 @@ export default (descriptions, options = {}) => {
       context.drawImage(channel.program.canvasElement, 0, 0)
     })
 
+    const { brightness } = params.values
+
+    if (brightness < 1) {
+      context.globalAlpha = 1 - brightness
+      context.fillRect(0, 0, width, height)
+    }
+
     outputs.forEach(output => {
       output.context.drawImage(canvas, 0, 0)
     })
@@ -218,19 +245,3 @@ export default (descriptions, options = {}) => {
     }
   }
 }
-
-function updateCanvasSize (canvas, width, height) {
-  if (canvas.width !== width) {
-    canvas.width = width
-  }
-
-  if (canvas.height !== height) {
-    canvas.height = height
-  }
-}
-
-// Warn reload
-// window.addEventListener('beforeunload', function (event) {
-//   event.preventDefault()
-//   event.returnValue = ''
-// })
