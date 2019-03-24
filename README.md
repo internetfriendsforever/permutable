@@ -52,15 +52,15 @@ Example:
   name: 'circle',
   params: {
     stroke: {
-      type: 'boolean',
+      type: 'toggle',
       value: true
     }
   },
   setup: function (canvas) {
     const context = canvas.getContext('2d')
 
-    return function render (params) {
-      if (params.stroke.value) {
+    return function render ({ stroke }) {
+      if (stroke) {
         context.strokeRect(0, 0, 100, 100)
       } else {
         context.fillRect(0, 0, 100, 100)
@@ -76,15 +76,6 @@ A name for the program
 #### params (object)
 Parameters for the program. These are the types available:
 
-##### boolean
-
-```javascript
-{
-  type: 'boolean',
-  value: false
-}
-```
-
 ##### number
 
 ```javascript
@@ -97,6 +88,31 @@ Parameters for the program. These are the types available:
 }
 ```
 
+##### timer
+
+```javascript
+{
+  type: 'timer'
+}
+```
+
+##### toggle
+
+```javascript
+{
+  type: 'toggle',
+  value: false
+}
+```
+
+##### trigger
+
+```javascript
+{
+  type: 'trigger'
+}
+```
+
 #### setup (function)
 A setup function for the program. The canvas is given as an argument. Expects a render function to be returned.
 
@@ -104,8 +120,8 @@ Example with 2d context:
 ```javascript
 function setup (canvas) {
   const context = canvas.getContext('2d')
-  
-  return function render (params) {
+
+  return function render (values) {
     context.strokeRect(0, 0, 100, 100)
   }
 }
@@ -115,8 +131,8 @@ Example with regl:
 ```javascript
 function setup (canvas) {
   const regl = createREGL({ canvas })
-  
-  return function render (params) {
+
+  return function render (values) {
     regl.poll()
     regl.clear({
       color: [1, 0, 0, 1]
