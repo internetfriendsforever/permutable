@@ -45,12 +45,22 @@ const styles = {
   `),
 
   heading: css(`
-    flex: 0;
-    padding: 0.8rem;
+    flex-grow: 0;
+    display: flex;
     border-bottom: 2px #aaa solid;
-    font-size: 1em;
-    font-weight: normal;
-    margin: 0;
+
+    h2 {
+      flex: auto;
+      font-size: 1em;
+      font-weight: normal;
+      padding: 0.8rem;
+      margin: 0;
+    }
+
+    button {
+      padding: 0 1rem;
+      border-left: 2px #aaa solid;
+    }
   `),
 
   content: css(`
@@ -73,17 +83,17 @@ export default (descriptions, options = {}) => {
   document.body.innerHTML = `
     <div class=${styles.container}>
       <div class="${styles.panel} ${styles.programs}"}>
-        <h2 class=${styles.heading}>
-          Programs
-        </h2>
+        <div class=${styles.heading}>
+          <h2>Programs</h2>
+        </div>
 
         <div data-programs class=${styles.content}></div>
       </div>
 
       <div class=${styles.panel}>
-        <h2 class=${styles.heading}>
-          Channels
-        </h2>
+        <div class=${styles.heading}>
+          <h2>Channels</h2>
+        </div>
 
         <div class=${styles.content}>
           <table data-channels class=${styles.channelsTable}></table>
@@ -91,9 +101,13 @@ export default (descriptions, options = {}) => {
       </div>
 
       <div class="${styles.panel} ${styles.master}">
-        <h2 class=${styles.heading}>
-          Master
-        </h2>
+        <div class=${styles.heading}>
+          <h2>Master</h2>
+
+          <button data-open-output is='p-button'>
+            Open output window
+          </button>
+        </div>
 
         <div class=${styles.canvas}>
           <canvas data-canvas />
@@ -109,9 +123,43 @@ export default (descriptions, options = {}) => {
   canvas.height = options.height || 720
   canvas.style.width = canvas.width / 2
 
+  const { width, height } = canvas
+
   const channels = []
+  const outputs = []
+
   const programList = document.querySelector('[data-programs]')
   const channelList = document.querySelector('[data-channels]')
+  const outputButton = document.querySelector('[data-open-output]')
+
+  outputButton.addEventListener('click', event => {
+    const name = `Output ${outputs.length + 1}`
+    const options = `location=0,width=${width},height=${height}`
+    const win = window.open('', name, options)
+    const canvas = document.createElement('canvas')
+    const context = canvas.getContext('2d')
+    const output = { canvas, context }
+
+    canvas.width = width
+    canvas.height = height
+    canvas.style.width = '100vw'
+    canvas.style.height = '100vh'
+
+    win.addEventListener('load', e => {
+      const { body } = win.document
+      win.document.title = name
+      body.style.margin = 0
+      body.style.background = 'black'
+      body.appendChild(canvas)
+    })
+
+    win.addEventListener('beforeunload', () => {
+      outputs.splice(outputs.indexOf(output), 1)
+    })
+
+    outputs.push(output)
+    queueRender()
+  })
 
   descriptions.forEach(description => {
     if (!description.params) {
@@ -157,6 +205,10 @@ export default (descriptions, options = {}) => {
     channels.forEach(channel => {
       context.globalAlpha = channel.params.values.mix
       context.drawImage(channel.program.canvasElement, 0, 0)
+    })
+
+    outputs.forEach(output => {
+      output.context.drawImage(canvas, 0, 0)
     })
   }
 
