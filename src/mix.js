@@ -220,8 +220,11 @@ export default (descriptions, options = {}) => {
   function render () {
     renderRequest = null
 
+    context.globalCompositeOperation = 'source-over'
     context.globalAlpha = 1
     context.fillRect(0, 0, canvas.width, canvas.height)
+
+    context.globalCompositeOperation = 'screen'
 
     channels.forEach(channel => {
       context.globalAlpha = channel.params.values.mix
@@ -231,6 +234,7 @@ export default (descriptions, options = {}) => {
     const { brightness } = params.values
 
     if (brightness < 1) {
+      context.globalCompositeOperation = 'source-over'
       context.globalAlpha = 1 - brightness
       context.fillRect(0, 0, width, height)
     }
