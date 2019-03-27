@@ -115,6 +115,12 @@ class NumberParamElement extends HTMLTableRowElement {
     }))
   }
 
+  set normalValue (normalValue) {
+    const stepped = this.min + Math.round((normalValue * this.range) / this.step) * this.step
+    const clamped = Math.max(this.min, Math.min(this.max, stepped))
+    this.value = clamped
+  }
+
   get range () {
     return this.max - this.min
   }
@@ -123,8 +129,7 @@ class NumberParamElement extends HTMLTableRowElement {
     const onDrag = event => {
       const rect = this.sliderElement.getBoundingClientRect()
       const position = (event.clientX - Math.floor(rect.left)) / Math.floor(rect.width)
-      const stepped = this.min + Math.floor((position * this.range) / this.step) * this.step
-      this.value = Math.max(this.min, Math.min(this.max, stepped))
+      this.normalValue = position
     }
 
     const onEnd = () => {
@@ -139,7 +144,8 @@ class NumberParamElement extends HTMLTableRowElement {
   }
 
   onMidiInput (event) {
-    this.value = this.min + this.range * event.detail.value
+    console.log(event.detail.value)
+    this.normalValue = event.detail.value
   }
 
   attributeChangedCallback (name) {
