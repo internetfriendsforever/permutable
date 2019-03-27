@@ -12,7 +12,13 @@ const styles = {
 }
 
 class Program {
-  constructor ({ name, params, setup }) {
+  constructor ({
+    name,
+    params,
+    setup
+  }, {
+    autoRender = true
+  } = {}) {
     if (!name) {
       throw new Error('Program should have a name')
     }
@@ -22,18 +28,25 @@ class Program {
 
     this.render = this.render.bind(this)
     this.queueRender = this.queueRender.bind(this)
+    this.autoRender = autoRender
 
     this.canvasElement = document.createElement('canvas')
     this.canvasElement.classList.add(styles.canvas)
 
     this.params = createParams(params)
-    this.params.element.addEventListener('change', this.queueRender)
+
+    if (this.autoRender) {
+      this.params.element.addEventListener('change', this.queueRender)
+    }
   }
 
   setup () {
     Promise.resolve(this.setupHandler(this.canvasElement)).then(renderHandler => {
       this.renderHandler = renderHandler
-      this.queueRender()
+
+      if (this.autoRender) {
+        this.queueRender()
+      }
     })
   }
 

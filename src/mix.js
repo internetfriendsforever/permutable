@@ -192,7 +192,7 @@ export default (descriptions, options = {}) => {
     button.innerText = description.name
 
     button.addEventListener('click', () => {
-      const program = createProgram(description)
+      const program = createProgram(description, { autoRender: false })
       const channel = createChannel(program)
 
       program.canvasElement.width = canvas.width
@@ -227,6 +227,7 @@ export default (descriptions, options = {}) => {
     context.globalCompositeOperation = 'screen'
 
     channels.forEach(channel => {
+      channel.program.render()
       context.globalAlpha = channel.params.values.mix
       context.drawImage(channel.program.canvasElement, 0, 0)
     })

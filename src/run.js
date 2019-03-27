@@ -43,7 +43,10 @@ export default function run (description, options = {}) {
   document.body.appendChild(paramsTable)
 
   if (options.fullscreen !== false) {
-    window.addEventListener('resize', () => resize().then(program.queueRender))
+    window.addEventListener('resize', () => {
+      resize().then(program.render)
+    })
+
     program.canvasElement.classList.add(styles.fullscreen)
   }
 
@@ -58,5 +61,6 @@ export default function run (description, options = {}) {
   }
 
   resize()
+
   program.setup()
 }
