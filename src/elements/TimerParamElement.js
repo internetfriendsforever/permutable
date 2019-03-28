@@ -14,17 +14,6 @@ const styles = {
     padding: 0 0.4rem;
     position: relative;
     width: 1%;
-    animation 1s spin linear infinite;
-
-    @keyframes spin {
-      from {
-        transform: rotate(0deg);
-      }
-
-      to {
-        transform: rotate(360deg);
-      }
-    }
   `)
 }
 
@@ -43,11 +32,11 @@ export default class TimerParamElement extends HTMLTableRowElement {
 
     this.innerHTML = `
       <td class="name ${styles.name}">Name</td>
-      <td class="value ${styles.value}">˙</td>
+      <td class="value ${styles.value}">–</td>
     `
 
     this.nameElement = this.querySelector('.name')
-    // this.valueElement = this.querySelector('.value')
+    this.valueElement = this.querySelector('.value')
   }
 
   connectedCallback () {
@@ -55,6 +44,7 @@ export default class TimerParamElement extends HTMLTableRowElement {
   }
 
   disconnectedCallback () {
+    clearInterval(this.interval)
     window.cancelAnimationFrame(this.updateRequest)
   }
 
