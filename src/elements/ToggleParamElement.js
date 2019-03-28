@@ -56,8 +56,6 @@ export default class ToggleParamElement extends HTMLTableRowElement {
     this.nameElement = this.querySelector('.name')
     this.valueElement = this.querySelector('.value')
     this.midiInput = this.querySelector('p-midi-input')
-
-    this.update()
   }
 
   connectedCallback () {
@@ -71,14 +69,14 @@ export default class ToggleParamElement extends HTMLTableRowElement {
   }
 
   set value (value) {
-    this.toggleAttribute('active', value)
+    this.setAttribute('active', value)
     this.dispatchEvent(new CustomEvent('change', {
       bubbles: true
     }))
   }
 
   get value () {
-    return this.hasAttribute('active')
+    return this.getAttribute('active') === 'true'
   }
 
   onClick (event) {
@@ -95,11 +93,7 @@ export default class ToggleParamElement extends HTMLTableRowElement {
     }
   }
 
-  attributeChangedCallback () {
-    this.update()
-  }
-
-  update () {
+  attributeChangedCallback (name, oldValue, newValue) {
     this.button.innerText = this.getAttribute('key')
     this.valueElement.innerText = this.value ? 'On' : 'Off'
   }
