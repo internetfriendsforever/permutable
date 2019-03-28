@@ -14,29 +14,40 @@ const styles = {
     padding: 0 0.4rem;
     position: relative;
     width: 1%;
+    animation 1s spin linear infinite;
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
   `)
 }
 
 export default class TimerParamElement extends HTMLTableRowElement {
   static get observedAttributes() {
-    return ['key', 'value']
+    return ['key']
   }
 
   constructor () {
     super()
 
-    this.setAttribute('value', 0)
+    this.value = 0
     this.classList.add(styles.container)
 
     this.update = this.update.bind(this)
 
     this.innerHTML = `
       <td class="name ${styles.name}">Name</td>
-      <td class="value ${styles.value}">Value</td>
+      <td class="value ${styles.value}">˙</td>
     `
 
     this.nameElement = this.querySelector('.name')
-    this.valueElement = this.querySelector('.value')
+    // this.valueElement = this.querySelector('.value')
   }
 
   connectedCallback () {
@@ -47,12 +58,13 @@ export default class TimerParamElement extends HTMLTableRowElement {
     window.cancelAnimationFrame(this.updateRequest)
   }
 
-  get value () {
-    return parseFloat(this.getAttribute('value'), 10)
-  }
+  // get value () {
+  //   return parseFloat(this.getAttribute('value'), 10)
+  // }
 
   update (time) {
-    this.setAttribute('value', (time / 1000).toFixed(2))
+    this.value = (time / 1000).toFixed(2)
+    // this.setAttribute('value', )
     this.dispatchEvent(new CustomEvent('change', { bubbles: true }))
     this.queueUpdate()
   }
@@ -61,12 +73,10 @@ export default class TimerParamElement extends HTMLTableRowElement {
     this.updateRequest = window.requestAnimationFrame(this.update)
   }
 
-  attributeChangedCallback (name) {
+  attributeChangedCallback (name, oldValue, newValue) {
     switch (name) {
       case 'key':
         return this.nameElement.innerText = this.getAttribute('key')
-      case 'value':
-        return this.valueElement.innerText = this.getAttribute('value')
     }
   }
 }
