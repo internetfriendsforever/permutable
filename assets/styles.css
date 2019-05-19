@@ -8,10 +8,17 @@
 body {
   font-family: 'IBM Plex Mono';
   background: #222;
-  color: #ddd;
+  color: #aaa;
   font-size: 14px;
   line-height: 1.4;
-  margin: 4vw;
+  margin: 1.5em;
+}
+
+@media (min-width: 800px) {
+  body {
+    font-size: 16px;
+    margin: 3em;
+  }
 }
 
 h1,
@@ -23,6 +30,7 @@ h6 {
   font: inherit;
   text-transform: uppercase;
   margin: 3em 0 1em 0;
+  color: white;
 }
 
 h1,
