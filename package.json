@@ -10,8 +10,9 @@
   ],
   "scripts": {
     "build": "rollup -c",
+    "build-docs": "node build-docs",
     "dev": "concurrently \"rollup -c -w\" \"now-lambda\"",
-    "deploy": "now"
+    "deploy": "npm run build-docs && now"
   },
   "repository": {
     "type": "git",
