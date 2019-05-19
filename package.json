@@ -10,8 +10,9 @@
   ],
   "scripts": {
     "build": "rollup -c",
+    "build-docs": "node build-docs",
     "dev": "concurrently \"rollup -c -w\" \"now-lambda\"",
-    "deploy": "now"
+    "deploy": "npm run build-docs && now"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,8 @@
     "rollup": "^1.6.0"
   },
   "dependencies": {
-    "@happycat/css": "0.0.12"
+    "@happycat/css": "0.0.12",
+    "highlight.js": "^9.15.6",
+    "marked": "^0.6.2"
   }
 }
