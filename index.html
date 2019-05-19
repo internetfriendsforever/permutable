@@ -1,11 +1,112 @@
-<h1>Permutable</h1>
 
-<h2>Examples</h2>
+  <!doctype html>
+  <html lang="en">
+    <head>
+      <title>Permutable</title>
+      <link rel="stylesheet" href="assets/highlight/dracula.css" />
+      <link rel="stylesheet" href="assets/styles.css" />
+    </head>
+    <body>
+      <h1 id="permutable">Permutable</h1>
+<p>Tools for programming graphics</p>
+<h2 id="examples">Examples</h2>
 <ul>
-  <li><a href="examples/basic/index.html">Basic</a></li>
-  <li><a href="examples/async/index.html">Async</a></li>
-  <li><a href="examples/custom-size/index.html">Custom size</a></li>
-  <li><a href="examples/mixer-inline/index.html">Mixer inline</a></li>
-  <li><a href="examples/mixer-load/index.html">Mixer load</a></li>
-  <li><a href="examples/timer/index.html">Timer</a></li>
+<li><a href="examples/basic/index.html">Basic</a></li>
+<li><a href="examples/async/index.html">Async</a></li>
+<li><a href="examples/custom-size/index.html">Custom size</a></li>
+<li><a href="examples/mixer-inline/index.html">Mixer inline</a></li>
+<li><a href="examples/mixer-load/index.html">Mixer load</a></li>
+<li><a href="examples/timer/index.html">Timer</a></li>
 </ul>
+<h2 id="usage">Usage</h2>
+<p>The recommended way is using ECMAScript modules (esm):</p>
+<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">'module'</span>&gt;</span><span class="javascript">
+  <span class="hljs-keyword">import</span> { mix, run } <span class="hljs-keyword">from</span> <span class="hljs-string">'https://unpkg.com/permutable?module'</span>
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
+<p>See full <a href="examples">examples</a></p>
+<h2 id="api">API</h2>
+<h3 id="run">run</h3>
+<p>Run a single program</p>
+<pre><code class="language-javascript">run(program)</code></pre>
+<h3 id="mix">mix</h3>
+<p>Mix multiple programs</p>
+<pre><code class="language-javascript">mix([
+  program1,
+  program2
+])</code></pre>
+<h3 id="program">program</h3>
+<p>A program is defined as a plain JavaScript object</p>
+<pre><code>{
+  name: string,
+  params: object,
+  setup: function
+}</code></pre><p>Example:</p>
+<pre><code class="language-javascript">{
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'circle'</span>,
+  <span class="hljs-attr">params</span>: {
+    <span class="hljs-attr">stroke</span>: {
+      <span class="hljs-attr">type</span>: <span class="hljs-string">'toggle'</span>,
+      <span class="hljs-attr">value</span>: <span class="hljs-literal">true</span>
+    }
+  },
+  <span class="hljs-attr">setup</span>: <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">canvas</span>) </span>{
+    <span class="hljs-keyword">const</span> context = canvas.getContext(<span class="hljs-string">'2d'</span>)
+
+    <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">render</span> (<span class="hljs-params">{ stroke }</span>) </span>{
+      <span class="hljs-keyword">if</span> (stroke) {
+        context.strokeRect(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">100</span>, <span class="hljs-number">100</span>)
+      } <span class="hljs-keyword">else</span> {
+        context.fillRect(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">100</span>, <span class="hljs-number">100</span>)
+      }
+    }
+  }
+}</code></pre>
+<h4 id="name-string">name (string)</h4>
+<p>A name for the program</p>
+<h4 id="params-object">params (object)</h4>
+<p>Parameters for the program. These are the types available:</p>
+<h5 id="number">number</h5>
+<pre><code class="language-javascript">{
+  <span class="hljs-attr">type</span>: <span class="hljs-string">'number'</span>,
+  <span class="hljs-attr">value</span>: <span class="hljs-number">5</span>,
+  <span class="hljs-attr">min</span>: <span class="hljs-number">0</span>,
+  <span class="hljs-attr">max</span>: <span class="hljs-number">10</span>,
+  <span class="hljs-attr">step</span>: <span class="hljs-number">1</span>
+}</code></pre>
+<h5 id="timer">timer</h5>
+<pre><code class="language-javascript">{
+  <span class="hljs-attr">type</span>: <span class="hljs-string">'timer'</span>
+}</code></pre>
+<h5 id="toggle">toggle</h5>
+<pre><code class="language-javascript">{
+  <span class="hljs-attr">type</span>: <span class="hljs-string">'toggle'</span>,
+  <span class="hljs-attr">value</span>: <span class="hljs-literal">false</span>
+}</code></pre>
+<h5 id="trigger">trigger</h5>
+<pre><code class="language-javascript">{
+  <span class="hljs-attr">type</span>: <span class="hljs-string">'trigger'</span>
+}</code></pre>
+<h4 id="setup-function">setup (function)</h4>
+<p>A setup function will run once when the program is loaded. In it, the canvas element is being provided as a parameter. A render function is expected to be returned from the setup function. It will be called anytime the params changes.</p>
+<p>Example with <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial">2d context</a>:</p>
+<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setup</span> (<span class="hljs-params">canvas</span>) </span>{
+  <span class="hljs-keyword">const</span> context = canvas.getContext(<span class="hljs-string">'2d'</span>)
+
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">render</span> (<span class="hljs-params">values</span>) </span>{
+    context.strokeRect(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">100</span>, <span class="hljs-number">100</span>)
+  }
+}</code></pre>
+<p>Example using <a href="http://regl.party">regl</a>:</p>
+<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">setup</span> (<span class="hljs-params">canvas</span>) </span>{
+  <span class="hljs-keyword">const</span> regl = createREGL({ canvas })
+
+  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">render</span> (<span class="hljs-params">values</span>) </span>{
+    regl.poll()
+    regl.clear({
+      <span class="hljs-attr">color</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]
+    })
+  }
+}</code></pre>
+
+    </body>
+  </html>

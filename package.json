@@ -23,6 +23,8 @@
     "rollup": "^1.6.0"
   },
   "dependencies": {
-    "@happycat/css": "0.0.12"
+    "@happycat/css": "0.0.12",
+    "highlight.js": "^9.15.6",
+    "marked": "^0.6.2"
   }
 }

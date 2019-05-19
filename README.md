@@ -1,13 +1,22 @@
 # Permutable
 Tools for programming graphics
 
+## Examples
+
+- [Basic](examples/basic/index.html)
+- [Async](examples/async/index.html)
+- [Custom size](examples/custom-size/index.html)
+- [Mixer inline](examples/mixer-inline/index.html)
+- [Mixer load](examples/mixer-load/index.html)
+- [Timer](examples/timer/index.html)
+
 ## Usage
 
 The recommended way is using ECMAScript modules (esm):
 
 ```html
 <script type='module'>
-  import { run, mix } from 'https://unpkg.com/permutable?module'
+  import { mix, run } from 'https://unpkg.com/permutable?module'
 </script>
 ```
 
@@ -47,6 +56,7 @@ A program is defined as a plain JavaScript object
 ```
 
 Example:
+
 ```javascript
 {
   name: 'circle',
@@ -114,9 +124,9 @@ Parameters for the program. These are the types available:
 ```
 
 #### setup (function)
-A setup function for the program. The canvas is given as an argument. Expects a render function to be returned.
+A setup function will run once when the program is loaded. In it, the canvas element is being provided as a parameter. A render function is expected to be returned from the setup function. It will be called anytime the params changes.
 
-Example with 2d context:
+Example with [2d context](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial):
 ```javascript
 function setup (canvas) {
   const context = canvas.getContext('2d')
@@ -127,7 +137,7 @@ function setup (canvas) {
 }
 ```
 
-Example with regl:
+Example using [regl](http://regl.party):
 ```javascript
 function setup (canvas) {
   const regl = createREGL({ canvas })

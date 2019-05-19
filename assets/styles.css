@@ -1,0 +1,66 @@
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-weight: normal;
+  font-style: normal;
+  src: url(fonts/IBMPlexMono-Regular.woff2) format('woff2')
+}
+
+body {
+  font-family: 'IBM Plex Mono';
+  background: #222;
+  color: #ddd;
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 4vw;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font: inherit;
+  text-transform: uppercase;
+  margin: 3em 0 1em 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  max-width: 36em;
+}
+
+p {
+  margin: 1em 0;
+}
+
+code {
+  display: block;
+  background: #111;
+  padding: 1em;
+  overflow: auto;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+ul li::before {
+  content: "-";
+  margin-right: 0.5em;
+}
+
+a {
+  text-decoration: none;
+  color: skyblue;
+}
+
+a:hover {
+  color: white;
+}
