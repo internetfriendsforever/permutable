@@ -1,15 +1,6 @@
 # Permutable
 Tools for programming graphics
 
-## Examples
-
-- [Basic](examples/basic/index.html)
-- [Async](examples/async/index.html)
-- [Custom size](examples/custom-size/index.html)
-- [Mixer inline](examples/mixer-inline/index.html)
-- [Mixer load](examples/mixer-load/index.html)
-- [Timer](examples/timer/index.html)
-
 ## Usage
 
 The recommended way is using ECMAScript modules (esm):
@@ -20,7 +11,14 @@ The recommended way is using ECMAScript modules (esm):
 </script>
 ```
 
-See full [examples](examples)
+## Examples
+
+- [Basic](examples/basic/index.html)
+- [Async](examples/async/index.html)
+- [Custom size](examples/custom-size/index.html)
+- [Mixer inline](examples/mixer-inline/index.html)
+- [Mixer load](examples/mixer-load/index.html)
+- [Timer](examples/timer/index.html)
 
 ## API
 
