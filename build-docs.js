@@ -1,6 +1,11 @@
 const fs = require('fs')
 const marked = require('marked')
 const hljs = require('highlight.js')
+const package = require('./package.json')
+
+const [major, minor] = package.version.split('.')
+
+const docVersion = `${major}.${minor}`
 
 marked.setOptions({
   highlight: function(code, lang) {
@@ -26,7 +31,7 @@ const html = `
       <link rel="stylesheet" href="assets/styles.css" />
     </head>
     <body>
-      ${docs}
+      ${docs.replace('{{VERSION}}', docVersion)}
     </body>
   </html>
 `
