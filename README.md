@@ -18,6 +18,7 @@ The recommended way is using ECMAScript modules (esm):
 - [Custom size](examples/custom-size/index.html)
 - [Mixer inline](examples/mixer-inline/index.html)
 - [Mixer load](examples/mixer-load/index.html)
+- [Mixer 4K](examples/mixer-4K/index.html)
 - [Timer](examples/timer/index.html)
 
 ## API

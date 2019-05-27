@@ -1,0 +1,35 @@
+<script type="module">
+  import { mix } from '/dist/esm.js'
+
+  const circle = {
+    name: 'circle',
+    params: {
+      time: {
+        type: 'timer'
+      }
+    },
+    setup: function (canvas) {
+      const context = canvas.getContext('2d')
+
+      context.fillStyle = 'white'
+
+      return function render ({ time }) {
+        const { width, height } = canvas
+
+        const radius = Math.abs(Math.sin(time) * Math.min(width, height) / 2)
+
+        context.clearRect(0, 0, width, height)
+        context.beginPath()
+        context.arc(width / 2, height / 2, radius, 0, Math.PI * 2)
+        context.fill()
+      }
+    }
+  }
+
+  mix([
+    circle
+  ], {
+    width: 3840,
+    height: 2160
+  })
+</script>

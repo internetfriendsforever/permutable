@@ -130,7 +130,6 @@ export default (descriptions, options = {}) => {
 
   canvas.width = options.width || 1280
   canvas.height = options.height || 720
-  canvas.style.width = canvas.width / 2
 
   const { width, height } = canvas
 
@@ -210,6 +209,8 @@ export default (descriptions, options = {}) => {
         channel.element.removeEventListener('remove', onRemove)
         queueRender()
       })
+
+      queueLayout()
     })
 
     programList.appendChild(button)
@@ -218,8 +219,6 @@ export default (descriptions, options = {}) => {
   let renderRequest
 
   function render () {
-    renderRequest = null
-
     context.globalCompositeOperation = 'source-over'
     context.globalAlpha = 1
     context.fillRect(0, 0, canvas.width, canvas.height)
@@ -243,6 +242,8 @@ export default (descriptions, options = {}) => {
     outputs.forEach(output => {
       output.context.drawImage(canvas, 0, 0)
     })
+
+    renderRequest = null
   }
 
   function queueRender () {
@@ -250,4 +251,38 @@ export default (descriptions, options = {}) => {
       renderRequest = window.requestAnimationFrame(render)
     }
   }
+
+  let layoutRequest
+
+  function layout () {
+    const targets = [{
+      canvas: canvas,
+      ratio: 2.2
+    }, ...channels.map(channel => ({
+      canvas: channel.program.canvasElement,
+      ratio: 4
+    }))]
+
+    targets.forEach(target => {
+      let displayWidth = target.canvas.width
+
+      while (displayWidth > window.innerWidth / target.ratio) {
+        displayWidth = displayWidth / 2
+      }
+
+      target.canvas.style.width = displayWidth
+    })
+
+    layoutRequest = null
+  }
+
+  function queueLayout () {
+    if (!layoutRequest) {
+      layoutRequest = window.requestAnimationFrame(layout)
+    }
+  }
+
+  queueLayout()
+
+  window.addEventListener('resize', queueLayout)
 }
