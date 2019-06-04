@@ -164,13 +164,19 @@ export default (descriptions, options = {}) => {
     canvas.style.width = '100vw'
     canvas.style.height = '100vh'
 
-    win.addEventListener('load', e => {
+    const setup = () => {
       const { body } = win.document
       win.document.title = name
       body.style.margin = 0
       body.style.background = 'black'
       body.appendChild(canvas)
-    })
+    }
+
+    if ('document' in win) {
+      setup()
+    } else {
+      win.addEventListener('load', () => setup)
+    }
 
     win.addEventListener('beforeunload', () => {
       outputs.splice(outputs.indexOf(output), 1)
