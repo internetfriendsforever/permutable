@@ -3,7 +3,7 @@ import baseStyles from './styles.js'
 import createProgram from './program'
 import createChannel from './channel'
 import createParams from './params'
-import compositor from './compositor'
+import defaultCompositor from './compositor'
 import './elements/ButtonElement.js'
 import './elements/allParams.js'
 
@@ -127,6 +127,8 @@ export default (descriptions, options = {}) => {
   `
 
   const canvas = document.body.querySelector('[data-canvas]')
+
+  const compositor = options.compositor || defaultCompositor
   const compose = compositor.setup(canvas)
 
   canvas.width = options.width || 1280
