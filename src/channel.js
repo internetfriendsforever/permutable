@@ -41,18 +41,13 @@ const styles = {
 }
 
 class Channel {
-  constructor (program) {
+  constructor (program, params) {
     this.program = program
 
     this.element = document.createElement('tr')
     this.element.classList.add(styles.row)
 
-    this.params = createParams({
-      mix: {
-        type: 'number',
-        value: 0
-      }
-    })
+    this.params = createParams(params)
 
     this.element.innerHTML = `
       <td class=${styles.title}>${program.name}</td>
