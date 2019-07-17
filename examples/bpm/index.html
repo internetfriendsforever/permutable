@@ -1,0 +1,49 @@
+<script type="module">
+  import { run } from '/dist/esm.js'
+
+  run({
+    name: 'bpm example',
+
+    params: {
+      bpm: {
+        type: 'bpm'
+      },
+
+      time: {
+        type: 'timer'
+      },
+
+      offset: {
+        type: 'number',
+        value: 0.05
+      },
+
+      duration: {
+        type: 'number',
+        value: 0.2
+      },
+
+      every: {
+        type: 'number',
+        min: 1,
+        value: 1,
+        max: 8,
+        step: 1
+      }
+    },
+
+    setup (canvas) {
+      const context = canvas.getContext('2d')
+
+      return function render ({ bpm, time, offset, duration, every }) {
+        const { width, height } = canvas
+
+        const beat = ((time / 60) * bpm) + offset
+        const phase = Math.floor((beat / every) % 1 + duration / every)
+
+        context.fillStyle = `rgb(${phase * 255}, 0, 0)`
+        context.fillRect(0, 0, width, height)
+      }
+    }
+  })
+</script>
