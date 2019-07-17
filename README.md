@@ -122,6 +122,16 @@ Parameters for the program. These are the types available:
 }
 ```
 
+##### bpm
+
+```javascript
+{
+  type: 'bpm'
+  value: 120,
+  step: 1
+}
+```
+
 #### setup (function)
 A setup function will run once when the program is loaded. In it, the canvas element is being provided as a parameter. A render function is expected to be returned from the setup function. It will be called anytime the params changes.
 
