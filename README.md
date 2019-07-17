@@ -15,6 +15,7 @@ The recommended way is using ECMAScript modules (esm):
 
 - [Basic](examples/basic/index.html)
 - [Async](examples/async/index.html)
+- [BPM](examples/bpm/index.html)
 - [Custom size](examples/custom-size/index.html)
 - [Mixer inline](examples/mixer-inline/index.html)
 - [Mixer load](examples/mixer-load/index.html)
