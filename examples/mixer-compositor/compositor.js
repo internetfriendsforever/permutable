@@ -1,16 +1,34 @@
 export const channelParams = {
   compose: {
     type: 'toggle'
+  },
+
+  offset: {
+    type: 'number',
+    value: 0.05
+  },
+
+  duration: {
+    type: 'number',
+    value: 0.2
+  },
+
+  every: {
+    type: 'number',
+    min: 1,
+    value: 1,
+    max: 8,
+    step: 1
   }
 }
 
 export const params = {
   bpm: {
-    type: 'number',
-    value: 120,
-    min: 40,
-    max: 220,
-    step: 0.5
+    type: 'bpm'
+  },
+
+  screen: {
+    type: 'toggle'
   },
 
   time: {
@@ -21,23 +39,27 @@ export const params = {
 export function setup (canvas) {
   const context = canvas.getContext('2d')
 
-  return function render (channels, values) {
-    const activeChannels = channels.filter(channel => (
-      channel.params.values.compose
-    ))
-
+  return function render (channels, { bpm, time, screen }) {
     const { width, height } = canvas
 
-    const ms = values.time * 1000
-    const beat = ms * (values.bpm / 60000)
+    const beat = (time / 60) * bpm
 
+    context.globalCompositeOperation = 'source-over'
     context.fillRect(0, 0, canvas.width, canvas.height)
 
-    if (activeChannels.length) {
-      const index = Math.floor(beat) % activeChannels.length
-      const channel = activeChannels[index]
-
-      context.drawImage(channel.program.canvasElement, 0, 0)
+    if (screen) {
+      context.globalCompositeOperation = 'screen'
     }
+
+    channels.filter(channel => {
+      const { compose, offset, duration, every } = channel.params.values
+
+      if (compose) {
+        const beat = ((time / 60) * bpm) + offset
+        return Math.floor((beat / every) % 1 + duration / every)
+      }
+    }).forEach(channel => {
+      context.drawImage(channel.program.canvasElement, 0, 0)
+    })
   }
 }

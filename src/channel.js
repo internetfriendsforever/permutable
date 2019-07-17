@@ -24,6 +24,10 @@ const styles = {
     }
   `),
 
+  channelParams: css(`
+    border-bottom: 10px black solid;
+  `),
+
   canvas : css(`
     position: relative;
     width: 1%;
@@ -64,6 +68,8 @@ class Channel {
     this.remove = this.remove.bind(this)
     this.removeButton = this.element.querySelector('[data-remove]')
     this.removeButton.addEventListener('click', this.remove)
+
+    this.params.element.classList.add(styles.channelParams)
 
     this.paramsElement = this.element.querySelector('[data-params]')
     this.paramsElement.appendChild(this.params.element)
