@@ -196,7 +196,7 @@ export default (descriptions, options = {}) => {
     button.innerText = description.name
 
     button.addEventListener('click', () => {
-      const program = createProgram(description)
+      const program = createProgram(description, { autoRender: false })
       const channel = createChannel(program, compositor.channelParams)
 
       program.canvasElement.width = canvas.width
@@ -225,6 +225,14 @@ export default (descriptions, options = {}) => {
   let renderRequest
 
   function render () {
+    channels.forEach(channel => {
+      console.log(channel.program.dirty)
+      
+      if (channel.program.dirty) {
+        channel.program.render()
+      }
+    })
+
     compose(channels, params.values)
 
     outputs.forEach(output => {

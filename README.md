@@ -20,6 +20,7 @@ The recommended way is using ECMAScript modules (esm):
 - [Mixer inline](examples/mixer-inline/index.html)
 - [Mixer load](examples/mixer-load/index.html)
 - [Mixer 4K](examples/mixer-4K/index.html)
+- [Mixer compositor](examples/mixer-compositor/index.html)
 - [Timer](examples/timer/index.html)
 
 ## API

@@ -1,13 +1,12 @@
 <script type="module">
   import { mix } from '/dist/esm.js'
+  import * as compositor from './compositor.js'
 
   Promise.all([
-    import('./compositor.js'),
     import('./circle.js')
-  ]).then(([
-    compositor,
-    ...programs
-  ]) => {
-    mix(programs, { compositor })
+  ]).then((programs) => {
+    mix(programs, {
+      compositor
+    })
   })
 </script>
