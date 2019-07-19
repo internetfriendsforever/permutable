@@ -8,7 +8,7 @@ export default css(`
   color: #aaa;
   user-select: none;
   text-transform: uppercase;
-  font-size: 0.8em;
+  font-size: 12px;
   line-height: 1.2;
   letter-spacing: 0.05em;
 

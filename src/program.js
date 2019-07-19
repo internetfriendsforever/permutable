@@ -16,8 +16,6 @@ class Program {
     name,
     params,
     setup
-  }, {
-    autoRender = true
   } = {}) {
     if (!name) {
       throw new Error('Program should have a name')
@@ -28,25 +26,19 @@ class Program {
 
     this.render = this.render.bind(this)
     this.queueRender = this.queueRender.bind(this)
-    this.autoRender = autoRender
 
     this.canvasElement = document.createElement('canvas')
     this.canvasElement.classList.add(styles.canvas)
 
     this.params = createParams(params)
 
-    if (this.autoRender) {
-      this.params.element.addEventListener('change', this.queueRender)
-    }
+    this.params.element.addEventListener('change', this.queueRender)
   }
 
   setup () {
     Promise.resolve(this.setupHandler(this.canvasElement)).then(renderHandler => {
       this.renderHandler = renderHandler
-
-      if (this.autoRender) {
-        this.queueRender()
-      }
+      this.queueRender()
     })
   }
 

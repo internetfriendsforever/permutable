@@ -48,13 +48,8 @@ export default class TimerParamElement extends HTMLTableRowElement {
     window.cancelAnimationFrame(this.updateRequest)
   }
 
-  // get value () {
-  //   return parseFloat(this.getAttribute('value'), 10)
-  // }
-
   update (time) {
-    this.value = (time / 1000).toFixed(2)
-    // this.setAttribute('value', )
+    this.value = parseFloat((time / 1000).toFixed(2), 10)
     this.dispatchEvent(new CustomEvent('change', { bubbles: true }))
     this.queueUpdate()
   }

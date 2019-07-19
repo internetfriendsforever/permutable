@@ -20,10 +20,10 @@ const styles = {
 
   buttons: css(`
     display: flex;
+    padding: 0;
 
     button {
       margin: 0;
-      margin-right: 2px;
       padding: 0 0.4rem;
       line-height: inherit;
     }

@@ -24,6 +24,10 @@ const styles = {
     }
   `),
 
+  composeParams: css(`
+    border-left: 2px #ccc solid;
+  `),
+
   canvas : css(`
     position: relative;
     width: 1%;
@@ -41,28 +45,26 @@ const styles = {
 }
 
 class Channel {
-  constructor (program) {
+  constructor (program, params) {
     this.program = program
 
     this.element = document.createElement('tr')
     this.element.classList.add(styles.row)
 
-    this.params = createParams({
-      mix: {
-        type: 'number',
-        value: 0
-      }
-    })
+    this.params = createParams(params)
 
     this.element.innerHTML = `
       <td class=${styles.title}>${program.name}</td>
       <td class=${styles.params}>
-        <table data-params></table>
+        <table data-program-params></table>
       </td>
       <td data-canvas class=${styles.canvas}>
         <button data-remove is='p-button' class=${styles.removeButton}>
           ×
         </button>
+      </td>
+      <td class="${styles.params} ${styles.composeParams}">
+        <table data-channel-params></table>
       </td>
     `
 
@@ -70,9 +72,11 @@ class Channel {
     this.removeButton = this.element.querySelector('[data-remove]')
     this.removeButton.addEventListener('click', this.remove)
 
-    this.paramsElement = this.element.querySelector('[data-params]')
-    this.paramsElement.appendChild(this.params.element)
-    this.paramsElement.appendChild(program.params.element)
+    this.programParamsCell = this.element.querySelector('[data-program-params]')
+    this.programParamsCell.appendChild(program.params.element)
+
+    this.paramsCell = this.element.querySelector('[data-channel-params]')
+    this.paramsCell.appendChild(this.params.element)
 
     this.canvasContainer = this.element.querySelector('[data-canvas]')
     this.canvasContainer.appendChild(program.canvasElement)

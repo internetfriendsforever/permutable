@@ -3,6 +3,7 @@ import baseStyles from './styles.js'
 import createProgram from './program'
 import createChannel from './channel'
 import createParams from './params'
+import defaultCompositor from './compositor'
 import './elements/ButtonElement.js'
 import './elements/allParams.js'
 
@@ -126,7 +127,9 @@ export default (descriptions, options = {}) => {
   `
 
   const canvas = document.body.querySelector('[data-canvas]')
-  const context = canvas.getContext('2d')
+
+  const compositor = options.compositor || defaultCompositor
+  const compose = compositor.setup(canvas)
 
   canvas.width = options.width || 1280
   canvas.height = options.height || 720
@@ -136,12 +139,7 @@ export default (descriptions, options = {}) => {
   const channels = []
   const outputs = []
 
-  const params = createParams({
-    brightness: {
-      type: 'number',
-      value: 1
-    }
-  })
+  const params = createParams(compositor.params)
 
   const programList = document.querySelector('[data-programs]')
   const channelList = document.querySelector('[data-channels]')
@@ -183,6 +181,7 @@ export default (descriptions, options = {}) => {
     })
 
     outputs.push(output)
+
     queueRender()
   })
 
@@ -197,8 +196,8 @@ export default (descriptions, options = {}) => {
     button.innerText = description.name
 
     button.addEventListener('click', () => {
-      const program = createProgram(description, { autoRender: false })
-      const channel = createChannel(program)
+      const program = createProgram(description)
+      const channel = createChannel(program, compositor.channelParams)
 
       program.canvasElement.width = canvas.width
       program.canvasElement.height = canvas.height
@@ -217,6 +216,7 @@ export default (descriptions, options = {}) => {
       })
 
       queueLayout()
+      queueRender()
     })
 
     programList.appendChild(button)
@@ -225,25 +225,7 @@ export default (descriptions, options = {}) => {
   let renderRequest
 
   function render () {
-    context.globalCompositeOperation = 'source-over'
-    context.globalAlpha = 1
-    context.fillRect(0, 0, canvas.width, canvas.height)
-
-    context.globalCompositeOperation = 'screen'
-
-    channels.forEach(channel => {
-      channel.program.render()
-      context.globalAlpha = channel.params.values.mix
-      context.drawImage(channel.program.canvasElement, 0, 0)
-    })
-
-    const { brightness } = params.values
-
-    if (brightness < 1) {
-      context.globalCompositeOperation = 'source-over'
-      context.globalAlpha = 1 - brightness
-      context.fillRect(0, 0, width, height)
-    }
+    compose(channels, params.values)
 
     outputs.forEach(output => {
       output.context.drawImage(canvas, 0, 0)
@@ -263,10 +245,10 @@ export default (descriptions, options = {}) => {
   function layout () {
     const targets = [{
       canvas: canvas,
-      ratio: 2.2
+      ratio: 3
     }, ...channels.map(channel => ({
       canvas: channel.program.canvasElement,
-      ratio: 4
+      ratio: 6
     }))]
 
     targets.forEach(target => {
@@ -280,6 +262,8 @@ export default (descriptions, options = {}) => {
     })
 
     layoutRequest = null
+
+    queueRender()
   }
 
   function queueLayout () {
