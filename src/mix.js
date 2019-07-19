@@ -181,6 +181,7 @@ export default (descriptions, options = {}) => {
     })
 
     outputs.push(output)
+
     queueRender()
   })
 
@@ -195,7 +196,7 @@ export default (descriptions, options = {}) => {
     button.innerText = description.name
 
     button.addEventListener('click', () => {
-      const program = createProgram(description, { autoRender: false })
+      const program = createProgram(description)
       const channel = createChannel(program, compositor.channelParams)
 
       program.canvasElement.width = canvas.width
@@ -215,6 +216,7 @@ export default (descriptions, options = {}) => {
       })
 
       queueLayout()
+      queueRender()
     })
 
     programList.appendChild(button)
@@ -223,10 +225,6 @@ export default (descriptions, options = {}) => {
   let renderRequest
 
   function render () {
-    channels.forEach(channel => {
-      channel.program.render()
-    })
-
     compose(channels, params.values)
 
     outputs.forEach(output => {
@@ -247,10 +245,10 @@ export default (descriptions, options = {}) => {
   function layout () {
     const targets = [{
       canvas: canvas,
-      ratio: 2.2
+      ratio: 3
     }, ...channels.map(channel => ({
       canvas: channel.program.canvasElement,
-      ratio: 4
+      ratio: 6
     }))]
 
     targets.forEach(target => {
@@ -264,6 +262,8 @@ export default (descriptions, options = {}) => {
     })
 
     layoutRequest = null
+
+    queueRender()
   }
 
   function queueLayout () {
