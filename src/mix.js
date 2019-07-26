@@ -226,8 +226,6 @@ export default (descriptions, options = {}) => {
 
   function render () {
     channels.forEach(channel => {
-      console.log(channel.program.dirty)
-      
       if (channel.program.dirty) {
         channel.program.render()
       }
