@@ -144,7 +144,6 @@ class NumberParamElement extends HTMLTableRowElement {
   }
 
   onMidiInput (event) {
-    console.log(event.detail.value)
     this.normalValue = event.detail.value
   }
 
