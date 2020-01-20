@@ -9,32 +9,34 @@ const unpkg = id => {
   return `https://unpkg.com/${id}@${version}?module`
 }
 
-export default [
-  {
-    input: './src/index.js',
+export default {
+  input: './src/index.js',
 
-    external: external,
+  external: external,
 
-    output: [
-      {
-        file: 'dist/esm.js',
-        format: 'esm',
-        paths: unpkg
-      },
+  output: [
+    {
+      file: 'dist/esm.js',
+      format: 'esm',
+      paths: unpkg
+    },
 
-      {
-        file: 'dist/cjs.js',
-        format: 'cjs'
-      },
+    {
+      file: 'dist/cjs.js',
+      format: 'cjs'
+    },
 
-      {
-        file: 'dist/iife.js',
-        format: 'iife',
-        name: 'permutable',
-        globals: {
-          '@happycat/css': 'happycat.css'
-        }
+    {
+      file: 'dist/iife.js',
+      format: 'iife',
+      name: 'permutable',
+      globals: {
+        '@happycat/css': 'happycat.css'
       }
-    ]
+    }
+  ],
+
+  watch: {
+    clearScreen: false
   }
-]
+}

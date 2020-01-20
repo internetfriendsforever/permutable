@@ -10,6 +10,7 @@
   ],
   "scripts": {
     "build": "rollup -c",
+    "dev": "rollup -c --watch & http-server -c-1",
     "clean": "rm -rf dist"
   },
   "repository": {
@@ -20,6 +21,7 @@
     "@happycat/css": "0.0.12"
   },
   "devDependencies": {
+    "http-server": "^0.12.1",
     "rollup": "^1.6.0"
   }
 }

@@ -4,8 +4,10 @@
   "description": "Website for permutable",
   "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
   "scripts": {
-    "build": "node build",
-    "serve": "http-server -c-1 public"
+    "build": "node build-pages",
+    "serve": "http-server -c-1 public",
+    "watch": "chokidar --initial \"src/**/*.md\" -c \"npm run build\"",
+    "dev": "concurrently \"npm run serve\" \"npm run watch\""
   },
   "repository": {
     "type": "git",
@@ -14,8 +16,13 @@
   "dependencies": {
     "@happycat/css": "0.0.12",
     "highlight.js": "^9.15.6",
-    "http-server": "^0.12.1",
-    "marked": "^0.6.2",
-    "pretty": "^2.0.0"
+    "marked": "^0.8.0",
+    "pretty": "^2.0.0",
+    "write": "^2.0.0"
+  },
+  "devDependencies": {
+    "chokidar-cli": "^2.1.0",
+    "concurrently": "^5.0.2",
+    "http-server": "^0.12.1"
   }
 }
