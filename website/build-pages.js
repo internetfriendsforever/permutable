@@ -1,11 +1,16 @@
 const fs = require('fs')
+const child = require('child_process')
+const util = require('util')
+const path = require('path')
 const marked = require('marked')
 const hljs = require('highlight.js')
-const package = require('./package.json')
+const pretty = require('pretty')
+const write = require('write')
+const libraryPackage = require('../library/package.json')
 
-const [major, minor] = package.version.split('.')
+const exec = util.promisify(child.exec)
 
-const docVersion = `${major}.${minor}`
+console.time('Build')
 
 marked.setOptions({
   highlight: function(code, lang) {
@@ -17,10 +22,10 @@ marked.setOptions({
   }
 })
 
-const readme = fs.readFileSync('README.md', 'utf-8')
+const readme = fs.readFileSync(path.join(__dirname, 'src/introduction.md'), 'utf-8')
 const docs = marked(readme)
 
-const html = `
+const html = pretty(`
   <!doctype html>
   <html lang="en">
     <head>
@@ -31,9 +36,13 @@ const html = `
       <link rel="stylesheet" href="assets/styles.css" />
     </head>
     <body>
-      ${docs.replace('{{VERSION}}', docVersion)}
+      ${docs.replace('{{VERSION}}', libraryPackage.version)}
     </body>
   </html>
-`
+`, {
+  ocd: true
+})
 
-fs.writeFileSync('index.html', html)
+write(path.join(__dirname, 'public/index.html'), html)
+
+console.timeEnd('Build')
