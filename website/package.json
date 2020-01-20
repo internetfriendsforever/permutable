@@ -1,0 +1,21 @@
+{
+  "name": "permutable-website",
+  "version": "0.0.0",
+  "description": "Website for permutable",
+  "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
+  "scripts": {
+    "build": "node build",
+    "serve": "http-server -c-1 public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/internetfriendsforever/permutable.git/website"
+  },
+  "dependencies": {
+    "@happycat/css": "0.0.12",
+    "highlight.js": "^9.15.6",
+    "http-server": "^0.12.1",
+    "marked": "^0.6.2",
+    "pretty": "^2.0.0"
+  }
+}

@@ -1,6 +1,8 @@
 const fs = require('fs')
+const path = require('path')
 const marked = require('marked')
 const hljs = require('highlight.js')
+const pretty = require('pretty')
 const package = require('./package.json')
 
 const [major, minor] = package.version.split('.')
@@ -17,10 +19,10 @@ marked.setOptions({
   }
 })
 
-const readme = fs.readFileSync('README.md', 'utf-8')
+const readme = fs.readFileSync(path.join(__dirname, 'docs/introduction.md'), 'utf-8')
 const docs = marked(readme)
 
-const html = `
+const html = pretty(`
   <!doctype html>
   <html lang="en">
     <head>
@@ -34,6 +36,8 @@ const html = `
       ${docs.replace('{{VERSION}}', docVersion)}
     </body>
   </html>
-`
+`, {
+  ocd: true
+})
 
-fs.writeFileSync('index.html', html)
+fs.writeFileSync('public/index.html', html)
