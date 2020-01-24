@@ -79,6 +79,8 @@ A parameter is described by a plain `object` with the shape:
 
 #### Type `'number'`
 
+Ouput value type: `number`
+
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
 | [value] | number | 0 | Initial value |
@@ -109,7 +111,7 @@ Example with all options:
 
 #### Type `'toggle'`
 
-A toggle works like a toggle switch.
+A toggle works like a toggle switch. Ouput value type: `boolean`
 
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -126,7 +128,7 @@ Example with initial deactivated state:
 
 #### Type `'trigger'`
 
-A trigger is similar to a spring-loaded switch, it is only active when pressed down.
+A trigger is similar to a spring-loaded switch, it is only active when pressed down. Ouput value type: `boolean`
 
 ```javascript
 {
@@ -136,7 +138,7 @@ A trigger is similar to a spring-loaded switch, it is only active when pressed d
 
 #### Type `'timer'`
 
-A timer is updated continuously through [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame). The value is the time since the program started
+A timer is updated continuously through [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame). Output value type: The time since the program started as a `number`
 
 ```javascript
 {
@@ -146,10 +148,20 @@ A timer is updated continuously through [requestAnimationFrame](https://develope
 
 #### Type `'bpm'`
 
-A special parameter meant to set tempo (beats per minute)
+A special parameter meant to set tempo (beats per minute). Output value type: BPM as a `number`
 
 ```javascript
 {
   type: 'bpm'
+}
+```
+
+#### Type `'camera'`
+
+Camera input from [getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia). Output value type: An `<video />` element (can be used directly with [drawImage](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage) or as a texture image)
+
+```javascript
+{
+  type: 'camera'
 }
 ```
