@@ -4,7 +4,7 @@
   "description": "Website for permutable",
   "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
   "scripts": {
-    "build": "node build-pages",
+    "build": "node build",
     "serve": "http-server -c-1 public",
     "watch": "chokidar --initial \"src/**/*.(md|js)\" -c \"npm run build\"",
     "dev": "concurrently \"npm run serve\" \"npm run watch\""
