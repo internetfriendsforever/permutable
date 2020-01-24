@@ -1,8 +1,8 @@
-# [Permutable](/) – API reference
+# [Permutable](/) / API
 
 # Functions
 
-## run `run(program)`
+## run
 
 Gives you a minimal user interface with controls for the parameters you set up in your program.
 
@@ -10,16 +10,22 @@ Gives you a minimal user interface with controls for the parameters you set up i
 | --- | --- | --- |
 | program | [program](#program) | Your program |
 
+```javascript
+run(program)
+```
 
 
-
-## mix `mix(programs)`
+## mix
 
 Gives you an interface for composing and controlling _multiple_ programs with a single output.
 
 | Parameter | Type | Description |
 | --- | --- | --- |
 | programs | Array of [program](#program) | Your programs |
+
+```javascript
+mix(programs)
+```
 
 # Type definitions
 

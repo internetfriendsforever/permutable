@@ -1,5 +1,7 @@
 # Permutable
 
-Tools for programming graphics
+A framework for exploring and composing graphics in the browser. JavaScript with zero dependencies, it is open-source and weights \~6 kB uncompressed.
 
-For documentation, visit [permutable.xyz](https://permutable.xyz)
+permutable (pəˈmjuːtəb<sup>ə</sup>l) _adjective_ **able to be changed or exchanged**.
+
+For more information, visit [permutable.xyz](https://permutable.xyz)
