@@ -1,16 +1,21 @@
-@font-face {
+/*@font-face {
   font-family: 'IBM Plex Mono';
   font-weight: normal;
   font-style: normal;
   src: url(fonts/IBMPlexMono-Regular.woff2) format('woff2')
+}*/
+
+body,
+code {
+  font-family: "Menlo", "Monaco", monospace;
 }
 
 body {
-  font-family: 'IBM Plex Mono';
+  font-family: "Menlo", "Monaco", monospace;
   background: #1B1C21;
   color: #aaa;
   font-size: 14px;
-  line-height: 1.4;
+  line-height: 1.5;
   margin: 1.5em;
 }
 
@@ -21,37 +26,52 @@ body {
   }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6, footer {
+  margin: 6em 0 2em 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
   font: inherit;
-  text-transform: uppercase;
-  margin: 3em 0 1em 0;
   color: white;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
+h1:first-of-type {
+  margin-top: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p {
   max-width: 36em;
 }
 
-p {
+h1,
+h2 {
+  text-transform: uppercase;
+}
+
+p,
+table {
   margin: 1em 0;
 }
 
+pre,
 code {
-  display: block;
   background: #101113;
-  padding: 1em;
+  border-radius: 0.2em;
+  color: #aaa;
+}
+
+pre {
+  padding: 0.75em;
   overflow: auto;
+}
+
+pre code {
+  padding: 0;
+}
+
+code {
+  padding: 0.15em;
+  text-transform: none;
 }
 
 ul {
@@ -71,4 +91,21 @@ a {
 
 a:hover {
   color: white;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 0.75em;
+  border: 2px #101113 solid;
+  vertical-align: top;
+  max-width: 30em;
+}
+
+th {
+  text-align: left;
+  font-weight: normal;
+  background: #101113;
 }

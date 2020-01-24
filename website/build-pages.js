@@ -22,27 +22,35 @@ marked.setOptions({
   }
 })
 
-const readme = fs.readFileSync(path.join(__dirname, 'src/introduction.md'), 'utf-8')
-const docs = marked(readme)
-
-const html = pretty(`
+const page = ({ title, content }) => pretty(`
   <!doctype html>
   <html lang="en">
     <head>
-      <title>Permutable</title>
+      <title>${title}</title>
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta charset="utf-8" />
       <link rel="stylesheet" href="assets/highlight/dracula.css" />
       <link rel="stylesheet" href="assets/styles.css" />
     </head>
     <body>
-      ${docs.replace('{{VERSION}}', libraryPackage.version)}
+      ${content.replace('{{VERSION}}', libraryPackage.version)}
+
+      <footer>
+        <p>Happy coding! ♥ <a href="https://internetfriendsforever.com">internetfriendsforever</a></p>
+        <p>Supported by funding from <a href="https://www.grafill.no/">Grafill</a></p>
+      </footer>
     </body>
   </html>
-`, {
-  ocd: true
-})
+`)
 
-write(path.join(__dirname, 'public/index.html'), html)
+write(path.join(__dirname, 'public/index.html'), page({
+  title: 'Permutable',
+  content: marked(fs.readFileSync(path.join(__dirname, 'src/introduction.md'), 'utf-8'))
+}))
+
+write(path.join(__dirname, 'public/api.html'), page({
+  title: 'API – Permutable',
+  content: marked(fs.readFileSync(path.join(__dirname, 'src/api.md'), 'utf-8'))
+}))
 
 console.timeEnd('Build')

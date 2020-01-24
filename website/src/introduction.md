@@ -1,151 +1,53 @@
 # Permutable
-Tools for programming graphics
 
-## Usage
+A framework for exploring and composing graphics in the browser. Written in JavaScript with zero dependencies.
 
-The recommended way is using ECMAScript modules (esm):
+permutable (pəˈmjuːtəb<sup>ə</sup>l) _adjective_ **able to be changed or exchanged**.
 
-```html
-<script type='module'>
-  import { mix, run } from 'https://unpkg.com/permutable@{{VERSION}}?module'
-</script>
-```
+## What does it do?
 
-## API
+**Permutable run** gives you a minimal user interface with controls for the parameters you set up in your program.
 
-### run
+> We use `run` when we explore and develop single programs.
 
-Run a single program
+**Permutable mix** gives you an interface for composing and controlling multiple programs with a single output. 
 
-```javascript
-run(program)
-```
+> We use `mix` for composing and layering programs, and for performing live.
 
-### mix
+Permutable tries to get out of your way, shorten the feedback loop, and to let you explore and work with your ideas.
 
-Mix multiple programs
 
-```javascript
-mix([
-  program1,
-  program2
-])
-```
+## when does it update?
+Permutable only updates or redraws your graphic when a value changes, unless you tell it otherwise.
 
-### program
+## What does it _not_ do?
 
-A program is defined as a plain JavaScript object
+Permutable does not have an opinion on what or how you draw. It does not have any built in functions for drawing [full circles](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/arc#Drawing_a_full_circle) or perfect squares.
 
-```
-{
-  name: string,
-  params: object,
-  setup: function
-}
-```
+You are free to draw using _either_ the [Canvas API](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API) which provides a means for drawing 2D graphics via JavaScript, or the [WebGL API](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API) when you need to draw high-performance 3D and 2D graphics. Both APIs use the HTML `<canvas>` element.
 
-Example:
+Permutable is not designed for mobile, although it might be usable in some cases.
 
-```javascript
-{
-  name: 'circle',
-  params: {
-    stroke: {
-      type: 'toggle',
-      value: true
-    }
-  },
-  setup: function (canvas) {
-    const context = canvas.getContext('2d')
+## How does it work?
 
-    return function render ({ stroke }) {
-      if (stroke) {
-        context.strokeRect(0, 0, 100, 100)
-      } else {
-        context.fillRect(0, 0, 100, 100)
-      }
-    }
-  }
-}
-```
+At its core, Permutable provides you with the `run` function. The `run` function is wrapper that lets you set up Permutable parameters and provides you with a real time, live updated canvas.
 
-#### name (string)
-A name for the program
+When your program is run in standalone mode it provides the ‘run user interface’ which sets up interactive controls for your defined parameters.
 
-#### params (object)
-Parameters for the program. These are the types available:
+You can map each parameter to a control on a MIDI interface.
 
-##### number
+> In short: you can build and run standalone Permutable graphics with an interface for controlling your parameters.
 
-```javascript
-{
-  type: 'number',
-  value: 5,
-  min: 0,
-  max: 10,
-  step: 1
-}
-```
+Further, Permutable provides a `mix` function. The `mix` function allows you to combine and mix multiple programs into a single output. You can mix several instances of the same or completely different programs together.
 
-##### timer
+The ‘mix user interface’ lets you add instances of a predefined list of programs as channels in your mixer. There is no limit to the number of channels you can add.
 
-```javascript
-{
-  type: 'timer'
-}
-```
+Each added program will appear in the channels list. Each channel will have channel-specific controls set up by the mixer in addition to their own program-specific controls.
 
-##### toggle
+The mixer can also have its own set of global controls, which can be set up in a similar way to a standalone program.
 
-```javascript
-{
-  type: 'toggle',
-  value: false
-}
-```
+Out of the box, the `mix` function comes with a parameter called ‘mix’ for each channel and a global parameter for adjusting the ‘brightness’.
 
-##### trigger
+## Resources
 
-```javascript
-{
-  type: 'trigger'
-}
-```
-
-##### bpm
-
-```javascript
-{
-  type: 'bpm'
-  value: 120,
-  step: 1
-}
-```
-
-#### setup (function)
-A setup function will run once when the program is loaded. In it, the canvas element is being provided as a parameter. A render function is expected to be returned from the setup function. It will be called anytime the params changes.
-
-Example with [2d context](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial):
-```javascript
-function setup (canvas) {
-  const context = canvas.getContext('2d')
-
-  return function render (values) {
-    context.strokeRect(0, 0, 100, 100)
-  }
-}
-```
-
-Example using [regl](http://regl.party):
-```javascript
-function setup (canvas) {
-  const regl = createREGL({ canvas })
-
-  return function render (values) {
-    regl.poll()
-    regl.clear({
-      color: [1, 0, 0, 1]
-    })
-  }
-}
-```
+* [API reference](/api)
