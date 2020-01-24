@@ -1,0 +1,21 @@
+<script type="module">
+  import { run } from '/dist/esm.js'
+
+  run({
+    name: 'camera',
+
+    params: {
+      camera: {
+        type: 'camera'
+      }
+    },
+
+    setup (canvas) {
+      const context = canvas.getContext('2d')
+
+      return function render ({ camera }) {
+        context.drawImage(camera, 0, 0, canvas.width, canvas.height)
+      }
+    }
+  })
+</script>
