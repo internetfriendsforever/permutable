@@ -1,66 +1,56 @@
-import css from '@happycat/css'
 import createProgram from './program'
-import baseStyles from './styles.js'
-import './elements/allParams.js'
+import styles from './styles.css'
 
-const styles = {
-  params: css(`
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: black;
-    max-width: 200px;
-    border-collapse: collapse;
-  `),
+export default function run (
+  description,
+  {
+    container = document.body,
+    width = null,
+    height = null,
+    ratio = window.devicePixelRatio
+  } = {}
+) {
+  const program = createProgram(description.default || description)
+  const element = document.createElement('div')
 
-  canvas: css(`
-    position: absolute;
-    top: 0;
-    left: 0;
-  `),
+  element.classList.add('permutable', 'run')
 
-  fullscreen: css(`
-    width: 100%;
-    height: 100%;
-  `)
-}
+  const styleElement = document.createElement('style')
 
-export default function run (description, options = {}) {
-  const program = createProgram(description)
+  styleElement.setAttribute('scoped', true)
+  styleElement.innerHTML = styles
 
-  document.body.classList.add(baseStyles)
-  document.body.style.background = 'black'
-  document.body.style.margin = 0
+  container.appendChild(styleElement)
 
   const paramsTable = document.createElement('table')
 
-  program.canvasElement.classList.add(styles.canvas)
-  paramsTable.classList.add(styles.params)
-
+  paramsTable.classList.add('params')
   paramsTable.appendChild(program.params.element)
 
-  document.body.appendChild(program.canvasElement)
-  document.body.appendChild(paramsTable)
+  element.appendChild(program.canvasElement)
+  element.appendChild(paramsTable)
 
-  if (options.fullscreen !== false) {
+  container.appendChild(element)
+
+  if (width || height) {
+    container.style.width = width
+    container.style.height = height
+    program.canvasElement.width = width * ratio
+    program.canvasElement.height = height * ratio
+  } else {
+    async function resize () {
+      const width = container.offsetWidth
+      const height = container.offsetHeight
+      program.canvasElement.width = width * ratio
+      program.canvasElement.height = height * ratio
+    }
+
     window.addEventListener('resize', () => {
       resize().then(program.render)
     })
 
-    program.canvasElement.classList.add(styles.fullscreen)
+    resize()
   }
-
-  async function resize (initial) {
-    const ratio = options.ratio || window.devicePixelRatio
-    const width = options.width || window.innerWidth * ratio
-    const height = options.height || window.innerHeight * ratio
-    program.canvasElement.width = width
-    program.canvasElement.height = height
-    program.canvasElement.style.width = options.fullscreen ? '100%' : width / ratio
-    program.canvasElement.style.height = options.fullscreen ? '100%' : height / ratio
-  }
-
-  resize()
 
   program.setup()
 }

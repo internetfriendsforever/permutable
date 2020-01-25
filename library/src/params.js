@@ -1,23 +1,15 @@
-import css from '@happycat/css'
-
-const styles = {
-  params: css(`
-    border-collapse: collapse;
-  `)
-}
-
 class Params {
   constructor (description) {
     this.element = document.createElement('tbody')
-    this.element.classList.add(styles.params)
 
     for (let key in description) {
       const { type, ...props } = description[key]
 
       const element = document.createElement('tr', {
-        is: `p-${type}-param`
+        is: `permutable-${type}-param`
       })
 
+      element.classList.add(type, 'param')
       element.setAttribute('key', key)
 
       for (let prop in props) {

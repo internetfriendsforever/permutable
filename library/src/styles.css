@@ -1,0 +1,216 @@
+canvas {
+  display: block;
+}
+
+table {
+  color: inherit;
+  border-collapse: collapse;
+}
+
+.run,
+.mix {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-family: "Menlo", "Monaco", monospace;
+  margin: 0;
+  color: #aaa;
+  user-select: none;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+.run .params {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: black;
+  width: 200px;
+}
+
+.run canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.params button {
+  display: block;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  white-space: nowrap;
+  text-align: left;
+  background: #222;
+  color: #aaa;
+}
+
+.params button:hover {
+  background: #333;
+  color: white;
+}
+
+.params button:active {
+  background: #111;
+}
+
+.params button:disabled,
+.params button:disabled:hover {
+  cursor: default;
+  color: #444;
+  background: #222;
+  text-decoration: line-through;
+}
+
+.params button.active {
+  background: #ccc;
+  color: #222;
+
+  :hover {
+    background: white;
+    color: black;
+  }
+
+  :active {
+    background: #aaa;
+  }
+}
+
+.params .midi {
+  display: block;
+  margin: 0;
+  padding: 0 0.4rem;
+  line-height: inherit;
+}
+
+.param {
+  line-height: 1.8rem;
+}
+
+.timer.param .name {
+  position: relative;
+  padding: 0 0.5rem;
+}
+
+.timer.param .value {
+  padding: 0 0.4rem;
+  position: relative;
+  width: 1%;
+  text-align: right;
+}
+
+.timer.param .value span {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0); }
+  from { transform: rotate(-360deg); }
+}
+
+.bpm.param .name {
+  position: relative;
+  padding: 0 0.5rem;
+}
+
+.bpm.param .value {
+  position: relative;
+  padding: 0 0.4rem;
+  min-width: 3.5em;
+  text-align: right;
+}
+
+.bpm.param .buttons {
+  display: flex;
+  padding: 0;
+}
+
+.bpm.param .buttons button {
+  margin: 0;
+  padding: 0 0.4rem;
+  line-height: inherit;
+}
+
+.number.param .slider {
+  position: relative;
+  flex: auto;
+  cursor: ew-resize;
+  display: flex;
+  padding: 0 0.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-left: 1px solid #ddd;
+}
+
+.number.param .indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: white;
+  mix-blend-mode: difference;
+}
+
+.number.param .name {
+  position: relative;
+}
+
+.number.param .value {
+  position: relative;
+  padding: 0 0.4rem;
+  width: 1%;
+  text-align: right;
+}
+
+.number.param .input {
+  width: 1%;
+  padding: 0;
+}
+
+.toggle.param .name,
+.trigger.param .name {
+  position: relative;
+  padding: 0;
+}
+
+.toggle.param .button,
+.trigger.param .button {
+  display: block;
+  padding: 0 0.5rem;
+  width: 100%;
+}
+
+.toggle.param .value,
+.trigger.param .value {
+  position: relative;
+  padding: 0 0.4rem;
+  width: 1%;
+  text-align: right;
+}
+
+.toggle.param .input,
+.trigger.param .input {
+  width: 1%;
+  padding: 0;
+}
+
+.camera.param .name {
+  position: relative;
+  padding: 0 0.5rem;
+}
+
+.camera.param .video {
+  padding: 0 0.5rem;
+}
+
+.camera.param .video video {
+  width: 2em;
+  height: 2em;
+}

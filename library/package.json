@@ -17,11 +17,9 @@
     "type": "git",
     "url": "git+https://github.com/internetfriendsforever/permutable.git/library"
   },
-  "dependencies": {
-    "@happycat/css": "0.0.12"
-  },
   "devDependencies": {
     "http-server": "^0.12.1",
-    "rollup": "^1.6.0"
+    "rollup": "^1.6.0",
+    "rollup-plugin-string": "^3.0.0"
   }
 }

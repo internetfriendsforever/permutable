@@ -1,5 +1,5 @@
 import css from '@happycat/css'
-import baseStyles from './styles.js'
+// import baseStyles from './styles.js'
 import createProgram from './program'
 import createChannel from './channel'
 import createParams from './params'

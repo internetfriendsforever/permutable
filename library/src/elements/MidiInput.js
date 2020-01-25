@@ -1,12 +1,3 @@
-import css from '@happycat/css'
-import ButtonElement from './ButtonElement'
-
-const styles = css(`
-  margin: 0;
-  padding: 0 0.4rem;
-  line-height: inherit;
-`)
-
 export default class MidiInput extends HTMLElement {
   static get observedAttributes() {
     return ['pairing', 'name', 'port']
@@ -17,13 +8,9 @@ export default class MidiInput extends HTMLElement {
 
     this.onKeyDown = this.onKeyDown.bind(this)
     this.onMidiMessage = this.onMidiMessage.bind(this)
-
-    this.innerHTML = `
-      <button is="p-button" class=${styles}>
-        Midi
-      </button>
-    `
-
+    
+    this.innerHTML = `<button class="midi">Midi</button>`
+    
     this.button = this.querySelector('button')
   }
 
@@ -32,13 +19,19 @@ export default class MidiInput extends HTMLElement {
 
     this.addEventListener('click', this.onClick)
 
-    navigator.requestMIDIAccess().then(access => {
-      this.access = access
+    try {
+      navigator.requestMIDIAccess().then(access => {
+        this.access = access
 
-      for (const input of this.access.inputs.values()) {
-        input.addEventListener('midimessage', this.onMidiMessage)
-      }
-    })
+        for (const input of this.access.inputs.values()) {
+          input.addEventListener('midimessage', this.onMidiMessage)
+        }
+      })
+    } catch (error) {
+      console.error(error)
+      this.button.disabled = true
+      this.button.title = 'Midi not available (see console for more info)'
+    }
   }
 
   disconnectedCallback () {
@@ -100,9 +93,9 @@ export default class MidiInput extends HTMLElement {
     const name = this.getAttribute('name')
     const port = this.getAttribute('port')
 
-    this.button.toggleAttribute('active', pairing)
+    this.button.classList.toggle('active', pairing)
     this.button.innerText = name && port ? `${name.split(' ')[0]}#${port}` : 'Midi'
   }
 }
 
-customElements.define('p-midi-input', MidiInput)
+customElements.define('permutable-midi-input', MidiInput)

@@ -1,35 +1,3 @@
-import css from '@happycat/css'
-import ButtonElement from './ButtonElement'
-
-const styles = {
-  container: css(`
-    line-height: 1.8rem;
-  `),
-
-  name: css(`
-    position: relative;
-    padding: 0 0.5rem;
-  `),
-
-  value: css(`
-    position: relative;
-    padding: 0 0.4rem;
-    width: 1%;
-    text-align: right;
-  `),
-
-  buttons: css(`
-    display: flex;
-    padding: 0;
-
-    button {
-      margin: 0;
-      padding: 0 0.4rem;
-      line-height: inherit;
-    }
-  `)
-}
-
 export default class BPMParamElement extends HTMLTableRowElement {
   static get observedAttributes() {
     return ['key', 'value']
@@ -39,19 +7,18 @@ export default class BPMParamElement extends HTMLTableRowElement {
     super()
 
     this.taps = []
-    this.classList.add(styles.container)
     this.onTapClick = this.onTapClick.bind(this)
     this.onAddClick = this.onAddClick.bind(this)
     this.onSubtractClick = this.onSubtractClick.bind(this)
-    this.value = 120
+    this.value = 128
 
     this.innerHTML = `
-      <td class="name ${styles.name}">Name</td>
-      <td class="value ${styles.value}">${this.value}</td>
-      <td class="${styles.buttons}">
-        <button class="subtract" is="p-button">–</button>
-        <button class="add" is="p-button">+</button>
-        <button class="tap" is="p-button">Tap</button>
+      <td class="name">Name</td>
+      <td class="value">${this.value}</td>
+      <td class="buttons">
+        <button class="subtract">–</button>
+        <button class="add">+</button>
+        <button class="tap">Tap</button>
       </td>
     `
 
@@ -144,6 +111,6 @@ export default class BPMParamElement extends HTMLTableRowElement {
   }
 }
 
-customElements.define('p-bpm-param', BPMParamElement, {
+customElements.define('permutable-bpm-param', BPMParamElement, {
   extends: 'tr'
 })

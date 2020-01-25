@@ -1,15 +1,5 @@
-import css from '@happycat/css'
+import './elements/allParams.js'
 import createParams from './params'
-
-const styles = {
-  params: css(`
-    border-collapse: collapse;
-  `),
-
-  canvas: css(`
-    display: block;
-  `)
-}
 
 class Program {
   constructor ({
@@ -33,8 +23,6 @@ class Program {
     this.onChange = this.onChange.bind(this)
 
     this.canvasElement = document.createElement('canvas')
-    this.canvasElement.classList.add(styles.canvas)
-
     this.params = createParams(params)
 
     this.params.element.addEventListener('change', this.onChange)

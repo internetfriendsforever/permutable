@@ -1,34 +1,4 @@
-import css from '@happycat/css'
-import './ButtonElement'
-
-const styles = {
-  container: css(`
-    line-height: 1.8rem;
-  `),
-
-  name: css(`
-    position: relative;
-    padding: 0;
-  `),
-
-  button: css(`
-    display: block;
-    padding: 0 0.5rem;
-    width: 100%;
-  `),
-
-  value: css(`
-    position: relative;
-    padding: 0 0.4rem;
-    width: 1%;
-    text-align: right;
-  `),
-
-  input: css(`
-    width: 1%;
-    padding: 0;
-  `)
-}
+import './MidiInput.js'
 
 export default class ToggleParamElement extends HTMLTableRowElement {
   static get observedAttributes() {
@@ -40,22 +10,21 @@ export default class ToggleParamElement extends HTMLTableRowElement {
 
     this.onClick = this.onClick.bind(this)
     this.onMidiInput = this.onMidiInput.bind(this)
-    this.classList.add(styles.container)
 
     this.innerHTML = `
-      <td class="name ${styles.name}">
-        <button is="p-button" class=${styles.button}></button>
+      <td class="name">
+        <button class="button"></button>
       </td>
-      <td class="value ${styles.value}"></td>
-      <td class="input ${styles.input}">
-        <p-midi-input />
+      <td class="value"></td>
+      <td class="input">
+        <permutable-midi-input />
       </td>
     `
 
     this.button = this.querySelector('button')
     this.nameElement = this.querySelector('.name')
     this.valueElement = this.querySelector('.value')
-    this.midiInput = this.querySelector('p-midi-input')
+    this.midiInput = this.querySelector('permutable-midi-input')
   }
 
   connectedCallback () {
@@ -99,6 +68,6 @@ export default class ToggleParamElement extends HTMLTableRowElement {
   }
 }
 
-customElements.define('p-toggle-param', ToggleParamElement, {
+customElements.define('permutable-toggle-param', ToggleParamElement, {
   extends: 'tr'
 })
