@@ -7,36 +7,7 @@ table {
   border-collapse: collapse;
 }
 
-.run,
-.mix {
-  display: block;
-  width: 100%;
-  height: 100%;
-  font-family: "Menlo", "Monaco", monospace;
-  margin: 0;
-  color: #aaa;
-  user-select: none;
-  text-transform: uppercase;
-  font-size: 12px;
-  line-height: 1.2;
-  letter-spacing: 0.05em;
-  position: relative;
-}
-
-.run .params {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: black;
-  width: 200px;
-}
-
-.run canvas {
-  width: 100%;
-  height: 100%;
-}
-
-.params button {
+button {
   display: block;
   font: inherit;
   letter-spacing: inherit;
@@ -52,24 +23,24 @@ table {
   color: #aaa;
 }
 
-.params button:hover {
+button:hover {
   background: #333;
   color: white;
 }
 
-.params button:active {
+button:active {
   background: #111;
 }
 
-.params button:disabled,
-.params button:disabled:hover {
+button:disabled,
+button:disabled:hover {
   cursor: default;
   color: #444;
   background: #222;
   text-decoration: line-through;
 }
 
-.params button.active {
+button.active {
   background: #ccc;
   color: #222;
 
@@ -213,4 +184,139 @@ table {
 .camera.param .video video {
   width: 2em;
   height: 2em;
+}
+
+.run,
+.mix {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-family: "Menlo", "Monaco", monospace;
+  margin: 0;
+  color: #aaa;
+  user-select: none;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+.run .params {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: black;
+  width: 200px;
+}
+
+.run canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.mix {
+  display: flex;
+  min-height: 100%;
+  max-height: 100%;
+  border: 2px #aaa solid;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  background: black;
+}
+
+.mix .panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: 2px #aaa solid;
+}
+
+.mix .panel:last-child {
+  border-right: 0;
+}
+
+.mix .panel .heading {
+  flex-grow: 0;
+  display: flex;
+  border-bottom: 2px #aaa solid;
+}
+
+.mix .panel .heading h2 {
+  flex: auto;
+  font-size: 1em;
+  font-weight: normal;
+  padding: 0.8rem;
+  margin: 0;
+}
+
+.mix .panel .heading button {
+  padding: 0 1rem;
+  border-left: 2px #aaa solid;
+}
+
+.mix .panel .content {
+  flex: 1;
+  overflow: auto;
+}
+
+.mix .panel.programs,
+.mix .panel.master {
+  flex: 0;
+}
+
+.mix .panel.programs button {
+  width: 100%;
+  padding: 0.8rem;
+  border-bottom: 2px #aaa solid;
+}
+
+.mix .panel.channels table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mix .panel.master canvas {
+  padding: 0.35rem;
+}
+
+.mix .panel.master .params {
+  border-collapse: collapse;
+  margin: 0 0.35rem;
+}
+
+.mix .channel {
+  border-bottom: 2px #aaa solid;
+}
+
+.mix .channel td {
+  vertical-align: top;
+}
+
+.mix .channel .title {
+  padding: 0.7rem;
+  width: 1%;
+}
+
+.mix .channel .params {
+  padding: 0.4rem;
+}
+
+.mix .channel .params.compose {
+  border-left: 2px #ccc solid;
+}
+
+.mix .channel .canvas {
+  position: relative;
+  width: 1%;
+  padding: 0.35rem;
+}
+
+.mix .channel .remove-button {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  width: 1.8rem;
+  height: 1.8rem;
+  text-align: center;
 }

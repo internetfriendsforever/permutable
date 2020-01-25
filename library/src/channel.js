@@ -1,69 +1,25 @@
-import css from '@happycat/css'
 import createParams from './params'
-import './elements/ButtonElement.js'
-
-const styles = {
-  row: css(`
-    border-bottom: 2px #aaa solid;
-
-    td {
-      vertical-align: top;
-    }
-  `),
-
-  title: css(`
-    padding: 0.7rem;
-    width: 1%;
-  `),
-
-  params: css(`
-    padding: 0.4rem;
-
-    table {
-      border-collapse: collapse;
-    }
-  `),
-
-  composeParams: css(`
-    border-left: 2px #ccc solid;
-  `),
-
-  canvas : css(`
-    position: relative;
-    width: 1%;
-    padding: 0.35rem;
-  `),
-
-  removeButton: css(`
-    position: absolute;
-    top: 0.35rem;
-    right: 0.35rem;
-    width: 1.8rem;
-    height: 1.8rem;
-    text-align: center;
-  `)
-}
 
 class Channel {
   constructor (program, params) {
     this.program = program
 
     this.element = document.createElement('tr')
-    this.element.classList.add(styles.row)
+    this.element.classList.add('channel')
 
     this.params = createParams(params)
 
     this.element.innerHTML = `
-      <td class=${styles.title}>${program.name}</td>
-      <td class=${styles.params}>
+      <td class="title">${program.name}</td>
+      <td class="params">
         <table data-program-params></table>
       </td>
-      <td data-canvas class=${styles.canvas}>
-        <button data-remove is='p-button' class=${styles.removeButton}>
+      <td data-canvas class="canvas">
+        <button data-remove class="remove-button">
           ×
         </button>
       </td>
-      <td class="${styles.params} ${styles.composeParams}">
+      <td class="compose params">
         <table data-channel-params></table>
       </td>
     `

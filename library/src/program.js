@@ -1,4 +1,3 @@
-import './elements/allParams.js'
 import createParams from './params'
 
 class Program {

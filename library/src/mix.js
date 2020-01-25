@@ -1,127 +1,47 @@
-import css from '@happycat/css'
-// import baseStyles from './styles.js'
+import styles from './styles.css'
 import createProgram from './program'
 import createChannel from './channel'
 import createParams from './params'
 import defaultCompositor from './compositor'
-import './elements/ButtonElement.js'
-import './elements/allParams.js'
-
-const styles = {
-  container: css(`
-    display: flex;
-    min-height: 100vh;
-    max-height: 100vh;
-    border: 2px #aaa solid;
-    box-sizing: border-box;
-    -webkit-overflow-scrolling: touch;
-  `),
-
-  panel: css(`
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    border-right: 2px #aaa solid;
-
-    &:last-child {
-      border-right: 0;
-    }
-  `),
-
-  programs: css(`
-    flex: 0;
-  `),
-
-  master: css(`
-    flex: 0;
-  `),
-
-  canvas: css(`
-    padding: 0.35rem;
-  `),
-
-  programButton: css(`
-    width: 100%;
-    padding: 0.8rem;
-    border-bottom: 2px #aaa solid;
-  `),
-
-  heading: css(`
-    flex-grow: 0;
-    display: flex;
-    border-bottom: 2px #aaa solid;
-
-    h2 {
-      flex: auto;
-      font-size: 1em;
-      font-weight: normal;
-      padding: 0.8rem;
-      margin: 0;
-    }
-
-    button {
-      padding: 0 1rem;
-      border-left: 2px #aaa solid;
-    }
-  `),
-
-  content: css(`
-    flex: 1;
-    overflow: auto;
-
-    &:last-child {
-      border-right: 0;
-    }
-  `),
-
-  channelsTable: css(`
-    width: 100%;
-    border-collapse: collapse;
-  `),
-
-  params: css(`
-    border-collapse: collapse;
-    margin: 0 0.35rem;
-  `)
-}
 
 export default (descriptions, options = {}) => {
-  document.body.classList.add(baseStyles)
-
   document.body.innerHTML = `
-    <div class=${styles.container}>
-      <div class="${styles.panel} ${styles.programs}"}>
-        <div class=${styles.heading}>
+    <style scoped>
+      ${styles}
+    </style>
+
+    <div class="permutable mix">
+      <div class="programs panel"}>
+        <div class="heading">
           <h2>Programs</h2>
         </div>
 
-        <div data-programs class=${styles.content}></div>
+        <div class="content" data-programs></div>
       </div>
 
-      <div class=${styles.panel}>
-        <div class=${styles.heading}>
+      <div class="channels panel">
+        <div class="heading">
           <h2>Channels</h2>
         </div>
 
-        <div class=${styles.content}>
-          <table data-channels class=${styles.channelsTable}></table>
+        <div class="content">
+          <table data-channels></table>
         </div>
       </div>
 
-      <div class="${styles.panel} ${styles.master}">
-        <div class=${styles.heading}>
+      <div class="master panel">
+        <div class="heading">
           <h2>Master</h2>
-
-          <button data-open-output is='p-button'>
+          <button data-open-output>
             Open output window
           </button>
         </div>
 
-        <div class=${styles.canvas}>
+        <div class="canvas">
           <canvas data-canvas />
         </div>
 
-        <table data-params class=${styles.params}></table>
+        <table class="params" data-master-params></table>
       </div>
     </div>
   `
@@ -139,15 +59,15 @@ export default (descriptions, options = {}) => {
   const channels = []
   const outputs = []
 
-  const params = createParams(compositor.params)
+  const masterParams = createParams(compositor.params)
 
   const programList = document.querySelector('[data-programs]')
   const channelList = document.querySelector('[data-channels]')
   const outputButton = document.querySelector('[data-open-output]')
-  const paramsContainer = document.querySelector('[data-params]')
+  const masterParamsContainer = document.querySelector('[data-master-params]')
 
-  paramsContainer.appendChild(params.element)
-  paramsContainer.addEventListener('change', queueRender)
+  masterParamsContainer.appendChild(masterParams.element)
+  masterParamsContainer.addEventListener('change', queueRender)
 
   outputButton.addEventListener('click', event => {
     const name = `Output ${outputs.length + 1}`
@@ -190,7 +110,7 @@ export default (descriptions, options = {}) => {
       description.params = {}
     }
 
-    const button = document.createElement('button', { is: 'p-button' })
+    const button = document.createElement('button')
 
     button.classList.add(styles.programButton)
     button.innerText = description.name
@@ -231,7 +151,7 @@ export default (descriptions, options = {}) => {
       }
     })
 
-    compose(channels, params.values)
+    compose(channels, masterParams.values)
 
     outputs.forEach(output => {
       output.context.drawImage(canvas, 0, 0)

@@ -1,3 +1,5 @@
+import './elements/allParams.js'
+
 class Params {
   constructor (description) {
     this.element = document.createElement('tbody')
