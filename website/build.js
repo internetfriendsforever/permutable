@@ -6,6 +6,7 @@ const marked = require('marked')
 const hljs = require('highlight.js')
 const write = require('write')
 const page = require('./src/page')
+const package = require('../library/package.json')
 
 const exec = util.promisify(child.exec)
 
@@ -23,7 +24,7 @@ marked.setOptions({
 
 write(path.join(__dirname, 'public/index.html'), page({
   title: 'Permutable',
-  content: marked(fs.readFileSync(path.join(__dirname, 'src/introduction.md'), 'utf-8'))
+  content: marked(fs.readFileSync(path.join(__dirname, 'src/introduction.md'), 'utf-8')).replace(new RegExp('{{VERSION}}', 'g'), package.version)
 }))
 
 write(path.join(__dirname, 'public/api.html'), page({
