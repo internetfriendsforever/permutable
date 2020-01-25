@@ -1,8 +1,8 @@
-import styles from './styles.css'
-import createProgram from './program'
-import createChannel from './channel'
-import createParams from './params'
-import defaultCompositor from './compositor'
+import styles from '../styles.css'
+import Program from '../Program'
+import Params from '../params/Params'
+import Channel from './Channel'
+import defaultCompositor from './defaultCompositor'
 
 export default (descriptions, options = {}) => {
   document.body.innerHTML = `
@@ -59,7 +59,7 @@ export default (descriptions, options = {}) => {
   const channels = []
   const outputs = []
 
-  const masterParams = createParams(compositor.params)
+  const masterParams = new Params(compositor.params)
 
   const programList = document.querySelector('[data-programs]')
   const channelList = document.querySelector('[data-channels]')
@@ -116,8 +116,8 @@ export default (descriptions, options = {}) => {
     button.innerText = description.name
 
     button.addEventListener('click', () => {
-      const program = createProgram(description, { autoRender: false })
-      const channel = createChannel(program, compositor.channelParams)
+      const program = new Program(description, { autoRender: false })
+      const channel = new Channel(program, compositor.channelParams)
 
       program.canvasElement.width = canvas.width
       program.canvasElement.height = canvas.height

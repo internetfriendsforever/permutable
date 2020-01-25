@@ -1,4 +1,4 @@
-export default class CameraParamElement extends HTMLTableRowElement {
+export default class Camera extends HTMLTableRowElement {
   static get observedAttributes() {
     return ['key']
   }
@@ -118,6 +118,6 @@ export default class CameraParamElement extends HTMLTableRowElement {
   }
 }
 
-customElements.define('permutable-camera-param', CameraParamElement, {
+customElements.define('permutable-camera-param', Camera, {
   extends: 'tr'
 })

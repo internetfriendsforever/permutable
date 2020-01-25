@@ -1,6 +1,0 @@
-import './BPMParamElement.js'
-import './CameraParamElement.js'
-import './NumberParamElement.js'
-import './TimerParamElement.js'
-import './ToggleParamElement.js'
-import './TriggerParamElement.js'

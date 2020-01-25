@@ -1,4 +1,4 @@
-export default class BPMParamElement extends HTMLTableRowElement {
+export default class BPM extends HTMLTableRowElement {
   static get observedAttributes() {
     return ['key', 'value']
   }
@@ -111,6 +111,6 @@ export default class BPMParamElement extends HTMLTableRowElement {
   }
 }
 
-customElements.define('permutable-bpm-param', BPMParamElement, {
+customElements.define('permutable-bpm-param', BPM, {
   extends: 'tr'
 })

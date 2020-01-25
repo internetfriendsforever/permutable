@@ -1,6 +1,6 @@
-import './MidiInput.js'
+import './Midi'
 
-export default class ToggleParamElement extends HTMLTableRowElement {
+export default class Toggle extends HTMLTableRowElement {
   static get observedAttributes() {
     return ['key', 'active']
   }
@@ -68,6 +68,6 @@ export default class ToggleParamElement extends HTMLTableRowElement {
   }
 }
 
-customElements.define('permutable-toggle-param', ToggleParamElement, {
+customElements.define('permutable-toggle-param', Toggle, {
   extends: 'tr'
 })

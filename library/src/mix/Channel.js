@@ -1,13 +1,13 @@
-import createParams from './params'
+import Params from '../params/Params'
 
-class Channel {
+export default class Channel {
   constructor (program, params) {
     this.program = program
 
     this.element = document.createElement('tr')
     this.element.classList.add('channel')
 
-    this.params = createParams(params)
+    this.params = new Params(params)
 
     this.element.innerHTML = `
       <td class="title">${program.name}</td>
@@ -45,5 +45,3 @@ class Channel {
     this.element.remove()
   }
 }
-
-export default (...args) => new Channel(...args)

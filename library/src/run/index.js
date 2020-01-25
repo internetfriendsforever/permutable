@@ -1,5 +1,5 @@
-import createProgram from './program'
-import styles from './styles.css'
+import Program from '../Program'
+import styles from '../styles.css'
 
 export default function run (
   description,
@@ -10,7 +10,7 @@ export default function run (
     ratio = window.devicePixelRatio
   } = {}
 ) {
-  const program = createProgram(description.default || description)
+  const program = new Program(description.default || description)
   const element = document.createElement('div')
 
   element.classList.add('permutable', 'run')

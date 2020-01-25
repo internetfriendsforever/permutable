@@ -1,6 +1,6 @@
-import './MidiInput.js'
+import './Midi'
 
-class NumberParamElement extends HTMLTableRowElement {
+class Number extends HTMLTableRowElement {
   static get observedAttributes() {
     return ['key', 'value', 'min', 'max', 'step']
   }
@@ -110,6 +110,6 @@ class NumberParamElement extends HTMLTableRowElement {
   }
 }
 
-customElements.define('permutable-number-param', NumberParamElement, {
+customElements.define('permutable-number-param', Number, {
   extends: 'tr'
 })

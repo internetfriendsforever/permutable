@@ -1,4 +1,4 @@
-export default class MidiInput extends HTMLElement {
+export default class Midi extends HTMLElement {
   static get observedAttributes() {
     return ['pairing', 'name', 'port']
   }
@@ -98,4 +98,4 @@ export default class MidiInput extends HTMLElement {
   }
 }
 
-customElements.define('permutable-midi-input', MidiInput)
+customElements.define('permutable-midi-input', Midi)

@@ -1,3 +1,5 @@
+import './Midi'
+
 export default class Trigger extends HTMLTableRowElement {
   static get observedAttributes() {
     return ['key', 'active']

@@ -5,6 +5,7 @@ canvas {
 table {
   color: inherit;
   border-collapse: collapse;
+  font-size: 100%;
 }
 
 button {

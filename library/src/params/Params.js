@@ -1,6 +1,11 @@
-import './elements/allParams.js'
+import './BPM'
+import './Camera'
+import './Number'
+import './Timer'
+import './Toggle'
+import './Trigger'
 
-class Params {
+export default class Params {
   constructor (description) {
     this.element = document.createElement('tbody')
 
@@ -36,5 +41,3 @@ class Params {
     return values
   }
 }
-
-export default (...args) => new Params(...args)

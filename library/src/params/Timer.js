@@ -1,4 +1,4 @@
-export default class TimerParamElement extends HTMLTableRowElement {
+export default class Timer extends HTMLTableRowElement {
   static get observedAttributes() {
     return ['key']
   }
@@ -46,6 +46,6 @@ export default class TimerParamElement extends HTMLTableRowElement {
   }
 }
 
-customElements.define('permutable-timer-param', TimerParamElement, {
+customElements.define('permutable-timer-param', Timer, {
   extends: 'tr'
 })
