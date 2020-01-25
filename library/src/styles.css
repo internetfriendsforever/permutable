@@ -1,23 +1,84 @@
+span,
+div,
+canvas,
+table,
+button,
+tbody,
+tr,
+th,
+td {
+  background: unset;
+  border: unset;
+  box-sizing: border-box;
+  clear: unset;
+  color: unset;
+  cursor: unset;
+  filter: unset;
+  float: unset;
+  font: unset;
+  height: unset;
+  letter-spacing: unset;
+  line-height: unset;
+  margin: unset;
+  max-height: unset;
+  max-width: unset;
+  min-height: unset;
+  min-width: unset;
+  outline: unset;
+  overflow: unset;
+  padding: unset;
+  position: unset;
+  text-align: unset;
+  text-transform: unset;
+  transform: unset;
+  width: unset;
+  z-index: unset;
+}
+
+span {
+  display: inline;
+}
+
+div,
 canvas {
   display: block;
 }
 
 table {
-  color: inherit;
+  display: table;
   border-collapse: collapse;
-  font-size: 100%;
+}
+
+tr {
+  display: table-row;
+}
+
+thead,
+tbody {
+  display: table-row-group;
+}
+
+th, td {
+  display: table-cell;
+}
+
+.permutable {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-family: "Menlo", "Monaco", monospace;
+  margin: 0;
+  color: #aaa;
+  user-select: none;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: 0.05em;
+  position: relative;
 }
 
 button {
-  display: block;
-  font: inherit;
-  letter-spacing: inherit;
-  text-transform: inherit;
   cursor: pointer;
-  border: 0;
-  margin: 0;
-  padding: 0;
-  outline: 0;
   white-space: nowrap;
   text-align: left;
   background: #222;
@@ -115,7 +176,6 @@ button.active {
   position: relative;
   flex: auto;
   cursor: ew-resize;
-  display: flex;
   padding: 0 0.5rem;
   background: rgba(255, 255, 255, 0.15);
   border-left: 1px solid #ddd;
@@ -185,22 +245,6 @@ button.active {
 .camera.param .video video {
   width: 2em;
   height: 2em;
-}
-
-.run,
-.mix {
-  display: block;
-  width: 100%;
-  height: 100%;
-  font-family: "Menlo", "Monaco", monospace;
-  margin: 0;
-  color: #aaa;
-  user-select: none;
-  text-transform: uppercase;
-  font-size: 12px;
-  line-height: 1.2;
-  letter-spacing: 0.05em;
-  position: relative;
 }
 
 .run .params {
