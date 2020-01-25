@@ -1,25 +1,4 @@
-import css from '@happycat/css'
-
-const styles = {
-  container: css(`
-    line-height: 1.8rem;
-  `),
-
-  name: css(`
-    position: relative;
-    padding: 0 0.5rem;
-  `),
-
-  video: css(`
-    padding: 0 0.5rem;
-    video {
-      width: 2em;
-      height: 2em;
-    }
-  `)
-}
-
-export default class CameraParamElement extends HTMLTableRowElement {
+export default class Camera extends HTMLTableRowElement {
   static get observedAttributes() {
     return ['key']
   }
@@ -27,12 +6,10 @@ export default class CameraParamElement extends HTMLTableRowElement {
   constructor () {
     super()
 
-    this.classList.add(styles.container)
-
     this.innerHTML = `
-      <td class="name ${styles.name}">Name</td>
-      <td class="select ${styles.select}"><select></select></td>
-      <td class="video ${styles.video}"><video></video></td>
+      <td class="name">Name</td>
+      <td class="select"><select></select></td>
+      <td class="video"><video></video></td>
     `
 
     this.nameElement = this.querySelector('.name')
@@ -141,6 +118,6 @@ export default class CameraParamElement extends HTMLTableRowElement {
   }
 }
 
-customElements.define('p-camera-param', CameraParamElement, {
+customElements.define('permutable-camera-param', Camera, {
   extends: 'tr'
 })

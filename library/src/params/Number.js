@@ -1,52 +1,6 @@
-import css from '@happycat/css'
-import './MidiInput.js'
+import './Midi'
 
-const styles = {
-  container: css(`
-    line-height: 1.8rem;
-  `),
-
-  slider: css(`
-    position: relative;
-    flex: auto;
-    cursor: ew-resize;
-    display: flex;
-    padding: 0 0.5rem;
-    background: rgba(255, 255, 255, 0.15);
-    border-left: 1px solid #ddd;
-
-    :hover {
-      color: white;
-    }
-  `),
-
-  indicator: css(`
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    background: white;
-    mix-blend-mode: difference;
-  `),
-
-  name: css(`
-    position: relative;
-  `),
-
-  value: css(`
-    position: relative;
-    padding: 0 0.4rem;
-    width: 1%;
-    text-align: right;
-  `),
-
-  input: css(`
-    width: 1%;
-    padding: 0;
-  `)
-}
-
-class NumberParamElement extends HTMLTableRowElement {
+class Number extends HTMLTableRowElement {
   static get observedAttributes() {
     return ['key', 'value', 'min', 'max', 'step']
   }
@@ -62,16 +16,14 @@ class NumberParamElement extends HTMLTableRowElement {
     this.onMidiInput = this.onMidiInput.bind(this)
     this.onMouseDown = this.onMouseDown.bind(this)
 
-    this.classList.add(styles.container)
-
     this.innerHTML = `
-      <td class="slider ${styles.slider}">
-        <div class="name ${styles.name}"></div>
-        <div class="indicator ${styles.indicator}"></div>
+      <td class="slider">
+        <div class="name"></div>
+        <div class="indicator"></div>
       </td>
-      <td class="value ${styles.value}"></td>
-      <td class="input ${styles.input}">
-        <p-midi-input />
+      <td class="value"></td>
+      <td class="input">
+        <permutable-midi-input />
       </td>
     `
 
@@ -79,7 +31,7 @@ class NumberParamElement extends HTMLTableRowElement {
     this.nameElement = this.querySelector('.name')
     this.indicatorElement = this.querySelector('.indicator')
     this.valueElement = this.querySelector('.value')
-    this.midiInput = this.querySelector('p-midi-input')
+    this.midiInput = this.querySelector('permutable-midi-input')
   }
 
   connectedCallback () {
@@ -158,6 +110,6 @@ class NumberParamElement extends HTMLTableRowElement {
   }
 }
 
-customElements.define('p-number-param', NumberParamElement, {
+customElements.define('permutable-number-param', Number, {
   extends: 'tr'
 })

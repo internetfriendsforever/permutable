@@ -1,23 +1,22 @@
-import css from '@happycat/css'
+import './BPM'
+import './Camera'
+import './Number'
+import './Timer'
+import './Toggle'
+import './Trigger'
 
-const styles = {
-  params: css(`
-    border-collapse: collapse;
-  `)
-}
-
-class Params {
+export default class Params {
   constructor (description) {
     this.element = document.createElement('tbody')
-    this.element.classList.add(styles.params)
 
     for (let key in description) {
       const { type, ...props } = description[key]
 
       const element = document.createElement('tr', {
-        is: `p-${type}-param`
+        is: `permutable-${type}-param`
       })
 
+      element.classList.add(type, 'param')
       element.setAttribute('key', key)
 
       for (let prop in props) {
@@ -42,5 +41,3 @@ class Params {
     return values
   }
 }
-
-export default (...args) => new Params(...args)

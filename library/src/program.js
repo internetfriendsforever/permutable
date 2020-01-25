@@ -1,30 +1,15 @@
-import css from '@happycat/css'
-import createParams from './params'
+import Params from './params/Params'
 
-const styles = {
-  params: css(`
-    border-collapse: collapse;
-  `),
-
-  canvas: css(`
-    display: block;
-  `)
-}
-
-class Program {
-  constructor ({
-    name,
-    params,
-    setup
-  } = {}, {
+export default class Program {
+  constructor (description = {}, {
     autoRender = true
   } = {}) {
-    if (!name) {
+    if (!description.name) {
       throw new Error('Program should have a name')
     }
 
-    this.name = name
-    this.setupHandler = setup
+    this.name = description.name
+    this.setupHandler = description.setup
     this.autoRender = autoRender
     this.dirty = true
 
@@ -33,9 +18,7 @@ class Program {
     this.onChange = this.onChange.bind(this)
 
     this.canvasElement = document.createElement('canvas')
-    this.canvasElement.classList.add(styles.canvas)
-
-    this.params = createParams(params)
+    this.params = new Params(description.params)
 
     this.params.element.addEventListener('change', this.onChange)
   }
@@ -79,5 +62,3 @@ class Program {
     }
   }
 }
-
-export default (...args) => new Program(...args)

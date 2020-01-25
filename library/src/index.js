@@ -1,2 +1,2 @@
-export { default as mix } from './mix'
-export { default as run } from './run'
+export { default as mix } from './mix/index'
+export { default as run } from './run/index'
