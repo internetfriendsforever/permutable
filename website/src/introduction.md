@@ -7,7 +7,7 @@ permutable (pəˈmjuːtəb<sup>ə</sup>l) _adjective_ **able to be changed or ex
 <div id="example"></div>
 <style>#example { background: #000; }</style>
 <script type="module">
-  import { run } from 'http://unpkg.com/permutable@{{VERSION}}?module'
+  import { run } from 'https://unpkg.com/permutable@{{VERSION}}?module'
   run({
     name: 'dots',
     params: {
