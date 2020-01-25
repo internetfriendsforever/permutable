@@ -50,7 +50,7 @@ h2 {
 
 p,
 table {
-  margin: 1em 0;
+  margin: 2em 0;
 }
 
 pre,
@@ -77,6 +77,12 @@ code {
 ul {
   list-style: none;
   padding: 0;
+  margin: 0.5em 0;
+}
+
+ul ul {
+  margin-left: 2em;
+  margin-top: 0;
 }
 
 ul li::before {
@@ -98,8 +104,8 @@ table {
 }
 
 td, th {
-  padding: 0.75em;
-  border: 2px #101113 solid;
+  padding: 0.5em;
+  border: 1px #101113 solid;
   vertical-align: top;
   max-width: 30em;
 }
@@ -108,4 +114,5 @@ th {
   text-align: left;
   font-weight: normal;
   background: #101113;
+  padding: 0.25em 0.5em;
 }
