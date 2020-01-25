@@ -224,6 +224,7 @@ button.active {
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
   background: black;
+  overflow: auto;
 }
 
 .mix .panel {

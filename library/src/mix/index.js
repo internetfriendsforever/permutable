@@ -4,8 +4,17 @@ import Params from '../params/Params'
 import Channel from './Channel'
 import defaultCompositor from './defaultCompositor'
 
-export default (descriptions, options = {}) => {
-  document.body.innerHTML = `
+export default (
+  descriptions,
+  {
+    container = document.body,
+    width = 1280,
+    height = 720,
+    ratio = 1,
+    compositor = defaultCompositor
+  } = {}
+) => {
+  container.innerHTML = `
     <style scoped>
       ${styles}
     </style>
@@ -46,25 +55,21 @@ export default (descriptions, options = {}) => {
     </div>
   `
 
-  const canvas = document.body.querySelector('[data-canvas]')
-
-  const compositor = options.compositor || defaultCompositor
+  const canvas = container.querySelector('[data-canvas]')
   const compose = compositor.setup(canvas)
 
-  canvas.width = options.width || 1280
-  canvas.height = options.height || 720
-
-  const { width, height } = canvas
+  canvas.width = width * ratio
+  canvas.height = height * ratio
 
   const channels = []
   const outputs = []
 
   const masterParams = new Params(compositor.params)
 
-  const programList = document.querySelector('[data-programs]')
-  const channelList = document.querySelector('[data-channels]')
-  const outputButton = document.querySelector('[data-open-output]')
-  const masterParamsContainer = document.querySelector('[data-master-params]')
+  const programList = container.querySelector('[data-programs]')
+  const channelList = container.querySelector('[data-channels]')
+  const outputButton = container.querySelector('[data-open-output]')
+  const masterParamsContainer = container.querySelector('[data-master-params]')
 
   masterParamsContainer.appendChild(masterParams.element)
   masterParamsContainer.addEventListener('change', queueRender)
