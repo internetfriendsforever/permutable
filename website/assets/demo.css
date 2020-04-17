@@ -1,0 +1,94 @@
+#demo {
+  position: relative;
+}
+
+#demo .program {
+  background: rgba(0, 0, 0, 0.25);
+  position: absolute;
+  top: 5.6%;
+  left: 1.6%;
+  width: 96.5%;
+  height: 55.4%;
+}
+
+#demo .knob {
+  cursor: ew-resize;
+}
+
+#demo .knob circle { 
+  fill: rgba(255, 255, 255, 0.01);
+}
+
+/*#demo .knob:hover circle { 
+  fill: #101113;
+}*/
+
+#demo .knob:hover circle,
+#demo .knob.turning circle {
+  fill: #8492A5;
+  stroke: #8492A5;
+}
+
+#demo .knob:hover line,
+#demo .knob.turning line {
+  stroke: #101113;
+}
+
+/* Magic number explaination: */
+/* 1.268 = 864 / 681 */
+/* 864: Width of laptop ; */
+/* 681: Width of laptop screen ; */
+
+#demo .midi-description {
+  font-size: 0.75em;
+  position: absolute;
+  top: calc(80% + 0.5em);
+  left: calc(53% + 1em);
+  width: 20em;
+  margin: 0;
+}
+
+#demo .illustration {
+  margin: 4em -1.5em 2em -1.5em;
+  overflow: hidden;
+}
+
+#demo .illustration svg {
+  width: 100%;
+  width: calc(1.268 * 100% - 1.268 * 3em);
+  margin-left: calc((1 - 1.268) / 2 * 100% + 1.268 * 1.5em);
+}
+
+@media (min-width: 600px) {
+  .ruler {
+    width: 3em;
+  }
+}
+
+@media (min-width: 600px) {
+  #demo .illustration {
+    margin-left: -3em;
+    margin-right: -3em;
+  }
+
+  #demo .illustration svg {
+    width: calc(1.268 * 100% - 1.268 * 6em);
+    margin-left: calc((1 - 1.268) / 2 * 100% + 1.268 * 3em);
+  }
+}
+
+@media (min-width: 900px) {
+  #demo .illustration svg {
+    width: calc(1.268 * 900px - 1.268 * 6em);
+    margin-left: calc((1 - 1.268) / 2 * 900px + 1.268 * 3em);
+  }
+
+  #demo .midi-description {
+    left: calc(0.53 * (900px - 6em));
+  }
+
+  #demo .program {
+    left: 13px;
+    max-width: 775px;
+  }
+}

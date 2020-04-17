@@ -50,8 +50,11 @@ code {
 }
 
 pre {
-  padding: 0.75em;
+  box-sizing: border-box;
+  padding: 0.75em 2em 0.75em 1em;
   overflow: auto;
+  width: max-content;
+  max-width: 100%;
 }
 
 pre code {
@@ -106,8 +109,9 @@ table {
 
 td, th {
   padding: 0.5em 0.75em;
-  border: 1px #42474f solid;
+  border: 2px #42474f solid;
   vertical-align: top;
+  max-width: 40em;
 }
 
 th {
