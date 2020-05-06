@@ -1,0 +1,42 @@
+<script type="module">
+  import { run } from '/dist/esm.js'
+
+  const runtime = run({
+    name: 'set-params',
+
+    params: {
+      radius: {
+        type: 'number',
+        value: 20,
+        min: 1,
+        max: 100,
+        step: 1
+      }
+    },
+
+    setup (canvas) {
+      const context = canvas.getContext('2d')
+
+      return function render ({ radius }) {
+        const { width, height } = canvas
+
+        context.clearRect(0, 0, width, height)
+
+        const x = width / 2
+        const y = height / 2
+
+        context.fillStyle = '#aaa'
+        context.beginPath()
+        context.arc(x, y, radius, 0, Math.PI * 2)
+        context.fill()
+      }
+    }
+  })
+
+  const radius = runtime._program.params.element.querySelector('[key=radius]')
+
+  // Warning: This is not an official API (yet)
+  setInterval(() => {
+    radius.value = Math.random() * 100
+  }, 500)
+</script>
