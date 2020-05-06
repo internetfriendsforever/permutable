@@ -1,0 +1,322 @@
+---
+title: API – Permutable
+---
+{{>header}}
+    <h1><a href="/">Permutable</a> / API</h1>
+
+    <div class="columns">
+      <div class="sidebar">
+        <nav>
+          <h2>Methods</h2>
+          <ul>
+            <li><a href="#run-function">Run</a></li>
+            <li><a href="#mix-function">Mix</a></li>
+          </ul>
+
+          <h2>Types</h2>
+          <ul>
+            <li><a href="#program-object">Program</a></li>
+            <li><a href="#parameter-object">Parameter</a>
+              <ul>
+                <li><a href="#type-number">Number</a></li>
+                <li><a href="#type-toggle">Toggle</a></li>
+                <li><a href="#type-trigger">Trigger</a></li>
+                <li><a href="#type-timer">Timer</a></li>
+                <li><a href="#type-bpm">BPM</a></li>
+                <li><a href="#type-camera">Camera</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="main">
+        <h2 id="run-function">run <code>function</code></h2>
+
+        <p>Gives you a minimal user interface with controls for the parameters you set up in your program.</p>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>program</td>
+              <td><a href="#program-object">program</a></td>
+              <td>Your program</td>
+            </tr>
+            <tr>
+              <td>[options]</td>
+              <td>object</td>
+              <td>Runtime options</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <details>
+          <summary>Options</summary>
+          <table>
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>[container]</td>
+              <td>HTMLElement</td>
+              <td>Which container element to run in. Defaults to: <code>document.body</code></td>
+            </tr>
+            <tr>
+              <td>[width]</td>
+              <td>number</td>
+              <td>Use a fixed width. If ommited it will use the width of the container</td>
+            </tr>
+            <tr>
+              <td>[height]</td>
+              <td>number</td>
+              <td>Use a fixed height. If ommited it will use the height of the container</td>
+            </tr>
+            <tr>
+              <td>[ratio]</td>
+              <td>number</td>
+              <td>Use a fixed pixel ratio. Defaults to: <code>window.devicePixelRatio</code></td>
+            </tr>
+          </tbody>
+        </table>
+        </details>
+
+        <pre><code class="language-javascript">run(program)</code></pre>
+
+        <h2 id="mix-function">mix <code>function</code></h2>
+
+        <p>Gives you an interface for composing and controlling <em>multiple</em> programs with a single output.</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Parameter</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>programs</td>
+              <td>Array of <a href="#program-object">program</a></td>
+              <td>Your programs</td>
+            </tr>
+          </tbody>
+        </table>
+        <pre><code class="language-javascript">mix([program1, program2])</code></pre>
+
+        <h2 id="program-object">Program <code>object</code></h2>
+
+        <p>A program is described by a plain object</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>name</td>
+              <td>string</td>
+              <td>A name for your program</td>
+            </tr>
+            <tr>
+              <td>[params]</td>
+              <td>object</td>
+              <td>An object describing the parameters for the program. The <em>keys</em> should be short descriptive names of the parameter, for example &quot;radius&quot;. The <em>value</em> should be an object describing the <a href="#parameter-object">parameter</a></td>
+            </tr>
+            <tr>
+              <td>setup</td>
+              <td>function</td>
+              <td>A setup function that will run once the program is loaded. In it, the canvas element is being provided as an argument. An update function can be returned from the setup function. It will be called anytime the params changes and has one argument – an object containing the values of all the parameters</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>Example:</p>
+
+        <pre><code class="language-javascript">{
+  name: 'Rectangle',
+  params: {
+    hue: {
+      type: 'number',
+      value: 50,
+      max: 360
+    },
+    radius: {
+      type: 'number',
+      value: 0.5
+    }
+  },
+  setup: function (canvas) {
+    // This function is called once when the program loads
+
+    return function update (values) {
+      // This function is called whenever any of the parameter changes
+      console.log(values) // { hue: 50, radius: 0.5 }
+    }
+  }
+}</code></pre>
+
+        <h2 id="parameter-object">Parameter <code>object</code></h2>
+
+        <p>A parameter is described by a plain object</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>type</td>
+              <td>string</td>
+              <td>The parameter type</td>
+            </tr>
+            <tr>
+              <td>[...options]</td>
+              <td>mixed</td>
+              <td>Type-specific options</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 id="type-number">Type <code>&#39;number&#39;</code></h3>
+
+        <p>Ouput value type: <code>number</code></p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>[value]</td>
+              <td>number</td>
+              <td>0</td>
+              <td>Initial value</td>
+            </tr>
+            <tr>
+              <td>[min]</td>
+              <td>number</td>
+              <td>0</td>
+              <td>Minimum value</td>
+            </tr>
+            <tr>
+              <td>[max]</td>
+              <td>number</td>
+              <td>1</td>
+              <td>Maximum value</td>
+            </tr>
+            <tr>
+              <td>[step]</td>
+              <td>number</td>
+              <td>0.01</td>
+              <td>Increments</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>Example with inital value:</p>
+
+        <pre><code class="language-javascript">{
+  type: 'number',
+  value: 0.5
+}</code></pre>
+        
+        <p>Example with all options:</p>
+        
+        <pre><code class="language-javascript">{
+  type: 'number',
+  value: 20,
+  min: 10,
+  max: 70,
+  step: 1
+}</code></pre>
+
+        <h3 id="type-toggle">Type <code>&#39;toggle&#39;</code></h3>
+
+        <p>A toggle works like a toggle switch. Ouput value type: <code>boolean</code></p>
+        
+        <table>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>[active]</td>
+              <td>boolean</td>
+              <td>true</td>
+              <td>Initial state</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>Example with initial deactivated state:</p>
+        
+        <pre><code class="language-javascript">{
+  type: 'toggle',
+  active: false
+}</code></pre>
+
+        <h3 id="type-trigger">Type <code>&#39;trigger&#39;</code></h3>
+
+        <p>A trigger is similar to a spring-loaded switch, it is only active when pressed down. Ouput value type: <code>boolean</code></p>
+
+        <pre><code class="language-javascript">{
+  type: 'trigger'
+}</code></pre>
+
+        <h3 id="type-timer">Type <code>&#39;timer&#39;</code></h3>
+        
+        <p>A timer is updated continuously through <a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame">requestAnimationFrame</a>. Output value type: The time since the program started as a <code>number</code></p>
+        
+        <pre><code class="language-javascript">{
+  type: 'timer'
+}</code></pre>
+        
+        <h3 id="type-bpm">Type <code>&#39;bpm&#39;</code></h3>
+        
+        <p>A special parameter meant to set tempo (beats per minute). Output value type: BPM as a <code>number</code></p>
+        
+        <pre><code class="language-javascript">{
+  type: 'bpm'
+}</code></pre>
+
+        <h3 id="type-camera">Type <code>&#39;camera&#39;</code></h3>
+
+        <p>Camera input from <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia">getUserMedia</a>. Output value type: An <code>&lt;video /&gt;</code> element (can be used directly with <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage">drawImage</a> or as a texture image)</p>
+
+        <pre><code class="language-javascript">{
+  type: 'camera'
+}</code></pre>
+      </div>
+    </div>
+{{>footer}}

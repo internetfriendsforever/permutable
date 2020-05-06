@@ -1,6 +1,6 @@
 {
   "name": "permutable",
-  "version": "0.2.19",
+  "version": "0.2.20",
   "description": "Tools for programming graphics",
   "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
   "main": "dist/cjs.js",
@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c --watch & http-server -c-1",
+    "dev": "rollup -c --watch & static",
     "clean": "rm -rf dist"
   },
   "repository": {
@@ -18,8 +18,8 @@
     "url": "git+https://github.com/internetfriendsforever/permutable.git/library"
   },
   "devDependencies": {
-    "http-server": "^0.12.1",
-    "rollup": "^1.6.0",
+    "node-static": "^0.7.11",
+    "rollup": "^2.6.1",
     "rollup-plugin-string": "^3.0.0"
   }
 }

@@ -104,9 +104,11 @@ class Number extends HTMLTableRowElement {
     const decimals = (this.step.toString().split('.')[1] || '').length
     const displayValue = this.value.toFixed(decimals)
 
-    this.indicatorElement.style.width = `${percent}%`
-    this.nameElement.innerText = this.getAttribute('key')
-    this.valueElement.innerText = displayValue
+    if (this.indicatorElement) {
+      this.indicatorElement.style.width = `${percent}%`
+      this.nameElement.innerText = this.getAttribute('key')
+      this.valueElement.innerText = displayValue
+    }
   }
 }
 

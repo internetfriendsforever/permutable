@@ -53,4 +53,8 @@ export default function run (
   }
 
   program.setup()
+
+  return {
+    _program: program
+  }
 }

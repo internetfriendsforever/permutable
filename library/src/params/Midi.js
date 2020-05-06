@@ -28,7 +28,7 @@ export default class Midi extends HTMLElement {
         }
       })
     } catch (error) {
-      console.error(error)
+      console.warn(`MIDI not available (${error.message}). See https://caniuse.com/#feat=midi for browser support tables`)
       this.button.disabled = true
       this.button.title = 'Midi not available (see console for more info)'
     }

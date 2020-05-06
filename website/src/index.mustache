@@ -1,0 +1,164 @@
+---
+title: Permutable
+---
+{{>header}}
+    <h1>Permutable</h1>
+
+    <p>
+      A framework for exploring and composing graphics in the browser. Written in JavaScript with zero dependencies – it is <a href="https://github.com/internetfriendsforever/permutable">open-source</a> and weighs 32 kB uncompressed.
+    </p>
+
+    <p>
+      permutable (pəˈmjuːtəb<sup>ə</sup>l) <em>adjective</em> <em>able to be changed or exchanged</em>.
+    </p>
+
+    <div id="demo">
+      <div class="program"></div> 
+
+      <div class="illustration">
+        <svg viewBox="0 0 864 660" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none" fill-rule="evenodd">
+            <path stroke="#C49A6C" d="M451 528h270.549v-78"/>
+            <g stroke="#8492A5">
+              <path d="M437.6 658.1H104c-6.7 0-12.2-5.5-12.2-12.2V501.2c0-6.7 5.5-12.2 12.2-12.2h333.6c6.7 0 12.2 5.5 12.2 12.2v144.6c0 6.8-5.4 12.3-12.2 12.3z" stroke-width="2"/>
+              <path d="M115 509h66v66h-66zM198 509h66v66h-66zM281 509h66v66h-66zM361 509h66v66h-66z"/>
+              
+              <g transform="translate(130 602)" class="knob">
+                <circle stroke-width="2" cx="18" cy="18" r="18"/>
+                <g transform="translate(18, 18)">
+                  <line x1="0" y1="0" x2="0" y2="-17" stroke-width="4" />
+                </g>
+              </g>
+              
+              <path d="M133.3 637.7c-5.7-4.7-9-12.1-8.2-20 1.2-12.6 12.5-21.9 25.1-20.6 12.6 1.2 21.9 12.5 20.6 25.1-.6 6.3-3.7 11.7-8.2 15.5" stroke-width="2" stroke-linecap="round" stroke-dasharray="0,7"/>
+              
+              <g transform="translate(213 602)" class="knob">
+                <circle stroke-width="2" cx="18" cy="18" r="18"/>
+                <g transform="translate(18, 18)">
+                  <line x1="0" y1="0" x2="0" y2="-17" stroke-width="4" />
+                </g>
+              </g>
+              
+              <path d="M216.3 637.7c-5.7-4.7-9-12.1-8.2-20 1.2-12.6 12.5-21.9 25.1-20.6 12.6 1.3 21.9 12.5 20.6 25.1-.6 6.3-3.7 11.7-8.2 15.5" stroke-width="2" stroke-linecap="round" stroke-dasharray="0,7"/>
+              
+              <g transform="translate(296 602)" class="knob">
+                <circle stroke-width="2" cx="18" cy="18" r="18"/>
+                <g transform="translate(18, 18)">
+                  <line x1="0" y1="0" x2="0" y2="-17" stroke-width="4" />
+                </g>
+              </g>
+              
+              <path d="M299.3 637.7c-5.7-4.7-9-12.1-8.2-20 1.2-12.6 12.5-21.9 25.1-20.6 12.6 1.3 21.9 12.5 20.6 25.1-.6 6.3-3.7 11.7-8.2 15.5" stroke-width="2" stroke-linecap="round" stroke-dasharray="0,7"/>
+              
+              <g transform="translate(376 602)" class="knob">
+                <circle stroke-width="2" cx="18" cy="18" r="18"/>
+                <g transform="translate(18, 18)">
+                  <line x1="0" y1="0" x2="0" y2="-17" stroke-width="4" />
+                </g>
+              </g>
+              
+              <path d="M379.3 637.7c-5.7-4.7-9-12.1-8.2-20 1.2-12.6 12.5-21.9 25.1-20.6 12.6 1.3 21.9 12.5 20.6 25.1-.6 6.3-3.7 11.7-8.2 15.5" stroke-width="2" stroke-linecap="round" stroke-dasharray="0,7"/>
+            </g>
+            
+            <g transform="translate(1 1)" stroke="#8492A5">
+              <path d="M739.4.9H122c-16.8 0-31.1 13.8-31.1 30.9v393.6h679.6V31.7c0-17-14.3-30.8-31.1-30.8z" stroke-width="2"/>
+              <path d="M797.7 449H63.8C25.7 449 0 444.6 0 439.1v-10.7c0-1.7 1.7-3 3.7-3h854c2.1 0 3.7 1.3 3.7 3v11.4c.1 4.3-19.8 9.2-63.7 9.2z" stroke-width="2"/>
+              <path d="M.6 437.2h858.6" stroke-linecap="square"/>
+              <path d="M100.6 35.7h659v371h-659zM524 426.6v1.4c0 2.7-5.4 3.6-9.5 3.6H347.1c-4.3 0-9.7-.8-9.7-3.6v-1.4"/>
+            </g>
+          </g>
+      </svg>
+
+      </div>
+
+      <p class="midi-description">Connect your favorite MIDI&nbsp;controller <a href="https://caniuse.com/#feat=midi&search=midi" title="See browser support of the Web MIDI API" target="_blank" rel="noopener noreferer">*</a></p>
+    </div>
+
+    <link rel="stylesheet" href="/assets/demo.css" />
+    
+    <script type="module">
+      import { run } from 'http://unpkg.com/permutable@{{version}}?module'
+
+      const runtime = run({{{demo.program}}}, {
+        container: document.querySelector('.program')
+      })
+
+      const knobs = document.querySelectorAll('.knob')
+
+      Array.from(knobs).forEach((knob, i) => {
+        const indicator = knob.querySelector('line')
+        const param = runtime._program.params.element.childNodes[i]
+
+        let value = 0.5
+
+        function turn (amount) {
+          value = Math.min(1, Math.max(0, value + amount / 100))
+          param.value = param.min + param.range * value
+          indicator.setAttribute('transform', `rotate(${(value - 0.5) * 290})`)
+        }
+
+        knob.addEventListener('pointerdown', function (event) {
+          let x = event.clientX
+
+          knob.classList.add('turning')
+
+          function move (event) {
+            turn(event.clientX - x)
+            x = event.clientX
+          }
+
+          function up () {
+            knob.classList.remove('turning')
+            document.removeEventListener('pointermove', move)
+            document.removeEventListener('pointerup', up)
+          }
+
+          document.addEventListener('pointermove', move)
+          document.addEventListener('pointerup', up)
+        })
+      })
+    </script>
+
+    <details>
+      <summary>Demo source</summary>
+      <pre><code class="language-html">{{demo.code}}</code></pre>
+    </details>
+
+    <h2>What does it do?</h2>
+
+    <p>
+      Permutable has two different runtimes. Programs you write are compatible with both, so you can easily switch based on what mode you are in.
+    </p>
+
+    <p>
+      <a href="/api#run-function">run</a> gives you a minimal user interface with controls for the parameters you set up in your program. This runtime is good for exploring and developing single programs.
+    </p>
+
+    <p>
+      <a href="/api#mix-function">mix</a> gives you an interface for composing and controlling multiple programs with a single output. This runtime is good for composing and layering programs, and for performing live.
+    </p>
+
+    <p>
+      Permutable tries to get out of your way, shorten the feedback loop, and to let you explore and work with your ideas.
+    </p>
+
+    <h2>What does it <em>not</em> do?</h2>
+
+    <p>
+      Permutable does not have an opinion on what or how you draw. It does not have any built in functions for <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/arc#Drawing_a_full_circle">drawing full circles</a> or perfect squares.
+    </p>
+
+    <p>
+      You are free to draw using <em>either</em> the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API">Canvas API</a> which provides a means for drawing 2D graphics via JavaScript, or the <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API">WebGL API</a> when you need to draw high-performance 3D and 2D graphics. Both APIs use the HTML <code>&lt;canvas&gt;</code> element.
+    </p>
+
+    <p>
+      Permutable is not designed for mobile, although it might be usable in some cases.
+    </p>
+
+    <h2>Resources</h2>
+
+    <ul>
+      <li><a href="/api">API</a></li>
+    </ul>
+{{>footer}}
