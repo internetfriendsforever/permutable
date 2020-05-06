@@ -1,5 +1,4 @@
 node_modules
 library/dist
-website/public/*
-!website/public/assets
+website/dist
 .DS_Store

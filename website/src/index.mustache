@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Permutable</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="assets/highlight/dracula.css" />
-    <link rel="stylesheet" href="assets/styles.css" />
-    <link rel="stylesheet" href="assets/demo.css" />
-  </head>
-  <body>
+---
+title: Permutable
+---
+{{>header}}
     <h1>Permutable</h1>
 
     <p>
@@ -81,6 +74,14 @@
       <p class="midi-description">Connect your favorite MIDI&nbsp;controller <a href="https://caniuse.com/#feat=midi&search=midi" title="See browser support of the Web MIDI API" target="_blank" rel="noopener noreferer">*</a></p>
     </div>
 
+    <link rel="stylesheet" href="/assets/demo.css" />
+    <script src="/assets/demo.js"></script>
+
+    <details>
+      <summary>Demo source</summary>
+      <pre><code class="language-html">{{demo.code}}</code></pre>
+    </details>
+
     <h2>What does it do?</h2>
 
     <p>
@@ -88,11 +89,11 @@
     </p>
 
     <p>
-      <a href="api.html#run-function">run</a> gives you a minimal user interface with controls for the parameters you set up in your program. This runtime is good for exploring and developing single programs.
+      <a href="/api#run-function">run</a> gives you a minimal user interface with controls for the parameters you set up in your program. This runtime is good for exploring and developing single programs.
     </p>
 
     <p>
-      <a href="api.html#mix-function">mix</a> gives you an interface for composing and controlling multiple programs with a single output. This runtime is good for composing and layering programs, and for performing live.
+      <a href="/api#mix-function">mix</a> gives you an interface for composing and controlling multiple programs with a single output. This runtime is good for composing and layering programs, and for performing live.
     </p>
 
     <p>
@@ -116,27 +117,6 @@
     <h2>Resources</h2>
 
     <ul>
-      <li><a href="api.html">API</a></li>
+      <li><a href="/api">API</a></li>
     </ul>
-
-    <footer>
-      <p>
-        Happy coding!
-        ♥
-        <a href="https://internetfriendsforever.com" target="_blank" rel="noopener noreferrer">
-          internetfriendsforever
-        </a>
-      </p>
-      <p>
-        Supported by funding from
-        <a href="https://www.grafill.no/" target="_blank" rel="noopener noreferrer">
-          Grafill
-        </a>
-      </p>
-    </footer>
-
-    <script src="assets/demo.js"></script>
-    <script src="assets/highlight/highlight.pack.js"></script>
-    <script>hljs.initHighlightingOnLoad()</script>
-  </body>
-</html>
+{{>footer}}

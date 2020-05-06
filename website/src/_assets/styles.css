@@ -125,6 +125,10 @@ th {
   padding: 0;
 }
 
+details details {
+  padding-left: 1em;
+}
+
 details summary {
   cursor: pointer;
 }

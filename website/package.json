@@ -1,0 +1,17 @@
+{
+  "name": "permutable-website",
+  "description": "Permutable presentation and documentation website",
+  "scripts": {
+    "build": "eleventy",
+    "clean": "rm -rf dist",
+    "dev": "eleventy --serve"
+  },
+  "author": "internetfriendsforever <anyone@internetfriendsforever.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/internetfriendsforever/permutable.git/website"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^0.10.0"
+  }
+}
