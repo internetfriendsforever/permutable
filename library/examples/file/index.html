@@ -2,28 +2,32 @@
   import { run } from '/dist/esm.js'
 
   run({
-    name: 'camera',
+    name: 'file',
 
     params: {
-      number: {
+      num: {
         type: 'number'
       },
       image: {
         type: 'file',
         accept: 'image/*',
-        multiple: true
-      },
-      video: {
-        type: 'file',
-        accept: 'video/*'
+        multiple: false,
+        process: file => {
+          const image = new Image()
+          image.src = URL.createObjectURL(file)
+          return image
+        }
       }
     },
 
     setup (canvas) {
-      // const context = canvas.getContext('2d')
+      const context = canvas.getContext('2d')
 
-      return function render ({ image, video }) {
-        // context.drawImage(camera, 0, 0, canvas.width, canvas.height)
+      return function render ({ image }) {
+        console.log(image)
+        if (image) {
+          context.drawImage(image, 0, 0, canvas.width, canvas.height)
+        }
       }
     }
   })

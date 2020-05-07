@@ -6,12 +6,15 @@ export default class File extends HTMLTableRowElement {
   constructor () {
     super()
 
+    this.value = null
+
     this.innerHTML = `
-      <td>
-        <span class="name">Name</span>
-        <input type="file" />
+      <td colspan="3">
+        <div class="flex">
+          <span class="name">Name</span>
+          <input type="file" />
+        </div>
       </td>
-      <td class="value"></td>
     `
 
     this.nameElement = this.querySelector('.name')
@@ -21,22 +24,19 @@ export default class File extends HTMLTableRowElement {
     this.fileElement.addEventListener('change', this.onChange.bind(this))
   }
 
-  onChange (event) {
-    Array.from(event.currentTarget.files).forEach(file => {
-      console.log(file)
-    })
+  async onChange (event) {
+    const passThrough = file => file
+    const process = this.props.process || passThrough
+    const files = Array.from(event.currentTarget.files)
+
+    if (this.props.multiple) {
+      this.value = await process(files)
+    } else {
+      this.value = await process(files[0])
+    }
+
+    this.dispatchEvent(new CustomEvent('change', { bubbles: true }))
   }
-
-  // onLoad (stream) {
-  // }
-
-  // onError (error) {
-  //   console.warn('Could not get file', error)
-  // }
-
-  // update () {
-  //   this.dispatchEvent(new CustomEvent('change', { bubbles: true }))
-  // }
 
   attributeChangedCallback (name, oldValue, newValue) {
     switch (name) {

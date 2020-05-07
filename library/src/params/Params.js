@@ -17,6 +17,7 @@ export default class Params {
         is: `permutable-${type}-param`
       })
 
+      element.props = props
       element.classList.add(type, 'param')
       element.setAttribute('key', key)
 

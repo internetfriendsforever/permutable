@@ -127,6 +127,20 @@ button.active {
   line-height: 1.8rem;
 }
 
+.file.param .flex {
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.file.param .flex .name {
+  margin-right: 1em;
+}
+
+.file.param .flex input {
+  max-width: 20em;
+}
+
 .timer.param .name {
   position: relative;
   padding: 0 0.5rem;
