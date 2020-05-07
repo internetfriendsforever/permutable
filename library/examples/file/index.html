@@ -1,0 +1,34 @@
+<script type="module">
+  import { run } from '/dist/esm.js'
+
+  run({
+    name: 'file',
+
+    params: {
+      num: {
+        type: 'number'
+      },
+      image: {
+        type: 'file',
+        accept: 'image/*',
+        multiple: false,
+        process: file => {
+          const image = new Image()
+          image.src = URL.createObjectURL(file)
+          return image
+        }
+      }
+    },
+
+    setup (canvas) {
+      const context = canvas.getContext('2d')
+
+      return function render ({ image }) {
+        console.log(image)
+        if (image) {
+          context.drawImage(image, 0, 0, canvas.width, canvas.height)
+        }
+      }
+    }
+  })
+</script>

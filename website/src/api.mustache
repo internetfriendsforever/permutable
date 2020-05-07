@@ -18,12 +18,13 @@ title: API – Permutable
             <li><a href="#program-object">Program</a></li>
             <li><a href="#parameter-object">Parameter</a>
               <ul>
-                <li><a href="#type-number">Number</a></li>
-                <li><a href="#type-toggle">Toggle</a></li>
-                <li><a href="#type-trigger">Trigger</a></li>
-                <li><a href="#type-timer">Timer</a></li>
                 <li><a href="#type-bpm">BPM</a></li>
                 <li><a href="#type-camera">Camera</a></li>
+                <li><a href="#type-file">File</a></li>
+                <li><a href="#type-number">Number</a></li>
+                <li><a href="#type-timer">Timer</a></li>
+                <li><a href="#type-toggle">Toggle</a></li>
+                <li><a href="#type-trigger">Trigger</a></li>
               </ul>
             </li>
           </ul>
@@ -197,6 +198,87 @@ title: API – Permutable
             </tr>
           </tbody>
         </table>
+        
+        <h3 id="type-bpm">Type <code>&#39;bpm&#39;</code></h3>
+        
+        <p>A special parameter meant to set tempo (beats per minute). Output value type: BPM as a <code>number</code></p>
+        
+        <pre><code class="language-javascript">{
+  type: 'bpm'
+}</code></pre>
+
+        <h3 id="type-camera">Type <code>&#39;camera&#39;</code></h3>
+
+        <p>Camera input from <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia">getUserMedia</a>. Output value type: An <code>&lt;video /&gt;</code> element (can be used directly with <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage">drawImage</a> or as a texture image)</p>
+
+        <pre><code class="language-javascript">{
+  type: 'camera'
+}</code></pre>
+
+        <h3 id="type-file">Type <code>&#39;file&#39;</code></h3>
+
+        <p>Select one or more files from file system. Output value is either a single <a href="https://developer.mozilla.org/en-US/docs/Web/API/File">File</a> or an array of them depending on <code>multiple</code> option. The output value can optionally be pre-processed using <code>process</code> option</p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>[accept]</td>
+              <td>string</td>
+              <td></td>
+              <td>Which file types to accept. See <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/accept">valid formatting</a></td>
+            </tr>
+            <tr>
+              <td>[multiple]</td>
+              <td>boolean</td>
+              <td>false</td>
+              <td>Allow multiple files</td>
+            </tr>
+            <tr>
+              <td>[process]</td>
+              <td>function</td>
+              <td></td>
+              <td>Pre-process files for easier consumption later</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>Example:</p>
+        <pre><code class="language-javascript">{
+  type: 'file'
+}</code></pre>
+
+        <p>Example, returning an array buffer:</p>
+        <pre><code class="language-javascript">{
+  type: 'file',
+  process: async file => file.arrayBuffer()
+}</code></pre>
+
+        <p>Example, prossesing a text file:</p>
+        <pre><code class="language-javascript">{
+  type: 'file',
+  accept: 'text/plain',
+  process: async file => file.text()
+}</code></pre>
+
+        <p>Example, prossesing multiple images and returning an array of image elements:</p>
+        <pre><code class="language-javascript">{
+  type: 'file',
+  accept: 'image/*',
+  multiple: true,
+  process: files => files.map(file => {
+    const image = new Image()
+    image.src = URL.createObjectURL(file)
+    return image
+  })
+}</code></pre>
 
         <h3 id="type-number">Type <code>&#39;number&#39;</code></h3>
 
@@ -256,6 +338,14 @@ title: API – Permutable
   step: 1
 }</code></pre>
 
+        <h3 id="type-timer">Type <code>&#39;timer&#39;</code></h3>
+        
+        <p>A timer is updated continuously through <a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame">requestAnimationFrame</a>. Output value type: The time since the program started as a <code>number</code></p>
+        
+        <pre><code class="language-javascript">{
+  type: 'timer'
+}</code></pre>
+
         <h3 id="type-toggle">Type <code>&#39;toggle&#39;</code></h3>
 
         <p>A toggle works like a toggle switch. Ouput value type: <code>boolean</code></p>
@@ -292,30 +382,6 @@ title: API – Permutable
 
         <pre><code class="language-javascript">{
   type: 'trigger'
-}</code></pre>
-
-        <h3 id="type-timer">Type <code>&#39;timer&#39;</code></h3>
-        
-        <p>A timer is updated continuously through <a href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame">requestAnimationFrame</a>. Output value type: The time since the program started as a <code>number</code></p>
-        
-        <pre><code class="language-javascript">{
-  type: 'timer'
-}</code></pre>
-        
-        <h3 id="type-bpm">Type <code>&#39;bpm&#39;</code></h3>
-        
-        <p>A special parameter meant to set tempo (beats per minute). Output value type: BPM as a <code>number</code></p>
-        
-        <pre><code class="language-javascript">{
-  type: 'bpm'
-}</code></pre>
-
-        <h3 id="type-camera">Type <code>&#39;camera&#39;</code></h3>
-
-        <p>Camera input from <a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getUserMedia">getUserMedia</a>. Output value type: An <code>&lt;video /&gt;</code> element (can be used directly with <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage">drawImage</a> or as a texture image)</p>
-
-        <pre><code class="language-javascript">{
-  type: 'camera'
 }</code></pre>
       </div>
     </div>
