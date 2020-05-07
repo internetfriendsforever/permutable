@@ -1,5 +1,6 @@
 import './BPM'
 import './Camera'
+import './File'
 import './Number'
 import './Timer'
 import './Toggle'
