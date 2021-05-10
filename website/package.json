@@ -12,6 +12,6 @@
     "url": "git+https://github.com/internetfriendsforever/permutable.git/website"
   },
   "dependencies": {
-    "@11ty/eleventy": "^0.10.0"
+    "@11ty/eleventy": "^0.12.1"
   }
 }
