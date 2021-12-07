@@ -7,7 +7,8 @@ export default function run (
     container = document.body,
     width = null,
     height = null,
-    ratio = window.devicePixelRatio
+    ratio = window.devicePixelRatio,
+    visible = true
   } = {}
 ) {
   const program = new Program(description.default || description)
@@ -51,6 +52,14 @@ export default function run (
 
     resize()
   }
+
+  window.addEventListener('keydown', event => {
+    if (event.keyCode === 27) {
+      paramsTable.classList.toggle('visible')
+    }
+  })
+
+  paramsTable.classList.toggle('visible', visible)
 
   program.setup()
 

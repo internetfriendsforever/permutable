@@ -267,6 +267,11 @@ button.active {
   left: 0;
   background: black;
   width: 200px;
+  display: none;
+}
+
+.run .params.visible {
+  display: block;
 }
 
 .run canvas {
