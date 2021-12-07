@@ -29,7 +29,7 @@ const program = `{
 }`
 
 const code = `<script type="module">
-  import { run } from 'http://unpkg.com/permutable@0.2.19?module'
+  import { run } from 'https://unpkg.com/permutable@0.2.19?module'
 
   run(${program.split('\n').join('\n  ')})
 </script>`
